@@ -1,11 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Card, Container, Form, Row} from "react-bootstrap";
 import {NavLink, useLocation} from "react-router-dom";
 import {LOGIN_ROUTE, REGISTRATION_ROUTE} from "../utils/consts";
+import {login, registration} from "../http/UserApi";
 
 const Auth = () => {
     const location = useLocation()
     const isLogin = location.pathname === LOGIN_ROUTE
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const click = async () =>{
+        if(isLogin){
+            const response = await login()
+            console.log(response)
+        } else{
+            const response = await registration(email, password)
+            console.log(response)
+        }
+
+
+    }
+
     return (
         <Container className={"d-flex justify-content-center align-items-center"}
                    style={{height: window.innerHeight - 54}}
@@ -16,10 +32,15 @@ const Auth = () => {
                     <Form.Control
                         className={'mt-3'}
                         placeholder="Введите Имеил"
+                        value={email}
+                        onChange={e=>setEmail(e.target.value)}
                     />
                     <Form.Control
                         className={'mt-3'}
                         placeholder="Введите пароль"
+                        type={'password'}
+                        value={password}
+                        onChange={e=>setPassword(e.target.value)}
                     />
                     <Row className={'d-flex justify-content-between mt-3 pr-3 pl-3'}>
                         {isLogin ?
@@ -33,7 +54,9 @@ const Auth = () => {
                                 <NavLink to={LOGIN_ROUTE}> Войдите</NavLink>
                             </div>
                         }
-                        <Button variant={'outline-success'}>
+                        <Button
+                            onClick={() => click()}
+                            variant={'outline-success'}>
                             {isLogin? 'Войти': 'Зарегистрируйтесь'}
                         </Button>
                     </Row>
