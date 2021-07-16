@@ -2,6 +2,46 @@ import {makeAutoObservable} from "mobx";
 
 export default class DeviceStore {
     constructor() {
+
+        this._brandInType = [
+            {
+                name: 'Холодильник',
+                brandDTOS: [
+                    'Samsung',
+                    'Apple',
+                    'Asus',
+                ]
+            },
+            {
+                name: 'Смартфон',
+                brandDTOS: [
+                    'Samsung',
+                    'Apple',
+                    'Asus',
+                    'Lenovo',
+                ]
+            },
+            {
+                name: 'Ноутбуки',
+                brandDTOS: [
+                    'Samsung',
+                    'Apple',
+                    'Asus',
+                    'Lenovo',
+                ]
+            },
+            {
+                name: 'Телевизоры',
+                brandDTOS: [
+                    'Samsung',
+                    'Apple',
+                    'Asus',
+                    'Lenovo',
+                ]
+            }
+
+        ]
+
         this._types = [
             {id: 1, name: 'Холодильник'},
             {id: 2, name: 'Смартфон'},
@@ -32,6 +72,10 @@ export default class DeviceStore {
         makeAutoObservable(this)
     }
 
+    setBrandInType(massive){
+        this._brandInType = massive
+    }
+
     setTypes(types) {
         this._types = types
     }
@@ -48,8 +92,8 @@ export default class DeviceStore {
         this._selectedType = type
     }
 
-    setSelectedBrand(brand) {
-        this._selectedBrand = brand
+    setSelectedBrand(id) {
+        this._selectedBrand = id
     }
 
     get Types() {
@@ -58,6 +102,10 @@ export default class DeviceStore {
 
     get Brands() {
         return this._brands
+    }
+
+    get BrandInType() {
+        return this._brandInType
     }
 
     get Devices() {

@@ -3,6 +3,7 @@ import {Row} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../index";
 import DeviceItem from "./DeviceItem";
+import {useLocation} from "react-router-dom";
 
 const DeviceList = observer(() => {
     const {device} = useContext(Context)
