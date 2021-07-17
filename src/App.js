@@ -3,6 +3,7 @@ import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import NavBar from "./components/NavBar/NavBar";
 import {useEffect} from "react";
+import TaskContainer from "./utils/TaskContainer";
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
         <BrowserRouter className="App">
             <NavBar/>
             <AppRouter/>
+            <TaskContainer />
         </BrowserRouter>
     );
 }

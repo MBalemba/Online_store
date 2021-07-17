@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {action, makeAutoObservable} from "mobx";
 
 //Выполняет функции записиданных перед отправкой на сервер
 export default class CreateDeviceStore {
@@ -16,7 +16,14 @@ export default class CreateDeviceStore {
             }
         ]
 
-        makeAutoObservable(this)
+        makeAutoObservable(this,{
+            setBrand: action,
+            setType: action,
+            setName: action,
+            setPrice: action,
+            setImg: action,
+        })
+
     }
 
     setBrand(brand) {
@@ -67,5 +74,20 @@ export default class CreateDeviceStore {
         return this._img
     }
 
+    deleteAll() {
+        this._brand = null
+        this._type = null
+        this._name = null
+        this._price = null
+        this._img = null
+        this._characteristic = [
+            {
+                nameProperty: '',
+                description: '',
+            }
+        ]
+    }
 
 }
+
+window.store = new CreateDeviceStore()

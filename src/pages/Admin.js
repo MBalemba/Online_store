@@ -1,10 +1,16 @@
-import React, {useState} from 'react';
+import React, {createContext, useState} from 'react';
 import {Button, Container} from "react-bootstrap";
 import CreateBrand from "../components/ModalsAdmin/CreateBrand";
 import CreateType from "../components/ModalsAdmin/CreateType";
-import CreateDevice from "../components/ModalsAdmin/CreateDevice";
+import CreateDevice from "../components/ModalsAdmin/CreateDevice/CreateDevice";
+import CreateDeviceStore from "../store/CreateDeviceInfo";
+import {observer} from "mobx-react-lite";
 
-const Admin = () => {
+
+const createDevice = new CreateDeviceStore()
+
+
+const Admin = observer(() => {
     const [brandVisible,setBrandVisible] = useState(false)
     const [typeVisible,setTypeVisible] = useState(false)
     const [deviceVisible,setDeviceVisible] = useState(false)
@@ -21,9 +27,9 @@ const Admin = () => {
 
             <CreateBrand show={brandVisible} onHide={()=> setBrandVisible(false)}/>
             <CreateType show={typeVisible} onHide={()=> setTypeVisible(false)}/>
-            <CreateDevice show={deviceVisible} onHide={()=> setDeviceVisible(false)}/>
+                <CreateDevice createDevice={createDevice} show={deviceVisible} onHide={()=> setDeviceVisible(false)}/>
         </Container>
     );
-};
+});
 
 export default Admin;
