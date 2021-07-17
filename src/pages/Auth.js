@@ -1,19 +1,22 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Card, Container, Form, Row} from "react-bootstrap";
 import {NavLink, useLocation} from "react-router-dom";
 import {LOGIN_ROUTE, REGISTRATION_ROUTE} from "../utils/consts";
 import {login, registration} from "../http/UserApi";
+import {observer} from "mobx-react-lite";
+import {Context} from "../index";
 
-const Auth = () => {
+const Auth = observer(() => {
     const location = useLocation()
+    const {user, taskInstance} = useContext(Context)
     const isLogin = location.pathname === LOGIN_ROUTE
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const click = async () =>{
         if(isLogin){
-            const response = await login()
-            console.log(response)
+            user.doAutorizate(email, password, taskInstance)
+
         } else{
             const response = await registration(email, password)
             console.log(response)
@@ -63,6 +66,6 @@ const Auth = () => {
             </Card>
         </Container>
     );
-};
+});
 
 export default Auth;

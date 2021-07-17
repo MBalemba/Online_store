@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {Form} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
-import CreateDeviceStore from "../../../store/CreateDeviceInfo";
+import CreateDeviceStore from "../../../store/CreateDeviceStore";
 
 
 

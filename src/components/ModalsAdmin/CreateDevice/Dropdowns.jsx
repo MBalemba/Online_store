@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {Dropdown} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../index";
-import CreateDeviceStore from "../../../store/CreateDeviceInfo";
+import CreateDeviceStore from "../../../store/CreateDeviceStore";
 
 
 

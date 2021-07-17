@@ -3,7 +3,7 @@ import {Button, Container} from "react-bootstrap";
 import CreateBrand from "../components/ModalsAdmin/CreateBrand";
 import CreateType from "../components/ModalsAdmin/CreateType";
 import CreateDevice from "../components/ModalsAdmin/CreateDevice/CreateDevice";
-import CreateDeviceStore from "../store/CreateDeviceInfo";
+import CreateDeviceStore from "../store/CreateDeviceStore";
 import {observer} from "mobx-react-lite";
 
 

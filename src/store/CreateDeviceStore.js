@@ -1,7 +1,5 @@
 import {action, makeAutoObservable} from "mobx";
 import {giveDeviceServer} from "../http/UserApi";
-import TaskStore from "./Tasks";
-
 
 //Выполняет функции записиданных перед отправкой на сервер
 export default class CreateDeviceStore {

@@ -1,4 +1,5 @@
 import {makeAutoObservable} from "mobx";
+import {login} from "../http/UserApi";
 
 export default class UserStore {
     constructor() {
@@ -20,6 +21,16 @@ export default class UserStore {
     }
     get user() {
         return this._user
+    }
+
+    doAutorizate (email, password, taskInstance) {
+        login(email, password)
+            .then((response)=>{
+                taskInstance.createTask()
+            })
+            .catch(()=>{
+
+            })
     }
 
 }
