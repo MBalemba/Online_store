@@ -16,7 +16,6 @@ const Auth = observer(() => {
     const click = async () =>{
         if(isLogin){
             user.doAutorizate(email, password, taskInstance)
-
         } else{
             const response = await registration(email, password)
             console.log(response)

@@ -23,10 +23,11 @@ export default class UserStore {
         return this._user
     }
 
-    doAutorizate (email, password, taskInstance) {
+    doAutorizate(email, password, taskInstance) {
         login(email, password)
             .then((response)=>{
-                taskInstance.createTask()
+                console.log(response)
+                taskInstance.createTask('Успешно', 'Successful')
             })
             .catch(()=>{
 

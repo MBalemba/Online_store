@@ -7,7 +7,7 @@ export const registration = async (email, password) => {
 }
 
 export const login = async (email, password) => {
-    const response = await $host.post('login', {email, password})
+    const response = await $host.post('login', {email: email, password: password })
     return response
 }
 
