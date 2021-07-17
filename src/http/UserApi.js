@@ -12,11 +12,16 @@ export const login = async (email, password) => {
 }
 
 export const check = async (email, password) => {
-    const response = await $host.post('api/auth/registration')
+    const response = await $authHost.post('api/auth/registration')
     return response
 }
 
 export const getTypeBrand = async () =>{
     const response = await $host.get('type/getAll')
+    return response
+}
+
+export const giveDeviceServer = async (data) =>{
+    const response = await $authHost.post('device/add', data)
     return response
 }

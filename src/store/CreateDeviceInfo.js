@@ -1,4 +1,7 @@
 import {action, makeAutoObservable} from "mobx";
+import {giveDeviceServer} from "../http/UserApi";
+import TaskStore from "./Tasks";
+
 
 //Выполняет функции записиданных перед отправкой на сервер
 export default class CreateDeviceStore {
@@ -46,9 +49,6 @@ export default class CreateDeviceStore {
         this._img = file
     }
 
-    setCharacteristic() {
-
-    }
 
     set() {
 
@@ -80,12 +80,30 @@ export default class CreateDeviceStore {
         this._name = null
         this._price = null
         this._img = null
-        this._characteristic = [
-            {
-                nameProperty: '',
-                description: '',
-            }
-        ]
+        this._characteristic = []
+    }
+
+    IsGetReadyToRequest (){
+        return this._brand && this._type && this._name && this._price && this._img
+    }
+
+     giveSomeDataToServer(characteristic, taskStore) {
+        let data =new FormData();
+        data.append('brand', this._brand)
+        data.append('type', this._type)
+        data.append('name', this._name)
+        data.append('price', this._price)
+        data.append('img', this._img, this._img.name)
+        if(characteristic){
+            data.append('characteristic', this._characteristic)
+        }
+
+        giveDeviceServer(data)
+            .then((response)=>{(taskStore.createTask('Успешно', 'Success'))})
+            .catch((e)=>{
+                taskStore.createTask('Ошибка отправки данных', 'Danger')
+            })
+
     }
 
 }

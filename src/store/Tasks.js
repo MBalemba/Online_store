@@ -8,7 +8,7 @@ export default class TaskStore{
     }
 
     createTask(message, status=''){
-        this.task.push({message, status: 'Secondary', id: new Date().getTime()})
+        this.task.push({message, status: status, id: new Date().getTime()})
     }
 
     deleteTask(id){

@@ -8,8 +8,8 @@ import {Context} from "../index";
 const Container = styled.div`
   position: fixed;
   z-index: 9999;
-  right: 5rem;
-  bottom: 5rem;
+  right: 2rem;
+  bottom: 2rem;
 `
 
 
@@ -23,7 +23,7 @@ const TaskContainer = observer(() => {
             console.log('добавление таска: ', newTask.id)
             setTimeout(() => {
                 taskInstance.deleteTask(newTask.id)
-            }, 5000)
+            }, 1000)
         }
     })
 
@@ -42,9 +42,9 @@ const TaskElem = ({el, taskInstance}) => {
     el.status.toLowerCase()
 
     return (
-        <Toast className={'bg-' + el.status.toLowerCase()} onClose={() => taskInstance.deleteTask(el.id)}>
-            <Toast.Header>
-                <strong className="me-auto">Bootstrap</strong>
+        <Toast animation={'true'} className={'bg-' + el.status.toLowerCase()} onClose={() => taskInstance.deleteTask(el.id)}>
+            <Toast.Header style={{display: 'flex', justifyContent: 'space-between'}}>
+                <strong className="me-auto">Сообщение</strong>
                 <small className="text-muted">just now</small>
             </Toast.Header>
             <Toast.Body>{el.message}</Toast.Body>

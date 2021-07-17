@@ -101,11 +101,16 @@ const CreateDevice = observer(({show, onHide, createDevice}) => {
 
                     <Modal.Footer>
                         <Button variant={'outline-danger'} onClick={onHide}>Закрыть</Button>
-                        <Button variant={'outline-success'} onClick={() => {
+                        <Button variant={'outline-success'} onClick={async () => {
                             let characteristic = info.filter(el => el.nameProperty && el.description).map(el=>({nameProperty: el.nameProperty, description: el.description }))
-                            createDevice.deleteAll()
-                            setInfo([])
-                            taskInstance.createTask('не робит)', 'Warning')
+                            if(createDevice.IsGetReadyToRequest()){
+                                await createDevice.giveSomeDataToServer(characteristic, taskInstance)
+                            } else {
+                                taskInstance.createTask('Заполненны не все данные', 'Warning')
+                            }
+                            // createDevice.deleteAll()
+                            // setInfo([])
+
 
                         }}>Добавить</Button>
                     </Modal.Footer>
