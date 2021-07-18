@@ -1,4 +1,5 @@
 import {makeAutoObservable} from "mobx";
+import {getTypeBrand} from "../http/UserApi";
 
 export default class DeviceStore {
     constructor() {
@@ -72,16 +73,15 @@ export default class DeviceStore {
         makeAutoObservable(this)
     }
 
-    setBrandInType(massive){
-        this._brandInType = massive
-    }
+    // setBrandInType(massive){
+    //     this._brandInType = massive
+    // }
 
-    setTypes(types) {
-        this._types = types
-    }
-
-    setBrands(brands) {
-        this._brands = brands
+    setBrandInType(types) {
+        getTypeBrand().then((r)=>{
+            console.log(r.data)
+            this._brandInType = r.data
+        })
     }
 
     setDevices(devices) {

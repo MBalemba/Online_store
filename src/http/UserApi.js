@@ -31,3 +31,8 @@ export const postType = async (name) => {
     const response = await $authHost.post('type/add', {name: name})
     return response
 }
+
+export const postBrand = async (data) => {
+    const response = await $authHost.post('brand/add', data)
+    return response
+}

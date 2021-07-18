@@ -1,7 +1,26 @@
-import React from 'react';
-import {Button, Form, Modal} from "react-bootstrap";
+import React, {useContext, useEffect, useState} from 'react';
+import {Button, Dropdown, Form, Modal} from "react-bootstrap";
+import {getTypeBrand, postBrand} from "../../http/UserApi";
+import {Context} from "../../index";
 
 const CreateBrand = ({show, onHide}) => {
+
+
+    const {device, taskInstance} = useContext(Context)
+    const [typeSelected, setTypeSelected] = useState(null)
+    const [brandSelected, setBrandSelected] = useState('')
+
+    function sendToServer() {
+        postBrand({name: brandSelected.trim(), type: typeSelected}).then(()=>{
+            taskInstance.createTask('Успешно добавлен бренд', 'success')
+            onHide()
+            setTypeSelected(null)
+            setBrandSelected('')
+        }).catch(()=>{
+            taskInstance.createTask('Возникла какая-то ошибка', 'Danger')
+        })
+
+    }
 
     return (
         <div>
@@ -18,16 +37,37 @@ const CreateBrand = ({show, onHide}) => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Control
-                            placeholder={'Введите название типа'}
-                        >
+                        {typeSelected ?
+                            <Form.Control
+                                placeholder={'Введите название бренда'}
+                                onChange={(e)=> setBrandSelected(e.target.value)}
+                            >
 
-                        </Form.Control>
+                            </Form.Control>
+                            :
+                            <p className="lead">&nbsp;&nbsp;&nbsp;&nbsp;Выберите тип техники, в который хотите добавить бренд:</p>
+                        }
+
+                        <Dropdown  style={{width: '100%'}} className={"mt-2 mb-2 "}>
+                            <Dropdown.Toggle style={{width: '100%'}}>{typeSelected || 'Выберете тип>'}</Dropdown.Toggle>
+                            <Dropdown.Menu style={{width: '100%'}}>
+                                {device.BrandInType.map(type =>
+                                    <Dropdown.Item
+                                        onClick={() => setTypeSelected(type.name)}
+                                        key={type.name}>
+                                        {type.name}
+                                    </Dropdown.Item>
+                                )}
+                            </Dropdown.Menu>
+                        </Dropdown>
+
+
                     </Form>
+
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant={'outline-danger'} onClick={onHide}>Закрыть</Button>
-                    <Button variant={'outline-success'} onClick={onHide}>Добавить</Button>
+                    <Button disabled={!(brandSelected && typeSelected)} variant={'outline-success'} onClick={sendToServer}>Добавить</Button>
                 </Modal.Footer>
             </Modal>
         </div>

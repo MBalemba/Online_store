@@ -1,19 +1,27 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import {Button, Container} from "react-bootstrap";
 import CreateBrand from "../components/ModalsAdmin/CreateBrand";
 import CreateType from "../components/ModalsAdmin/CreateType";
 import CreateDevice from "../components/ModalsAdmin/CreateDevice/CreateDevice";
 import CreateDeviceStore from "../store/CreateDeviceStore";
 import {observer} from "mobx-react-lite";
+import {Context} from "../index";
 
 
 const createDevice = new CreateDeviceStore()
 
 
 const Admin = observer(() => {
+    const {device} = useContext(Context)
+
     const [brandVisible,setBrandVisible] = useState(false)
     const [typeVisible,setTypeVisible] = useState(false)
     const [deviceVisible,setDeviceVisible] = useState(false)
+
+    useEffect(()=>{
+            device.setBrandInType()
+        }
+    , [])
 
     return (
         <Container className={'d-flex flex-column align-items-start mt-5'}>
