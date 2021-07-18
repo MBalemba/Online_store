@@ -27,7 +27,7 @@ const Admin = observer(() => {
 
             <CreateBrand show={brandVisible} onHide={()=> setBrandVisible(false)}/>
             <CreateType show={typeVisible} onHide={()=> setTypeVisible(false)}/>
-                <CreateDevice createDevice={createDevice} show={deviceVisible} onHide={()=> setDeviceVisible(false)}/>
+            <CreateDevice createDevice={createDevice} show={deviceVisible} onHide={()=> setDeviceVisible(false)}/>
         </Container>
     );
 });

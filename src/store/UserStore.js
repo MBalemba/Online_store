@@ -1,9 +1,9 @@
 import {makeAutoObservable} from "mobx";
-import {login} from "../http/UserApi";
+import {check, login} from "../http/UserApi";
 
 export default class UserStore {
     constructor() {
-        this._isAuth = true
+        this._isAuth = false
         this._user = {}
         makeAutoObservable(this)
     }
@@ -24,14 +24,28 @@ export default class UserStore {
     }
 
     doAutorizate(email, password, taskInstance) {
-        login(email, password)
+        return  login(email, password)
             .then((response)=>{
-                console.log(response)
-                taskInstance.createTask('Успешно', 'Successful')
+                localStorage.setItem('token', response.headers.authorization)
+                this._isAuth = true
+                return Promise.resolve(response)
             })
             .catch(()=>{
-
+                return Promise.reject()
             })
+    }
+
+    checkAutorize(){
+        if(localStorage.getItem('token')){
+            check().then(() => {
+                this.setIsAuth(true)
+            } )
+        }
+    }
+
+    Out(){
+        localStorage.removeItem('token')
+        this._isAuth = false
     }
 
 }

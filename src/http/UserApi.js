@@ -11,8 +11,8 @@ export const login = async (email, password) => {
     return response
 }
 
-export const check = async (email, password) => {
-    const response = await $authHost.post('api/auth/registration')
+export const check = async () => {
+    const response = await $authHost.post('user/check')
     return response
 }
 
@@ -23,5 +23,11 @@ export const getTypeBrand = async () =>{
 
 export const giveDeviceServer = async (data) =>{
     const response = await $authHost.post('device/add', data)
+    return response
+}
+
+
+export const postType = async (name) => {
+    const response = await $authHost.post('device/add', name)
     return response
 }

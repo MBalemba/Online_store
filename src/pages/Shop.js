@@ -11,7 +11,8 @@ import {getTypeBrand} from "../http/UserApi";
 
 
 const Shop = observer(() => {
-    const {device} = useContext(Context)
+    const {device, user} = useContext(Context)
+    console.log(user.isAuth)
     useEffect(
         async ()=>{
             try {

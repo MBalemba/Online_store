@@ -2,14 +2,16 @@ import './App.css';
 import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import NavBar from "./components/NavBar/NavBar";
-import {useEffect} from "react";
+import {useContext, useEffect} from "react";
 import TaskContainer from "./utils/TaskContainer";
+import {Context} from "./index";
+import {observer} from "mobx-react-lite";
 
-function App() {
-
+const App = observer(function () {
+    const {user} = useContext(Context)
     useEffect(()=>{
-        console.log('render')
-    })
+        user.checkAutorize()
+    }, [])
     return (
         <BrowserRouter className="App">
             <NavBar/>
@@ -17,6 +19,6 @@ function App() {
             <TaskContainer />
         </BrowserRouter>
     );
-}
+})
 
 export default App;
