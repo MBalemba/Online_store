@@ -28,6 +28,6 @@ export const giveDeviceServer = async (data) =>{
 
 
 export const postType = async (name) => {
-    const response = await $authHost.post('device/add', name)
+    const response = await $authHost.post('type/add', {name: name})
     return response
 }

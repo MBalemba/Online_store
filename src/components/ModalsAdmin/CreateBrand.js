@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
 
 const CreateBrand = ({show, onHide}) => {
+
     return (
         <div>
             <Modal
@@ -12,7 +13,7 @@ const CreateBrand = ({show, onHide}) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Добавить новый тип
+                        Добавить новый бренд
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

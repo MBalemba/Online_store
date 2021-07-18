@@ -17,7 +17,7 @@ export default class CreateDeviceStore {
             }
         ]
 
-        makeAutoObservable(this,{
+        makeAutoObservable(this, {
             setBrand: action,
             setType: action,
             setName: action,
@@ -81,28 +81,32 @@ export default class CreateDeviceStore {
         this._characteristic = []
     }
 
-    IsGetReadyToRequest (){
+    IsGetReadyToRequest() {
         return this._brand && this._type && this._name && this._price && this._img
     }
 
-     giveSomeDataToServer(characteristic, taskStore) {
-        let data =new FormData();
+    giveSomeDataToServer(characteristic, taskStore) {
+        let data = new FormData();
         data.append('brand', this._brand)
         data.append('type', this._type)
         data.append('name', this._name)
         data.append('price', this._price)
         data.append('img', this._img, this._img.name)
-        if(characteristic){
+        if (characteristic) {
             data.append('characteristic', this._characteristic)
         }
 
         giveDeviceServer(data)
-            .then((response)=>{(taskStore.createTask('Успешно', 'Success'))})
-            .catch((e)=>{
+            .then((response) => {
+                (taskStore.createTask('Успешно', 'Success'))
+            })
+            .catch((e) => {
                 taskStore.createTask('Ошибка отправки данных', 'Danger')
             })
 
     }
+
+
 
 }
 

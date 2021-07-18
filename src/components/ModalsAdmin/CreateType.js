@@ -1,7 +1,19 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
+import {postType} from "../../http/UserApi";
+import {observer} from "mobx-react-lite";
+import {Context} from "../../index";
 
-const CreateType = ({show, onHide}) => {
+const CreateType = observer(({show, onHide}) => {
+    const [typeValue, setTypeValue] = useState('')
+    const {taskInstance} = useContext(Context)
+    function add() {
+        postType(typeValue.trim()).then((r)=>{
+            onHide()
+            taskInstance.createTask('Тип добавлен', 'success')
+        })
+    }
+
     return (
         <div>
             <Modal
@@ -19,6 +31,8 @@ const CreateType = ({show, onHide}) => {
                     <Form>
                         <Form.Control
                         placeholder={'Введите название типа'}
+                        value={typeValue}
+                        onChange={(e)=>setTypeValue(e.target.value)}
                         >
 
                         </Form.Control>
@@ -26,11 +40,11 @@ const CreateType = ({show, onHide}) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant={'outline-danger'} onClick={onHide}>Закрыть</Button>
-                    <Button variant={'outline-success'} onClick={onHide}>Добавить</Button>
+                    <Button disabled={typeValue.trim()===''} variant={'outline-success'} onClick={add}>Добавить</Button>
                 </Modal.Footer>
             </Modal>
         </div>
     );
-};
+});
 
 export default CreateType;
