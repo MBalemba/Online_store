@@ -2,8 +2,6 @@ import React, {createContext, useContext, useEffect, useState} from 'react';
 import {Button, Col, Dropdown, Form, Image, Modal, Row} from "react-bootstrap";
 import {Context} from "../../../index";
 import {observer} from "mobx-react-lite";
-import {Div} from "./CreateDeviceElement";
-import {CreateDeviceContext} from "../../../pages/Admin";
 import Dropdowns from "./ChildComponentDevice/Dropdowns.jsx";
 import NameAndPriceInput from "./ChildComponentDevice/NameAndPriceInput.jsx";
 import LoadImage from "./ChildComponentDevice/LoadImage";
@@ -16,7 +14,7 @@ const CreateDevice = observer(({show, onHide, createDevice}) => {
     const [info, setInfo] = useState([])
 
     const addInfo = () => {
-        setInfo([...info, {nameProperty: '', description: '', number: Date.now(),}])
+        setInfo([...info, {title: '', description: '', number: Date.now(),}])
     }
 
     const removeInfo = (number) => {
@@ -62,11 +60,11 @@ const CreateDevice = observer(({show, onHide, createDevice}) => {
                                     <Row className={"mt-2"} key={i.number}>
                                         <Col md={4}>
                                             <Form.Control
-                                                value={i.nameProperty}
+                                                value={i.title}
                                                 onChange={(e) =>
                                                     setInfo(info.map(el => (el.number === i.number ? {
                                                         ...el,
-                                                        nameProperty: e.target.value
+                                                        title: e.target.value
                                                     } : {...el})))
                                                 }
 
@@ -102,7 +100,7 @@ const CreateDevice = observer(({show, onHide, createDevice}) => {
                     <Modal.Footer>
                         <Button variant={'outline-danger'} onClick={onHide}>Закрыть</Button>
                         <Button variant={'outline-success'} onClick={async () => {
-                            let characteristic = info.filter(el => el.nameProperty && el.description).map(el=>({nameProperty: el.nameProperty, description: el.description }))
+                            let characteristic = info.filter(el => el.title && el.description).map(el=>({title: el.title, description: el.description }))
                             if(createDevice.IsGetReadyToRequest()){
                                 await createDevice.giveSomeDataToServer(characteristic, taskInstance)
                             } else {
