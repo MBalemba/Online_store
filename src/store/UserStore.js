@@ -37,9 +37,11 @@ export default class UserStore {
 
     checkAutorize(){
         if(localStorage.getItem('token')){
-            check().then(() => {
+            return check().then(() => {
                 this.setIsAuth(true)
+                return Promise.resolve()
             } )
+                .catch(()=>Promise.resolve())
         }
     }
 
