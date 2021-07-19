@@ -10,6 +10,7 @@ export default class CreateDeviceStore {
         this._name = null
         this._price = null
         this._img = null
+        this._link = null
         this._characteristic = [
             {
                 nameProperty: '',
@@ -47,6 +48,10 @@ export default class CreateDeviceStore {
         this._img = file
     }
 
+    SetLink(link) {
+        this._link = link
+    }
+
 
     set() {
 
@@ -72,6 +77,10 @@ export default class CreateDeviceStore {
         return this._img
     }
 
+    get Link() {
+        return this._link
+    }
+
     deleteAll() {
         this._brand = null
         this._type = null
@@ -91,9 +100,9 @@ export default class CreateDeviceStore {
         data.append('type', this._type)
         data.append('name', this._name)
         data.append('price', this._price)
-        data.append('img', this._img, this._img.name)
+        data.append('imgFile', this._img, this._img.name)
         if (characteristic) {
-            data.append('characteristic', this._characteristic)
+            data.append('characteristic', JSON.stringify(characteristic))
         }
 
         giveDeviceServer(data)

@@ -39,7 +39,8 @@ const LoadImage = observer(({createDevice, onFileUpload}) => {
                                 variant="outline-secondary" id="button-addon2">
                             Применить
                         </Button>
-                        <Button onClick={() => setClick({click: false, isLoad: false})} disabled={!statusLinkLoad.click}
+                        <Button onClick={() => {
+                            setClick({click: false, isLoad: false}); createDevice.SetLink(null)}} disabled={!statusLinkLoad.click}
                                 style={{borderTopLeftRadius: 0, borderBottomLeftRadius: 0}} variant="outline-secondary"
                                 id="button-addon2">
                             изменить
@@ -50,6 +51,7 @@ const LoadImage = observer(({createDevice, onFileUpload}) => {
                         {statusLinkLoad.click &&
                         <Img  onLoad={(e) => {
                             setClick({click: true, isLoad: true})
+                            createDevice.SetLink(link)
                         }} onError={() => {
                             setTimeout(()=>{setClick({click: false, isLoad: false}); setLink('')}, 1000)
                         }} alt={'Изображение не смогло загрузиться из источника, повторите попытку'}  src={link}/>
