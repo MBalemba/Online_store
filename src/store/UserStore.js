@@ -40,8 +40,10 @@ export default class UserStore {
             return check().then(() => {
                 this.setIsAuth(true)
                 return Promise.resolve()
-            } )
-                .catch(()=>Promise.resolve())
+            }).finally(()=>{
+                    return Promise.resolve()})
+        } else {
+            return Promise.resolve()
         }
     }
 

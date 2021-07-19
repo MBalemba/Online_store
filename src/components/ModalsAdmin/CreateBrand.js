@@ -16,6 +16,7 @@ const CreateBrand = ({show, onHide}) => {
             onHide()
             setTypeSelected(null)
             setBrandSelected('')
+            device.setBrandInType()
         }).catch(()=>{
             taskInstance.createTask('Возникла какая-то ошибка', 'Danger')
         })

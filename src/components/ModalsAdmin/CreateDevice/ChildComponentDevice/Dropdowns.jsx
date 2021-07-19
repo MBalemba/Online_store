@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import {Dropdown} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
-import {Context} from "../../../index";
-import CreateDeviceStore from "../../../store/CreateDeviceStore";
+import {Context} from "../../../../index";
+import CreateDeviceStore from "../../../../store/CreateDeviceStore";
 
 
 
@@ -15,7 +15,11 @@ const Dropdowns = observer(({createDevice}) => {
                     <Dropdown.Menu style={{width: '100%'}}>
                         {device.BrandInType.map(type =>
                             <Dropdown.Item
-                                onClick={() => createDevice.setType(type.name)}
+                                onClick={() =>{if(type.name!==createDevice.Type){
+                                    createDevice.setType(type.name)
+                                    createDevice.setBrand(null)
+                                }
+                                }}
                                 key={type.name}>
                                 {type.name}
                             </Dropdown.Item>

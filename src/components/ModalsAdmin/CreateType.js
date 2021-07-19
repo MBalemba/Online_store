@@ -6,11 +6,12 @@ import {Context} from "../../index";
 
 const CreateType = observer(({show, onHide}) => {
     const [typeValue, setTypeValue] = useState('')
-    const {taskInstance} = useContext(Context)
+    const {taskInstance, device} = useContext(Context)
     function add() {
         postType(typeValue.trim()).then((r)=>{
             onHide()
             taskInstance.createTask('Тип добавлен', 'success')
+            device.setBrandInType()
         })
     }
 
