@@ -31,12 +31,14 @@ const Dropdowns = observer(({createDevice}) => {
                     <Dropdown  style={{width: '48%'}} className={"mt-2 mb-2"}>
                         <Dropdown.Toggle style={{width: '100%'}}>{createDevice.Brand || 'Выберете бренд'}></Dropdown.Toggle>
                         <Dropdown.Menu style={{width: '100%'}}>
-                            {device.BrandInType.filter(unit => unit.name === createDevice.Type).map(({brandDTOS}) => {
-                                    return brandDTOS.map(brand => <Dropdown.Item
-                                        onClick={() => createDevice.setBrand(brand.name)}
-                                        key={brand.id}>
-                                        {brand.name}
-                                    </Dropdown.Item>)
+                            {device.BrandInType.filter(unit => unit.name === createDevice.Type)[0].brandDTOS.map((el) => {
+                                console.log(device.BrandInType)
+
+                                    return  <Dropdown.Item
+                                        onClick={() => createDevice.setBrand(el.name)}
+                                        key={el.id}>
+                                        {el.name}
+                                    </Dropdown.Item>
                                 }
                             )}
                         </Dropdown.Menu>

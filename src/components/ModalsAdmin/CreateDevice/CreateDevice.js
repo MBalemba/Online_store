@@ -4,7 +4,7 @@ import {Context} from "../../../index";
 import {observer} from "mobx-react-lite";
 import Dropdowns from "./ChildComponentDevice/Dropdowns.jsx";
 import NameAndPriceInput from "./ChildComponentDevice/NameAndPriceInput.jsx";
-import LoadImage from "./ChildComponentDevice/LoadImage";
+import LoadImage from "./ChildComponentDevice/LoadImage/LoadImage";
 
 
 

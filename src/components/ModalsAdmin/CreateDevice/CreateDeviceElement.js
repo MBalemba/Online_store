@@ -16,7 +16,7 @@ export const DivImg = styled.div`
 
 export const Img = styled.img`
   margin: 0 auto;
-  display: block;
+  display: ${({disp} ) => disp ? 'block': 'none' };
   max-width: 100%;
   width: auto;
   height: 400px;

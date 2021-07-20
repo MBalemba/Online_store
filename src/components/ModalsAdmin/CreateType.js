@@ -11,8 +11,13 @@ const CreateType = observer(({show, onHide}) => {
         postType(typeValue.trim()).then((r)=>{
             onHide()
             taskInstance.createTask('Тип добавлен', 'success')
+            setTypeValue('')
             device.setBrandInType()
-        })
+        }). catch(
+            ()=>{
+                taskInstance.createTask('Ошибка, возможно такой тип уже существует', 'warning')
+            }
+        )
     }
 
     return (

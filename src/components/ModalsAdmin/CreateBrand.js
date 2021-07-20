@@ -12,10 +12,8 @@ const CreateBrand = ({show, onHide}) => {
 
     function sendToServer() {
         postBrand({name: brandSelected.trim(), type: typeSelected}).then(()=>{
-            taskInstance.createTask('Успешно добавлен бренд', 'success')
-            onHide()
-            setTypeSelected(null)
             setBrandSelected('')
+            taskInstance.createTask('Успешно добавлен бренд', 'success')
             device.setBrandInType()
         }).catch(()=>{
             taskInstance.createTask('Возникла какая-то ошибка', 'Danger')
@@ -41,6 +39,7 @@ const CreateBrand = ({show, onHide}) => {
                         {typeSelected ?
                             <Form.Control
                                 placeholder={'Введите название бренда'}
+                                value={brandSelected}
                                 onChange={(e)=> setBrandSelected(e.target.value)}
                             >
 

@@ -8,7 +8,7 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 
 
-const createDevice = new CreateDeviceStore()
+export const createDevice = new CreateDeviceStore()
 
 
 const Admin = observer(() => {
