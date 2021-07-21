@@ -105,6 +105,7 @@ export default class DeviceStore {
     }
 
     get BrandInType() {
+        console.log(this._brandInType[0].name)
         return this._brandInType
     }
 

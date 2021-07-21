@@ -6,6 +6,7 @@ import CreateDevice from "../components/ModalsAdmin/CreateDevice/CreateDevice";
 import CreateDeviceStore from "../store/CreateDeviceStore";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
+import { toJS } from 'mobx'
 
 
 export const createDevice = new CreateDeviceStore()
@@ -22,6 +23,8 @@ const Admin = observer(() => {
             device.setBrandInType()
         }
     , [])
+
+    console.log((device.BrandInType))
 
     return (
         <Container className={'d-flex flex-column align-items-start mt-5'}>

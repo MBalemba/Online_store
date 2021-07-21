@@ -8,10 +8,10 @@ import {SHOP_ROUTE} from "../../utils/consts";
 const TypeBar = observer(() => {
     const history = useHistory();
     const {device} = useContext(Context)
-
+    console.log(device?.BrandInType)
     return (
         <ListGroup >
-            {device.BrandInType.map(type =>
+            {device?.BrandInType?.map(type =>
                 <NavLink key={type.name} to={SHOP_ROUTE+'/'+type.name}>
                     <ListGroup.Item
                         onClick={()=>device.setSelectedType(type.name)}

@@ -5,7 +5,6 @@ import BrandBar from "../components/Shop/BrandBar";
 import DeviceList from "../components/Shop/DeviceList/DeviceList";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
-import {getTypeBrand} from "../http/UserApi";
 
 
 
@@ -13,16 +12,12 @@ import {getTypeBrand} from "../http/UserApi";
 const Shop = observer(() => {
     const {device, user} = useContext(Context)
     console.log(user.isAuth)
-    useEffect(
-        async ()=>{
-            try {
-                let response = await getTypeBrand()
-                console.log(response)
-            } catch (e) {
-                console.log(e)
-            }
+
+    useEffect(()=>{
+            device.setBrandInType()
         }
-    )
+        , [])
+
     return (
         <Container className={'mt-2'}>
             <Row>

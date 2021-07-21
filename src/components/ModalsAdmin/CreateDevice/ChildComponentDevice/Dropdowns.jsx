@@ -8,6 +8,8 @@ import CreateDeviceStore from "../../../../store/CreateDeviceStore";
 
 const Dropdowns = observer(({createDevice}) => {
     const {device} = useContext(Context)
+
+    console.log(device.BrandInType)
     return (
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                 <Dropdown  style={{width: '48%'}} className={"mt-2 mb-2 "}>

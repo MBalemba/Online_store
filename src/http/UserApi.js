@@ -16,8 +16,13 @@ export const check = async () => {
     return response
 }
 
-export const getTypeBrand = async () =>{
+export const getTypeBrand = async () => {
     const response = await $host.get('type/getAll')
+    return response
+}
+
+export const getDevices = async () => {
+    const response = await $authHost.get('device/getByParams?type=Холодильники&brand=Lg,dfg sdafsdSamsung&page=3')
     return response
 }
 
