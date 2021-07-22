@@ -11,7 +11,6 @@ import {Context} from "../index";
 
 const Shop = observer(() => {
     const {device, user} = useContext(Context)
-    console.log(user.isAuth)
 
     useEffect(()=>{
             device.setBrandInType()

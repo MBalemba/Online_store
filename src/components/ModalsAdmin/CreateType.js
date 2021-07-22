@@ -20,6 +20,7 @@ const CreateType = observer(({show, onHide}) => {
         )
     }
 
+
     return (
         <div>
             <Modal

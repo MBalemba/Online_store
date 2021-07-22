@@ -4,11 +4,14 @@ import {Context} from "../../index";
 import {ListGroup, ListGroupItem} from "react-bootstrap";
 import {NavLink, useHistory} from 'react-router-dom'
 import {SHOP_ROUTE} from "../../utils/consts";
+import {toJS} from "mobx";
 
 const TypeBar = observer(() => {
     const history = useHistory();
     const {device} = useContext(Context)
-    console.log(device?.BrandInType)
+
+    console.log((device.BrandInType))
+
     return (
         <ListGroup >
             {device?.BrandInType?.map(type =>

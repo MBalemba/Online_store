@@ -1,47 +1,12 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, toJS} from "mobx";
 import {getTypeBrand} from "../http/UserApi";
+
+
 
 export default class DeviceStore {
     constructor() {
 
-        this._brandInType = [
-            {
-                name: 'Холодильник',
-                brandDTOS: [
-                    'Samsung',
-                    'Apple',
-                    'Asus',
-                ]
-            },
-            {
-                name: 'Смартфон',
-                brandDTOS: [
-                    'Samsung',
-                    'Apple',
-                    'Asus',
-                    'Lenovo',
-                ]
-            },
-            {
-                name: 'Ноутбуки',
-                brandDTOS: [
-                    'Samsung',
-                    'Apple',
-                    'Asus',
-                    'Lenovo',
-                ]
-            },
-            {
-                name: 'Телевизоры',
-                brandDTOS: [
-                    'Samsung',
-                    'Apple',
-                    'Asus',
-                    'Lenovo',
-                ]
-            }
-
-        ]
+        this._brandInType = []
 
         this._types = [
             {id: 1, name: 'Холодильник'},
@@ -79,7 +44,6 @@ export default class DeviceStore {
 
     setBrandInType(types) {
         getTypeBrand().then((r)=>{
-            console.log(r.data)
             this._brandInType = r.data
         })
     }
@@ -105,8 +69,7 @@ export default class DeviceStore {
     }
 
     get BrandInType() {
-        console.log(this._brandInType[0].name)
-        return this._brandInType
+        return toJS(this._brandInType)
     }
 
     get Devices() {

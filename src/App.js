@@ -11,6 +11,7 @@ import {ClimbingBoxLoader, PuffLoader} from "react-spinners";
 const App = observer(function () {
     const {user} = useContext(Context)
     const [loader, setLoader] = useState(true)
+
     useEffect(()=>{
         user.checkAutorize()
             .then(()=>{

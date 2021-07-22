@@ -24,7 +24,7 @@ const Admin = observer(() => {
         }
     , [])
 
-    console.log((device.BrandInType))
+    console.log({...device.BrandInType})
 
     return (
         <Container className={'d-flex flex-column align-items-start mt-5'}>

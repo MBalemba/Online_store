@@ -5,9 +5,11 @@ import App from './App';
 import UserStore from "./store/UserStore";
 import DeviceStore from "./store/DeviceStore";
 import TaskStore from "./store/Tasks";
-export const Context = createContext(null)
 
+export const Context = createContext(null)
 console.log(process.env.REACT_APP_API_URL)
+
+
 
 ReactDOM.render(
     <React.StrictMode>
