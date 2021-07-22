@@ -13,6 +13,16 @@ const LoadImage = observer(({createDevice, onFileUpload}) => {
             <Tabs
                 defaultActiveKey={"Загрузить ссылку"}
                 className="mb-3"
+                onClick = {(e)=>{
+                    if(e.target.tagName === 'A'){
+                        const tabActive  = e.target
+                        if(tabActive.innerHTML==='Загрузить ссылку'){
+                            createDevice.setImg(null)
+                        } else if('Загрузить изображение'){
+                            createDevice.setLink(null)
+                        }
+                    }
+                }}
             >
 
                 <Tab eventKey="Загрузить ссылку" title="Загрузить ссылку">

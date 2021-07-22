@@ -48,7 +48,7 @@ export default class CreateDeviceStore {
         this._img = file
     }
 
-    SetLink(link) {
+    setLink(link) {
         this._link = link
     }
 
@@ -91,7 +91,7 @@ export default class CreateDeviceStore {
     }
 
     IsGetReadyToRequest() {
-        return this._brand && this._type && this._name && this._price && this._img
+        return this._brand && this._type && this._name && this._price && (this._img || this._link)
     }
 
     giveSomeDataToServer(characteristic, taskStore) {
@@ -100,7 +100,13 @@ export default class CreateDeviceStore {
         data.append('type', this._type)
         data.append('name', this._name)
         data.append('price', this._price)
-        data.append('imgFile', this._img, this._img.name)
+        if(this._img){
+            data.append('imgFile', this._img, this._img.name)
+        }
+        if(this._link){
+            data.append('imgRef', this._link)
+        }
+
         if (characteristic) {
             data.append('characteristic', JSON.stringify(characteristic))
         }
