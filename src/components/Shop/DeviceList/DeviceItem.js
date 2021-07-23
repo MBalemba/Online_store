@@ -9,8 +9,11 @@ const DeviceItem = ({device}) => {
 
     return (
         <Col className={'mt-3'} md={3} onClick={() => history.push(DEVICE_ROUTE +'/'+ device.id)}>
+
             <Card style={{width: 150, cursor: 'pointer'}} border={'light'}>
+
                 <Image src={device.img} width={150} height={150}/>
+
                 <div className={'text-black-50 d-flex justify-content-between mt-2'}>
                     <div>Samsung...</div>
                     <div className={'d-flex align-items-center justify-content-between'}>
@@ -18,8 +21,10 @@ const DeviceItem = ({device}) => {
                         <Image src={star}/>
                     </div>
                 </div>
+
                 <div>{device.name}</div>
             </Card>
+
         </Col>
     );
 };

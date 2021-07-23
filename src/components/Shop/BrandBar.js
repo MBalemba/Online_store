@@ -15,10 +15,13 @@ const BrandBar = observer(() => {
     console.log('type from params: ', typeUrl , brands )
 
 
-    const clickCard = (brand, id) => {
-        device.setSelectedBrand(id);
-        history.push(location.pathname + '?brand=' + brand)
+    const clickCard = (nameBrand) => {
+        device.setSelectedBrands(nameBrand, Boolean(!device.SelectedBrands[nameBrand]));
     }
+
+    useEffect(()=>{
+            device.cleanSelectedBrands()
+    }, [typeUrl])
 
 
     if(!typeUrl){
@@ -33,8 +36,8 @@ const BrandBar = observer(() => {
                <BarLoader />
             :
                 brands.map(brand =>
-                    <Card onClick={clickCard.bind(null, brand.name, brand.id)} key={brand.id} className={'p-3'}
-                          border={brand.id === device.SelectedBrand ? 'danger' : 'light'}
+                    <Card onClick={clickCard.bind(null, brand.name)} key={brand.id} className={'p-3'}
+                          border={Boolean(device.SelectedBrands[brand.name]) ? 'danger' : 'light'}
                           style={{cursor: 'pointer'}}
                     >
                         {brand.name}
