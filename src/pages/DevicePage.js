@@ -1,25 +1,29 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import bigStar from '../assets/starBig.svg'
-const DevicePage = () => {
-    const device = {id: 1, name: 'Iphone 12 pro', price: 25000 , rating: 5, img: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-12-pro-blue-hero?wid=940&hei=1112&fmt=png-alpha&.v=1604021661000https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-12-pro-blue-hero?wid=940&hei=1112&fmt=png-alpha&.v=1604021661000'}
-    const description = [
-        {id: 1, title: 'Оперативная память', description: '5 гб'},
-        {id: 1, title: 'Оперативная память', description: '5 гб'},
-        {id: 1, title: 'Оперативная память', description: '5 гб'},
-        {id: 1, title: 'Оперативная память', description: '5 гб'},
-        {id: 1, title: 'Оперативная память', description: '5 гб'},
-        {id: 1, title: 'Оперативная память', description: '5 гб'},
-    ]
+import {observer} from "mobx-react-lite";
+import {Context} from "../index";
+import {useParams} from "react-router-dom";
+import {toJS} from "mobx";
+const DevicePage = observer(() => {
+    const {device} = useContext(Context)
+    const {id} = useParams()
+    const oneDevice = device.Devices.find((el)=>{
+        if(el.id == id){
+        return true
+        } else return false
+    })
+    console.log('Device:', toJS(device.Devices), oneDevice)
+    const description = oneDevice.deviceInfosDTO
     return (
         <Container className={'mt-3'}>
             <Row>
                 <Col md={4}>
-                    <Image width={300} height={300} src={device.img}/>
+                    <Image style={{objectFit: ' contain',}} width={300} height={300} src={!oneDevice.isName ? oneDevice.pathFile :(process.env.REACT_APP_API_URL+'takeImage/'+ oneDevice.pathFile) }/>
                 </Col>
                 <Col md={4}>
                     <Row className={'d-flex flex-column align-items-center'}>
-                        <h2>{device.name}</h2>
+                        <h2>{oneDevice.name}</h2>
                         <div className={'d-flex align-items-center justify-content-center'}
                              style={{
                                  background: `url(${bigStar}) no-repeat center center`,
@@ -30,9 +34,10 @@ const DevicePage = () => {
                              }}
                         >
 
-                            {device.rating}
+                            {oneDevice.ratings}
                         </div>
                     </Row>
+
                 </Col>
                 <Col md={4}>
                     <Card className={'d-flex flex-column align-items-center justify-content-around'}
@@ -54,6 +59,6 @@ const DevicePage = () => {
             </Row>
         </Container>
     );
-};
+});
 
 export default DevicePage;
