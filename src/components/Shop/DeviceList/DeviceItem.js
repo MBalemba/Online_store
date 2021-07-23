@@ -12,12 +12,12 @@ const DeviceItem = ({device}) => {
 
             <Card style={{width: 150, cursor: 'pointer'}} border={'light'}>
 
-                <Image src={device.img} width={150} height={150}/>
+                <Image style={{objectFit: ' contain',}} src={!device.isName? device.pathFile : (process.env.REACT_APP_API_URL+'takeImage/'+ device.pathFile) } width={150} height={150}/>
 
                 <div className={'text-black-50 d-flex justify-content-between mt-2'}>
-                    <div>Samsung...</div>
+                    <div>{device.brandName}...</div>
                     <div className={'d-flex align-items-center justify-content-between'}>
-                        <div>{device.rating}</div>
+                        <div>{device.ratings}</div>
                         <Image src={star}/>
                     </div>
                 </div>

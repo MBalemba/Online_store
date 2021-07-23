@@ -21,8 +21,8 @@ export const getTypeBrand = async () => {
     return response
 }
 
-export const getDevices = async () => {
-    const response = await $authHost.get('device/getByParams?type=Холодильники&brand=Lg,dfg sdafsdSamsung&page=3')
+export const getDevices = async (query) => {
+    const response = await $authHost.get('device/getByParams'+ query)
     return response
 }
 
