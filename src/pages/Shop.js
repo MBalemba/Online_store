@@ -5,6 +5,7 @@ import BrandBar from "../components/Shop/BrandBar";
 import DeviceList from "../components/Shop/DeviceList/DeviceList";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
+import MyPagination from "../components/Shop/Pagination";
 
 
 
@@ -26,6 +27,7 @@ const Shop = observer(() => {
                 <Col md={9}>
                     <BrandBar />
                     <DeviceList />
+                    <MyPagination />
                 </Col>
             </Row>
         </Container>
