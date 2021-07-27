@@ -30,13 +30,25 @@ export default class DeviceStore {
     setQueryString(type, getReadyQueryFromUri = ''){
 
         if(getReadyQueryFromUri!==''){
-            const regexp = new RegExp("page=*\d");
-            let pageNumber = getReadyQueryFromUri.match(regexp)
+            const regexpPage = /page=(%20)*\d+/
+            const regexpBrand = /brand=((%20)*\w+,?)*/
+            let pageQuery = getReadyQueryFromUri.match(regexpPage)? getReadyQueryFromUri.match(regexpPage)[0]: ''
+            let brandQuery = getReadyQueryFromUri.match(regexpBrand)? getReadyQueryFromUri.match(regexpBrand)[0]: ''
 
-            console.log(pageNumber)
+            if(pageQuery){
+                pageQuery = '&' + pageQuery.replace(/%20/g,'')
+                debugger
+                let pageN = pageQuery.match(/\d+/)[0]
+                this._currentPage =  pageQuery.match(/\d+/)[0]
+            }
 
+            if(brandQuery){
+                brandQuery ='&'+ brandQuery.replace(/%20/g,'')
+            }
 
-            this._queryString = `${getReadyQueryFromUri.slice(1)}`
+            console.log('brandQuery&pageQuery: ' + `${brandQuery+pageQuery}` )
+            this._queryString = `${brandQuery+pageQuery}`
+
         } else {
             let brands = '&brand = '
 
@@ -57,10 +69,6 @@ export default class DeviceStore {
             }
 
 
-
-
-
-            console.log('_queryString',this._queryString)
 
             
         }
@@ -124,6 +132,10 @@ export default class DeviceStore {
 
     get CurrentPage (){
         return this._currentPage
+    }
+
+    get QueryString (){
+        return this._queryString
     }
 
     get arrOfPage(){

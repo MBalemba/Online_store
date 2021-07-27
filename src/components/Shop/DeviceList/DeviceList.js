@@ -19,7 +19,7 @@ const DeviceList = observer(() => {
             device.setQueryString(typeUrl, search)
             device.setDevices(typeUrl).then(
                 ()=>{
-                    device.toggleStatusLoadDevices(false)
+                    setTimeout(()=>{device.toggleStatusLoadDevices(false)}, 1000)
                 }
 
             ).catch(
@@ -28,16 +28,10 @@ const DeviceList = observer(() => {
                 }
             )
         }
-    }, [search])
+    }, [search, typeUrl])
 
 
-    useEffect(()=>{
-        console.log('change')
-        if(device.CurrentPage === 1){
 
-        }
-
-    }, [device.CurrentPage])
 
     return (<>
 

@@ -21,12 +21,15 @@ const Shop = observer(() => {
     return (
         <Container className={'mt-2'}>
             <Row>
+
                 <Col md={3}>
                     <TypeBar/>
                 </Col>
                 <Col md={9}>
                     <BrandBar />
                     <DeviceList />
+                </Col>
+                <Col md={12}>
                     <MyPagination />
                 </Col>
             </Row>
