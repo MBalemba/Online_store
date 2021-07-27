@@ -13,20 +13,28 @@ const DeviceList = observer(() => {
     const {search} = useLocation();
     console.log('search: ', search)
 
+
+    useEffect(()=>{
+        device.setCurrentPage(1)
+    },[typeUrl])
+
     useEffect(()=>{
         if(typeUrl){
             device.toggleStatusLoadDevices(true)
             device.setQueryString(typeUrl, search)
             device.setDevices(typeUrl).then(
                 ()=>{
-                    setTimeout(()=>{device.toggleStatusLoadDevices(false)}, 1000)
                 }
 
             ).catch(
                 (r)=>{
-
+                    device.cleanSelectedBrands()
+                    device.setCurrentPage(1)
+                    history.push(`/home/${typeUrl}`)
                 }
-            )
+            ).finally(()=>{
+                setTimeout(()=>{device.toggleStatusLoadDevices(false)}, 1000)
+            })
         }
     }, [search, typeUrl])
 
@@ -50,7 +58,6 @@ const DeviceList = observer(() => {
                             )
                     }
             </Row>}
-
         </>
     );
 })

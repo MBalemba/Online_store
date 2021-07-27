@@ -7,7 +7,7 @@ export default class DeviceStore {
 
         this._brandInType = []
         this._devices = []
-        this._isLoadDevices = false
+        this._isLoadDevices = true
         this._queryString = ''
 
         this._selectedBrands = {}
@@ -15,7 +15,7 @@ export default class DeviceStore {
         this._amountOfAllDevices = 0
         this._pageCount = 1
         this._currentPage = 1
-        this._limitPage = 1
+        this._limitPage = 4
 
         makeAutoObservable(this)
     }
@@ -30,19 +30,30 @@ export default class DeviceStore {
     setQueryString(type, getReadyQueryFromUri = ''){
 
         if(getReadyQueryFromUri!==''){
-            const regexpPage = /page=(%20)*\d+/
-            const regexpBrand = /brand=((%20)*\w+,?)*/
+            const regexpPage = /page\s*(%20)*=\s*(%20)*\d+/
+            const regexpBrand = /brand\s*(%20)*=(\s*(%20)*\w*,?)*/
             let pageQuery = getReadyQueryFromUri.match(regexpPage)? getReadyQueryFromUri.match(regexpPage)[0]: ''
             let brandQuery = getReadyQueryFromUri.match(regexpBrand)? getReadyQueryFromUri.match(regexpBrand)[0]: ''
 
             if(pageQuery){
                 pageQuery = '&' + pageQuery.replace(/%20/g,'')
-                debugger
+
                 let pageN = pageQuery.match(/\d+/)[0]
                 this._currentPage =  pageQuery.match(/\d+/)[0]
             }
 
             if(brandQuery){
+                debugger
+                let selectedBrands = {}
+                let copyBrandQuery = brandQuery
+                let arrOfBrands =  copyBrandQuery.replace(/(%20)/g,'').replace(/\s/g, '').replace(/brand=/g,'')
+                arrOfBrands = arrOfBrands.match(/\w+/g)
+                for(let k of arrOfBrands){
+                    selectedBrands[k] = true
+                }
+
+                console.log('selectedBrands',selectedBrands)
+                this._selectedBrands = {...selectedBrands}
                 brandQuery ='&'+ brandQuery.replace(/%20/g,'')
             }
 
@@ -50,7 +61,7 @@ export default class DeviceStore {
             this._queryString = `${brandQuery+pageQuery}`
 
         } else {
-            let brands = '&brand = '
+            let brands = '&brand='
 
             for (let i in this._selectedBrands){
                 if(this._selectedBrands[i]){
@@ -58,7 +69,7 @@ export default class DeviceStore {
                 }
             }
 
-            if(brands === '&brand = ') {
+            if(brands === '&brand=') {
                 brands = ''
             }
 
@@ -68,9 +79,6 @@ export default class DeviceStore {
                 this._queryString = `${brands}`
             }
 
-
-
-            
         }
 
     }
@@ -93,6 +101,7 @@ export default class DeviceStore {
 
 
     setSelectedBrands(name, bool) {
+
         this._selectedBrands[name] = bool
     }
 

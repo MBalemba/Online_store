@@ -22,6 +22,7 @@ export const getTypeBrand = async () => {
 }
 
 export const getDevices = async (query) => {
+    console.log('query', query)
     const response = await $authHost.get('device/getByParams'+ query)
     return response
 }

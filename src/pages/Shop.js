@@ -15,6 +15,9 @@ const Shop = observer(() => {
 
     useEffect(()=>{
             device.setBrandInType()
+            return ()=>{
+                device.toggleStatusLoadDevices(true)
+            }
         }
         , [])
 
