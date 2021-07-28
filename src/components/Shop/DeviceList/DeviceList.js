@@ -21,7 +21,7 @@ const DeviceList = observer(() => {
     useEffect(()=>{
         if(typeUrl){
             device.toggleStatusLoadDevices(true)
-            device.setQueryString(typeUrl, search)
+            device.setPropertyFromUri(search)
             device.setDevices(typeUrl).then(
                 ()=>{
                 }
@@ -30,7 +30,7 @@ const DeviceList = observer(() => {
                 (r)=>{
                     device.cleanSelectedBrands()
                     device.setCurrentPage(1)
-                    history.push(`/home/${typeUrl}`)
+                    history.push(`/home`)
                 }
             ).finally(()=>{
                 setTimeout(()=>{device.toggleStatusLoadDevices(false)}, 1000)

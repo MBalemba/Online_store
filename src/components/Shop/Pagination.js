@@ -22,8 +22,7 @@ const MyPagination = observer(() => {
 
     function clickPaginateItem(itemNumber){
         device.setCurrentPage(itemNumber)
-        device.setQueryString(typeUrl)
-        history.push(`/home/${typeUrl}?${device.QueryString}`)
+        history.push(`/home/${typeUrl}?${device.createStrParamsForRequest()}`)
     }
 
     return (

@@ -8,7 +8,7 @@ const DeviceItem = ({device}) => {
     const history = useHistory()
 
     return (
-        <Col className={'mt-3'} md={3} onClick={() => history.push('/device/'+device.id)}>
+        <Col className={'mt-3'} md={4} onClick={() => history.push('/device/'+device.id)}>
 
             <Card style={{width: 150, cursor: 'pointer'}} border={'light'}>
 

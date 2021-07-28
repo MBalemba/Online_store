@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import TypeBar from "../components/Shop/TypeBar";
-import BrandBar from "../components/Shop/BrandBar";
+import SettingsBar from "../components/Shop/SettingsBar";
 import DeviceList from "../components/Shop/DeviceList/DeviceList";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
@@ -29,7 +29,7 @@ const Shop = observer(() => {
                     <TypeBar/>
                 </Col>
                 <Col md={9}>
-                    <BrandBar />
+                    <SettingsBar />
                     <DeviceList />
                 </Col>
                 <Col md={12}>

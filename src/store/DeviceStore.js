@@ -7,7 +7,7 @@ export default class DeviceStore {
 
         this._brandInType = []
         this._devices = []
-        this._isLoadDevices = true
+        this._isLoadDevices = false
         this._queryString = ''
 
         this._selectedBrands = {}
@@ -15,7 +15,7 @@ export default class DeviceStore {
         this._amountOfAllDevices = 0
         this._pageCount = 1
         this._currentPage = 1
-        this._limitPage = 4
+        this._limitPage = 6
 
         makeAutoObservable(this)
     }
@@ -27,7 +27,7 @@ export default class DeviceStore {
         })
     }
 
-    setQueryString(type, getReadyQueryFromUri = ''){
+    setPropertyFromUri(getReadyQueryFromUri = ''){
 
         if(getReadyQueryFromUri!==''){
             const regexpPage = /page\s*(%20)*=\s*(%20)*\d+/
@@ -37,13 +37,10 @@ export default class DeviceStore {
 
             if(pageQuery){
                 pageQuery = '&' + pageQuery.replace(/%20/g,'')
-
-                let pageN = pageQuery.match(/\d+/)[0]
                 this._currentPage =  pageQuery.match(/\d+/)[0]
             }
 
             if(brandQuery){
-                debugger
                 let selectedBrands = {}
                 let copyBrandQuery = brandQuery
                 let arrOfBrands =  copyBrandQuery.replace(/(%20)/g,'').replace(/\s/g, '').replace(/brand=/g,'')
@@ -51,42 +48,46 @@ export default class DeviceStore {
                 for(let k of arrOfBrands){
                     selectedBrands[k] = true
                 }
-
                 console.log('selectedBrands',selectedBrands)
                 this._selectedBrands = {...selectedBrands}
                 brandQuery ='&'+ brandQuery.replace(/%20/g,'')
             }
 
-            console.log('brandQuery&pageQuery: ' + `${brandQuery+pageQuery}` )
-            this._queryString = `${brandQuery+pageQuery}`
+            // console.log('brandQuery&pageQuery: ' + `${brandQuery+pageQuery}` )
+            // this._queryString = `${brandQuery+pageQuery}`
 
         } else {
-            let brands = '&brand='
-
-            for (let i in this._selectedBrands){
-                if(this._selectedBrands[i]){
-                    brands += (i +',')
-                }
-            }
-
-            if(brands === '&brand=') {
-                brands = ''
-            }
-
-            if(this._currentPage !== 1){
-                this._queryString = `${brands}&page=${this._currentPage}`
-            } else {
-                this._queryString = `${brands}`
-            }
-
+            this._selectedBrands = {}
+            this._currentPage = 1
         }
 
+
+    }
+
+    createStrParamsForRequest(){
+        let brands = '&brand='
+
+        for (let i in this._selectedBrands){
+            if(this._selectedBrands[i]){
+                brands += (i +',')
+            }
+        }
+
+        if(brands === '&brand=') {
+            brands = ''
+        }
+
+        if(this._currentPage !== 1){
+            return `${brands}&page=${this._currentPage}`
+        } else {
+            return `${brands}`
+        }
     }
 
 
 
     setDevices(type) {
-            return getDevices(`?type=${type}&limit=${this._limitPage}${this._queryString}`).then(
+            return getDevices(`?type=${type}&limit=${this._limitPage}${this.createStrParamsForRequest()}`).then(
                 (r)=>{
                     console.log('devices', r.data)
                     this._devices = r.data.listDTO
@@ -100,9 +101,8 @@ export default class DeviceStore {
     }
 
 
-    setSelectedBrands(name, bool) {
-
-        this._selectedBrands[name] = bool
+    setSelectedBrands(obj) {
+        this._selectedBrands = obj
     }
 
     toggleStatusLoadDevices (bool) {
