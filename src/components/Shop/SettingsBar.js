@@ -16,8 +16,6 @@ const SettingsBar = observer(() => {
     const [selectedBrands, setSelectedBrands] = useState(device.SelectedBrands)
 
 
-
-
     const clickCard = (nameBrand) => {
         // device.setSelectedBrands(nameBrand, Boolean(!device.SelectedBrands[nameBrand]));
         setSelectedBrands({...selectedBrands, [nameBrand]: selectedBrands[nameBrand] ? false : true})
@@ -40,6 +38,8 @@ const SettingsBar = observer(() => {
 
     return (
         <Container className={'mt-3 mb-3'}>
+
+            {typeUrl &&
             <Row>
                 <Button onClick={MenuVisible} variant={'outline-primary'}>
                     <p>
@@ -48,6 +48,7 @@ const SettingsBar = observer(() => {
                     </p>
                 </Button>
             </Row>
+            }
 
 
             {isOpenMenu
@@ -65,8 +66,8 @@ const SettingsBar = observer(() => {
                                     <Card onClick={clickCard.bind(null, brand.name)} className={'p-3'}
                                           border={
                                               Boolean(selectedBrands[brand.name])
-                                              ? 'primary'
-                                              : 'light'
+                                                  ? 'primary'
+                                                  : 'light'
                                           }
                                           style={{cursor: 'pointer', margin: '0.5rem'}}
                                     >

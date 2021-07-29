@@ -35,6 +35,8 @@ const DeviceList = observer(() => {
             ).finally(()=>{
                 setTimeout(()=>{device.toggleStatusLoadDevices(false)}, 1000)
             })
+        } else {
+            device.returnToInitialState()
         }
     }, [search, typeUrl])
 

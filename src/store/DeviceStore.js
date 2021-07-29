@@ -15,7 +15,7 @@ export default class DeviceStore {
         this._amountOfAllDevices = 0
         this._pageCount = 1
         this._currentPage = 1
-        this._limitPage = 6
+        this._limitPage = 12
 
         makeAutoObservable(this)
     }
@@ -82,6 +82,20 @@ export default class DeviceStore {
         } else {
             return `${brands}`
         }
+    }
+
+    returnToInitialState(){
+        this._brandInType = []
+        this._devices = []
+        this._isLoadDevices = false
+        this._queryString = ''
+
+        this._selectedBrands = {}
+
+        this._amountOfAllDevices = 0
+        this._pageCount = 1
+        this._currentPage = 1
+        this._limitPage = 12
     }
 
 
