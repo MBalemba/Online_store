@@ -1,9 +1,19 @@
 import {$authHost, $host} from "./index";
 
 export const registration = async (email, password) => {
+
     console.log(process.env.REACT_APP_API_URL)
-    const response = await $host.post('user/registration', {email, password, role: 'ADMIN'})
-    return response
+
+    try {
+        const response = await $host.post('user/registration', {email, password, role: 'ADMIN'})
+        return response?.data?.info
+    } catch (err){
+        debugger
+        console.log(err)
+        return 'ошибка'
+    }
+
+
 }
 
 export const login = async (email, password) => {

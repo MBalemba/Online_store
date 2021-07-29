@@ -8,7 +8,7 @@ import {observer} from "mobx-react-lite";
 import {useHistory} from 'react-router-dom'
 
 const NavBar = observer(() => {
-    const {user} = useContext(Context)
+    const {user, device} = useContext(Context)
     const history = useHistory();
     const acountOut = () => {
         user.Out()
@@ -18,7 +18,7 @@ const NavBar = observer(() => {
 
         <Navbar bg="dark" variant="dark">
             <Container>
-                <Nav to={SHOP_ROUTE}>КупиДевайс</Nav>
+                <Nav onClick={()=>{device.cleanSelectedBrands()}} to={SHOP_ROUTE}>КупиДевайс</Nav>
 
                 {user._isAuth ? <NavB className="ml-auto" style={{color: 'white'}}>
                     <Button onClick={() => (history.push(ADMIN_ROUTE))} variant={'outline-light'}>Админ панель</Button>

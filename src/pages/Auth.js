@@ -26,7 +26,7 @@ const Auth = observer(() => {
                 })
         } else{
             const response = await registration(email, password)
-            console.log(response)
+            taskInstance.createTask(response, 'Successful')
         }
     }
 
