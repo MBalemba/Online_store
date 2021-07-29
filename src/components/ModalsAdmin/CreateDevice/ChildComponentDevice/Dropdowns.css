@@ -1,0 +1,28 @@
+.typeDropdown{
+
+}
+
+.typeDropdown.entering{
+    animation: appearDropdowns 1s;
+}
+.typeDropdown.entered{
+
+}
+.typeDropdown.exiting{
+
+}
+.typeDropdown.exited{
+
+}
+
+
+@keyframes appearDropdowns {
+    0%{
+        opacity: 0;
+    }
+
+
+    100%{
+        opacity: 100%;
+    }
+}

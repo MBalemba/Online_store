@@ -1,19 +1,23 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Dropdown} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../../index";
 import CreateDeviceStore from "../../../../store/CreateDeviceStore";
+import {CSSTransition} from "react-transition-group";
+import './Dropdowns.css'
+import {createDevice} from "../../../../pages/Admin";
 
 
-
-const Dropdowns = observer(({createDevice}) => {
+const Dropdowns = observer(() => {
     const {device} = useContext(Context)
+    useEffect(()=>{
 
-    console.log(device.BrandInType)
+    }, [createDevice.Brand])
+
     return (
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                 <Dropdown  style={{width: '48%'}} className={"mt-2 mb-2 "}>
-                    <Dropdown.Toggle style={{width: '100%'}}>{createDevice.Type || 'Выберете тип'}></Dropdown.Toggle>
+                    <Dropdown.Toggle style={{width: '100%'}}>{createDevice.Type || 'Выберете тип>'}</Dropdown.Toggle>
                     <Dropdown.Menu style={{width: '100%'}}>
                         {device.BrandInType.map(type =>
                             <Dropdown.Item
@@ -29,13 +33,18 @@ const Dropdowns = observer(({createDevice}) => {
                     </Dropdown.Menu>
                 </Dropdown>
 
-                {createDevice.Type ?
-                    <Dropdown  style={{width: '48%'}} className={"mt-2 mb-2"}>
-                        <Dropdown.Toggle style={{width: '100%'}}>{createDevice.Brand || 'Выберете бренд'}></Dropdown.Toggle>
+
+
+                <CSSTransition
+                    in={Boolean(createDevice.Type)}
+                    timeout={1000}
+                    mountOnEnter={true}
+                    unmountOnExit={true}
+                >
+                    {state => <Dropdown style={{width: '48%'}} className={`mt-2 mb-2 typeDropdown ${state}`}>
+                        <Dropdown.Toggle style={{width: '100%'}}>{createDevice.Brand || 'Выберете бренд>'}</Dropdown.Toggle>
                         <Dropdown.Menu style={{width: '100%'}}>
                             {device.BrandInType.filter(unit => unit.name === createDevice.Type)[0].brandDTOS.map((el) => {
-                                console.log(device.BrandInType)
-
                                     return  <Dropdown.Item
                                         onClick={() => createDevice.setBrand(el.name)}
                                         key={el.id}>
@@ -45,6 +54,13 @@ const Dropdowns = observer(({createDevice}) => {
                             )}
                         </Dropdown.Menu>
                     </Dropdown>
+
+                    }
+
+                </CSSTransition>
+
+                {createDevice.Type ?
+                    ''
                     :
                     ''
                 }

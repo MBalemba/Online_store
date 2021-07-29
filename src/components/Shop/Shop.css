@@ -14,3 +14,54 @@
 
 .listGroup{
 }
+
+
+.settingsBlock{
+
+}
+
+.settingsAppear{
+    opacity: 0;
+    border: 1px solid #e2e3e5;
+    padding: 2rem;
+    border-radius: 0.3rem;
+}
+
+.settingsAppear.entering{
+    animation: settingsAppear 0.5s;
+}
+.settingsAppear.entered{
+    opacity: 1;
+}
+.settingsAppear.exited{
+}
+
+.settingsAppear.exiting{
+    animation: settingsVanish 0.5s;
+}
+
+@keyframes settingsAppear {
+    0%{
+        opacity: 0;
+        margin-bottom: -200px;
+    }
+
+    100%{
+        opacity: 100%;
+        margin-bottom: 0px;
+    }
+}
+
+@keyframes settingsVanish{
+    0%{
+        margin-bottom: 0px;
+        opacity: 100%;
+    }
+
+    100%{
+        margin-bottom: -200px;
+        opacity:  0%;
+    }
+}
+
+

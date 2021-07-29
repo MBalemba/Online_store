@@ -27,7 +27,7 @@ const MyPagination = observer(() => {
 
     return (
 
-        <Row className={'d-flex justify-content-center mt-3 Pagination'}>
+        <Row className={'d-flex justify-content-center mt-4 mb-4 Pagination'}>
             <Pagination>
                 {device.PageCount < 9
                     ?

@@ -1,11 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../index";
-import {Accordion, Button, Card, Col, Container, Row} from "react-bootstrap";
+import {Accordion, Button, Card, Col, Container, Dropdown, Row} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
 import {useHistory, useLocation, useParams} from "react-router-dom";
 import {SHOP_ROUTE} from "../../utils/consts";
 import {BarLoader} from "react-spinners";
 import {GoSettings} from "react-icons/all";
+import {CSSTransition, Transition} from "react-transition-group";
+import './Shop.css'
+
 
 const SettingsBar = observer(() => {
     const {device} = useContext(Context)
@@ -37,7 +40,7 @@ const SettingsBar = observer(() => {
     }
 
     return (
-        <Container className={'mt-3 mb-3'}>
+        <Container className={'mt-3 mb-3 settingsBlock'}>
 
             {typeUrl &&
             <Row>
@@ -51,8 +54,14 @@ const SettingsBar = observer(() => {
             }
 
 
-            {isOpenMenu
-                ? <Container className={'mt-3 border-danger'}>
+
+            <Transition
+                in={isOpenMenu}
+                timeout={500}
+                mountOnEnter={true}
+                unmountOnExit={true}
+            >
+                {(state)=> <Container className={`mt-3 settingsAppear ${state}`}>
 
 
                     <Row className={'d-flex'}>
@@ -85,10 +94,10 @@ const SettingsBar = observer(() => {
                     </Row>
 
 
-                </Container>
-                :
-                ''
-            }
+                </Container>}
+            </Transition>
+
+
 
 
         </Container>

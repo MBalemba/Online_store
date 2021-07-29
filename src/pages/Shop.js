@@ -31,8 +31,6 @@ const Shop = observer(() => {
                 <Col md={9}>
                     <SettingsBar />
                     <DeviceList />
-                </Col>
-                <Col md={12}>
                     <MyPagination />
                 </Col>
             </Row>

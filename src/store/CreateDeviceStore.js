@@ -29,6 +29,7 @@ export default class CreateDeviceStore {
     }
 
     setBrand(brand) {
+
         this._brand = brand
     }
 
