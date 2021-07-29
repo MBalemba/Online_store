@@ -46,7 +46,7 @@ const DeviceList = observer(() => {
     return (<>
 
             {typeUrl &&
-                <Row className={'d-flex'}>
+                <Row className={'d-flex mt-3'}>
 
                     {
                         device.IsLoadDevices
