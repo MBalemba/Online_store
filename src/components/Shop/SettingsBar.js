@@ -82,8 +82,8 @@ const SettingsBar = observer(() => {
                                         >
                                             <p>{brand.name}</p>
                                             {Boolean(selectedBrands[brand.name])
-                                                ? <ImCheckboxUnchecked/>
-                                                : <ImCheckboxChecked/>
+                                                ? <ImCheckboxChecked/>
+                                                : <ImCheckboxUnchecked/>
                                             }
 
 

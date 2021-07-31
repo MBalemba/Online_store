@@ -23,6 +23,7 @@ export default class DeviceStore {
 
     setBrandInType(types) {
         getTypeBrand().then((r) => {
+            debugger
             this._brandInType = r.data
         })
     }
