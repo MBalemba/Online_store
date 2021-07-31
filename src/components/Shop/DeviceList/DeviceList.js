@@ -4,7 +4,7 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../../../index";
 import DeviceItem from "./DeviceItem";
 import {useHistory, useLocation, useParams} from "react-router-dom";
-import {DotLoader, FadeLoader, PacmanLoader} from "react-spinners";
+import {DotLoader, FadeLoader, MoonLoader, PacmanLoader} from "react-spinners";
 
 const DeviceList = observer(() => {
     const {device} = useContext(Context)
@@ -52,7 +52,7 @@ const DeviceList = observer(() => {
                         device.IsLoadDevices
                             ?
                             <div style={{margin:'auto', height: '70vh', display: 'flex', alignItems: 'center'}}>
-                                <PacmanLoader color={'#007bff'}/>
+                                <MoonLoader color={'#007bff'}/>
                             </div>
                             :
                             device.Devices.map(device=>

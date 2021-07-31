@@ -15,7 +15,10 @@ export default class DeviceStore {
         this._amountOfAllDevices = 0
         this._pageCount = 1
         this._currentPage = 1
-        this._limitPage = 12
+        this._limitPage = 4
+
+        this._paginationTypeBorderValue = 15
+        this._lengthMiddlePagination = 2
 
         makeAutoObservable(this)
     }
@@ -23,7 +26,7 @@ export default class DeviceStore {
 
     setBrandInType(types) {
         getTypeBrand().then((r) => {
-            debugger
+
             this._brandInType = r.data
         })
     }
@@ -38,7 +41,7 @@ export default class DeviceStore {
 
             if(pageQuery){
                 pageQuery = '&' + pageQuery.replace(/%20/g,'')
-                this._currentPage =  pageQuery.match(/\d+/)[0]
+                this._currentPage =  Number(pageQuery.match(/\d+/)[0]) || 1
             }
 
             if(brandQuery){
@@ -97,6 +100,7 @@ export default class DeviceStore {
         this._pageCount = 1
         this._currentPage = 1
         this._limitPage = 12
+
     }
 
 
@@ -162,27 +166,45 @@ export default class DeviceStore {
         return this._queryString
     }
 
+    get PaginationTypeBorderValue(){
+        return this._paginationTypeBorderValue
+    }
+
+    get LengthMiddlePagination(){
+        return this._lengthMiddlePagination
+    }
+
     get arrOfPage(){
         let arr =  []
+        debugger
         if(this._pageCount>1){
-            if (this._pageCount<9){
+
+            debugger
+
+            if (this._pageCount< this._paginationTypeBorderValue){
+                debugger
                 for (let i = 1; i<=this._pageCount; i++){
                     arr.push(i)
                 }
             } else {
 
-                    if(this._currentPage-4 > 1){
-                        arr = [this._currentPage-4, this._currentPage-3, this._currentPage-2,this._currentPage-1, this._currentPage]
+                    if(this._currentPage - this._lengthMiddlePagination >= 1){
+                        for (let i=0; i<=this._lengthMiddlePagination; i++){
+                            arr = [this._currentPage-i, ...arr]
+                        }
+
                     } else {
                         for (let i = 1; i<=this._currentPage; i++){
                             arr.push(i)
                         }
                     }
 
-                    if(this._currentPage+4 < this._amountOfAllDevices){
-                        arr = [...arr, this._currentPage+1,this._currentPage+2,this._currentPage+3,this._currentPage+4,]
-                    } else{
-                        for (let i = this._currentPage + 1; i<=this._amountOfAllDevices; i++){
+                    if(this._currentPage+this._lengthMiddlePagination<= this._pageCount ){
+                        for (let i=1; i<=this._lengthMiddlePagination; i++){
+                            arr = [...arr, this._currentPage+i]
+                        }
+                    } else {
+                        for (let i = this._currentPage + 1; i<=this._pageCount ; i++){
                             arr.push(i)
                         }
                     }
@@ -191,6 +213,8 @@ export default class DeviceStore {
 
         }
 
+
+        console.log('arrOfPage', arr)
         return arr
     }
 
