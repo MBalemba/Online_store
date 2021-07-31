@@ -15,9 +15,9 @@ export default class DeviceStore {
         this._amountOfAllDevices = 0
         this._pageCount = 1
         this._currentPage = 1
-        this._limitPage = 4
+        this._limitPage = 9
 
-        this._paginationTypeBorderValue = 15
+        this._paginationTypeBorderValue = 12
         this._lengthMiddlePagination = 2
 
         makeAutoObservable(this)
