@@ -147,7 +147,7 @@ export default class DeviceStore {
         this._amountOfAllDevices = 0
         this._pageCount = 1
         this._currentPage = 1
-        this._limitPage = 12
+        this._limitPage = 18
 
         this._clientMinPrice = null
         this._clientMaxPrice = null

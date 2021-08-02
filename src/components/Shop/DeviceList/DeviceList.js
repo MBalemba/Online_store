@@ -50,26 +50,6 @@ const DeviceList = observer(() => {
         if(typeUrl){
             device.toggleStatusLoadDevices(true)
             device.setPropertyFromUri(search)
-            // device.setDevices(typeUrl).then(
-            //     ()=>{
-            //     }
-            //
-            // ).catch(
-            //     (info)=>{
-            //         debugger
-            //         if('' || '' || '' || '' || '' || ''){
-            //             taskInstance.createTask(info, 'Warning')
-            //         }else{
-            //             device.cleanSelectedBrands()
-            //             device.setCurrentPage(1)
-            //             taskInstance.createTask(info, 'Warning')
-            //             history.push(`/home`)
-            //         }
-            //
-            //     }
-            // ).finally(()=>{
-            //     setTimeout(()=>{device.toggleStatusLoadDevices(false)}, 1000)
-            // })
             doRequest()
         } else {
             device.returnToInitialState()

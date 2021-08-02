@@ -8,9 +8,9 @@ const DeviceItem = ({device}) => {
     const history = useHistory()
 
     return (
-        <Col className={'mt-3'} md={4} onClick={() => history.push('/device/'+device.id)}>
+        <Col className={'mt-3'} md={6} onClick={() => history.push('/device/'+device.id)}>
 
-            <Card style={{width: 150, cursor: 'pointer'}} border={'light'}>
+            <Card style={{width: 200, cursor: 'pointer', margin: '0 auto'}} border={'light'}>
 
                 <Image style={{objectFit: 'contain',}} src={!device.isName? device.pathFile : (process.env.REACT_APP_API_URL+'takeImage/'+ device.pathFile) } width={150} height={150}/>
 
