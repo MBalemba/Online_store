@@ -7,11 +7,13 @@ import {useHistory, useLocation, useParams} from "react-router-dom";
 import {DotLoader, FadeLoader, MoonLoader, PacmanLoader} from "react-spinners";
 
 const DeviceList = observer(() => {
-    const {device} = useContext(Context)
+    const {device, taskInstance} = useContext(Context)
     const history = useHistory()
     const {type: typeUrl} = useParams();
     const {search} = useLocation();
     console.log('search: ', search)
+
+
 
 
     useEffect(()=>{
@@ -19,22 +21,56 @@ const DeviceList = observer(() => {
     },[typeUrl])
 
     useEffect(()=>{
-        if(typeUrl){
-            device.toggleStatusLoadDevices(true)
-            device.setPropertyFromUri(search)
+        debugger
+
+        function doRequest() {
             device.setDevices(typeUrl).then(
                 ()=>{
                 }
 
             ).catch(
-                (r)=>{
-                    device.cleanSelectedBrands()
-                    device.setCurrentPage(1)
-                    history.push(`/home`)
+                (info)=>{
+                    debugger
+                        taskInstance.createTask(info, 'Warning')
+                        device.cleanSelectedBrands()
+                        device.returnPriceRangeToInitial()
+                        device.setCurrentPage(1)
+                        history.push(`/home/${typeUrl}`)
+                        doRequest()
+                        // device.cleanSelectedBrands()
+                        // device.setCurrentPage(1)
+                        // taskInstance.createTask(info, 'Warning')
+                        // history.push(`/home`)
                 }
             ).finally(()=>{
                 setTimeout(()=>{device.toggleStatusLoadDevices(false)}, 1000)
             })
+        }
+
+        if(typeUrl){
+            device.toggleStatusLoadDevices(true)
+            device.setPropertyFromUri(search)
+            // device.setDevices(typeUrl).then(
+            //     ()=>{
+            //     }
+            //
+            // ).catch(
+            //     (info)=>{
+            //         debugger
+            //         if('' || '' || '' || '' || '' || ''){
+            //             taskInstance.createTask(info, 'Warning')
+            //         }else{
+            //             device.cleanSelectedBrands()
+            //             device.setCurrentPage(1)
+            //             taskInstance.createTask(info, 'Warning')
+            //             history.push(`/home`)
+            //         }
+            //
+            //     }
+            // ).finally(()=>{
+            //     setTimeout(()=>{device.toggleStatusLoadDevices(false)}, 1000)
+            // })
+            doRequest()
         } else {
             device.returnToInitialState()
         }

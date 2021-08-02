@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import TypeBar from "../components/Shop/TypeBar";
-import SettingsBar from "../components/Shop/SettingsBar";
+import SettingsBar from "../components/Shop/SettingsBar/SettingsBar";
 import DeviceList from "../components/Shop/DeviceList/DeviceList";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";

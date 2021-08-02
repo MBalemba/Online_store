@@ -23,7 +23,7 @@ const TaskContainer = observer(() => {
             console.log('добавление таска: ', newTask.id)
             setTimeout(() => {
                 taskInstance.deleteTask(newTask.id)
-            }, 2000)
+            }, 3000)
         }
     })
 
