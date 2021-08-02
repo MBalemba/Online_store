@@ -27,13 +27,9 @@ const SettingsBar = observer(() => {
     })
 
 
-    // useEffect(() => {
-    //     device.cleanSelectedBrands()
-    //     SetValue1({
-    //         min:  this._clientMinPrice,
-    //         max:  this._clientMinPrice,
-    //     })
-    // }, [typeUrl])
+    useEffect(() => {
+        device.returnPriceRangeToInitial()
+    }, [typeUrl])
 
     useEffect(()=> {
 

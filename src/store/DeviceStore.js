@@ -43,10 +43,10 @@ export default class DeviceStore {
     }
 
     setPropertyFromUri(getReadyQueryFromUri = ''){
-
+        getReadyQueryFromUri = decodeURI(getReadyQueryFromUri)
         if(getReadyQueryFromUri!==''){
             const regexpPage = /page\s*(%20)*=\s*(%20)*\d+/
-            const regexpBrand = /brand\s*(%20)*=(\s*(%20)*\w*,?)*/
+            const regexpBrand = /brand\s*(%20)*=(\s*(%20)*[\w\p{sc=Cyrillic}]+,?)*/u
             const regexpMinPrice = /minPrice\s*(%20)*=\s*(%20)*\d+/
             const regexpMaxPrice = /maxPrice\s*(%20)*=\s*(%20)*\d+/
 
@@ -179,10 +179,10 @@ export default class DeviceStore {
                     this._devices = r.data.listDTO
 
 
-                    if(this._minPrice !== dataMinPrice || this._maxPrice !== dataMaxPrice){
-                        this._clientMinPrice = dataMinPrice
-                        this._clientMaxPrice = dataMaxPrice
-                    }
+                    // if(this._minPrice !== dataMinPrice || this._maxPrice !== dataMaxPrice){
+                    //     this._clientMinPrice = dataMinPrice
+                    //     this._clientMaxPrice = dataMaxPrice
+                    // }
 
                     if(this._clientMinPrice=== null && this._clientMaxPrice===null){
                         this._clientMinPrice = dataMinPrice
