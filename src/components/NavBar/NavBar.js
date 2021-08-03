@@ -18,14 +18,30 @@ const NavBar = observer(() => {
 
         <Navbar bg="dark" variant="dark">
             <Container>
-                <Nav onClick={()=>{device.cleanSelectedBrands()}} to={SHOP_ROUTE}>КупиДевайс</Nav>
+                <Nav onClick={() => {
+                    device.cleanSelectedBrands()
+                }} to={SHOP_ROUTE}>КупиДевайс</Nav>
 
-                {user._isAuth ? <NavB className="ml-auto" style={{color: 'white'}}>
+                {user.isAuthAdmin ? <NavB className="ml-auto" style={{color: 'white'}}>
                     <Button onClick={() => (history.push(ADMIN_ROUTE))} variant={'outline-light'}>Админ панель</Button>
-                    <Button onClick={() =>acountOut()} className={"ml-2"} variant={'outline-light'}>Выйти</Button>
-                </NavB> : <NavB className="ml-auto" style={{color: 'white'}}>
-                    <Button onClick={() => history.push(LOGIN_ROUTE)} variant={'outline-light'}>Авторицация</Button>
-                </NavB>}
+                    <Button onClick={() => acountOut()} className={"ml-2"} variant={'outline-light'}>Выйти</Button>
+                </NavB> : ''
+                }
+
+                {user.isAuthUser ? <NavB className="ml-auto" style={{color: 'white'}}>
+                    <Button onClick={() => acountOut()} className={"ml-2"} variant={'outline-light'}>Выйти</Button>
+                </NavB> : ''}
+
+                {
+                    (user.isAuthAdmin || user.isAuthUser) === false
+                        ?
+                        <NavB className="ml-auto" style={{color: 'white'}}>
+                            <Button onClick={() => history.push(LOGIN_ROUTE)}
+                                    variant={'outline-light'}>Авторицация</Button>
+                        </NavB>
+                        :
+                        ''
+                }
             </Container>
         </Navbar>
     );

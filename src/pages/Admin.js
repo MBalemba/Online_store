@@ -7,13 +7,14 @@ import CreateDeviceStore from "../store/CreateDeviceStore";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import { toJS } from 'mobx'
+import {Redirect} from "react-router-dom";
 
 
 export const createDevice = new CreateDeviceStore()
 
 
 const Admin = observer(() => {
-    const {device} = useContext(Context)
+    const {device, user} = useContext(Context)
 
     const [brandVisible,setBrandVisible] = useState(false)
     const [typeVisible,setTypeVisible] = useState(false)
@@ -24,7 +25,9 @@ const Admin = observer(() => {
         }
     , [])
 
-    console.log({...device.BrandInType})
+    // if(!user.isAuthAdmin){
+    //     return <Redirect to={''}/>
+    // }
 
     return (
         <Container className={'d-flex flex-column align-items-start mt-5'}>

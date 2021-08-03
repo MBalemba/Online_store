@@ -13,6 +13,7 @@ const Auth = observer(() => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const history = useHistory()
+
     const click = async () =>{
         if(isLoginPage){
             user.doAutorizate(email, password, taskInstance)
@@ -31,8 +32,12 @@ const Auth = observer(() => {
     }
 
 
-    if(user.isAuth){
+    if(user.isAuthAdmin){
         return <Redirect to={'admin'}/>
+    }
+
+    if(user.isAuthUser){
+        return <Redirect to={'home'}/>
     }
 
     return (

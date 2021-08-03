@@ -12,12 +12,17 @@ const App = observer(function () {
     const {user} = useContext(Context)
     const [loader, setLoader] = useState(true)
 
+
     useEffect(()=>{
         user.checkAutorize()
             .then(()=>{
                 setTimeout(()=>{setLoader(false)}, 1000)
             })
     }, [])
+
+
+
+
     return (
         <BrowserRouter className="App">
             {loader

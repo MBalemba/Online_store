@@ -22,9 +22,10 @@ export const login = async (email, password) => {
 }
 
 export const check = async () => {
-    const response = await $authHost.post('user/check')
+    const response = await $authHost.get('user/checkAdminRole')
     return response
 }
+
 
 export const getTypeBrand = async () => {
     const response = await $host.get('type/getAll')
