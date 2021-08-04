@@ -25,9 +25,9 @@ const Admin = observer(() => {
         }
     , [])
 
-    // if(!user.isAuthAdmin){
-    //     return <Redirect to={''}/>
-    // }
+    if(!user.isAuthAdmin){
+        return <Redirect to={''}/>
+    }
 
     return (
         <Container className={'d-flex flex-column align-items-start mt-5'}>
