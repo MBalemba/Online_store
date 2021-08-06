@@ -99,7 +99,7 @@ export default class CreateDeviceStore {
         let data = new FormData();
         data.append('brand', this._brand)
         data.append('type', this._type)
-        data.append('name', this._name)
+        data.append('name', this._name.trim())
         data.append('price', this._price)
         if(this._img){
             data.append('imgFile', this._img, this._img.name)
@@ -112,17 +112,18 @@ export default class CreateDeviceStore {
             data.append('characteristic', JSON.stringify(characteristic))
         }
 
-        giveDeviceServer(data)
+        return giveDeviceServer(data)
             .then((response) => {
                 (taskStore.createTask('Успешно', 'Success'))
+                return Promise.resolve()
             })
             .catch((e) => {
-                taskStore.createTask('Ошибка отправки данных', 'Danger')
+                if(e.response.status!== 500){
+                    taskStore.createTask(e.response.data.info, 'Danger')
+                }
+                return Promise.reject(e.response)
             })
-
     }
-
-
 
 }
 

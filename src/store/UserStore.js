@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {check, checkAdmin, login} from "../http/UserApi";
+import {check, checkAdmin, login, refresh} from "../http/UserApi";
 
 export default class UserStore {
 
@@ -40,7 +40,9 @@ export default class UserStore {
     doAutorizate(email, password, taskInstance) {
         return login(email, password)
             .then((response) => {
-                localStorage.setItem('token', response.headers.authorization)
+                debugger
+                localStorage.setItem('token', response.headers.jwtoken)
+                localStorage.setItem('RefreshToken', response.headers.refreshtoken)
                 this.checkAutorize()
                 return Promise.resolve(response)
             })
@@ -49,11 +51,29 @@ export default class UserStore {
             })
     }
 
+    checkRefresh(promise) {
+    debugger
+        return refresh()
+            .then((response)=> {
+                debugger
+                localStorage.setItem('token', response.headers.jwtoken)
+                localStorage.setItem('RefreshToken', response.headers.refreshtoken)
+                return Promise.resolve()
+            })
+            .catch((error)=>{
+                debugger
+                localStorage.removeItem('token')
+                localStorage.removeItem('RefreshToken')
+                this._isAuthUser = false
+                this._isAuthAdmin = false
+                return Promise.reject()
+            })
+    }
+
     checkAutorize() {
         debugger
         if (localStorage.getItem('token')) {
             return check().then((r) => {
-                debugger
                 if (r.data.info === 'ADMIN') {
                     this._isAuthAdmin = true
                 }
@@ -66,6 +86,7 @@ export default class UserStore {
 
             }).catch((r)=>{
                 debugger
+                this.checkRefresh().then(()=>{})
                 console.log(r)
             }).finally(() => {
                     return Promise.resolve()

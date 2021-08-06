@@ -7,47 +7,66 @@ import {useHistory, useLocation, useParams} from "react-router-dom";
 import {DotLoader, FadeLoader, MoonLoader, PacmanLoader} from "react-spinners";
 
 const DeviceList = observer(() => {
-    const {device, taskInstance} = useContext(Context)
+    const {device, user, taskInstance} = useContext(Context)
     const history = useHistory()
     const {type: typeUrl} = useParams();
     const {search} = useLocation();
     console.log('search: ', search)
 
 
-
-
-    useEffect(()=>{
+    useEffect(() => {
         device.setCurrentPage(1)
-    },[typeUrl])
+    }, [typeUrl])
 
-    useEffect(()=>{
+    useEffect(() => {
         debugger
 
         function doRequest() {
             device.setDevices(typeUrl).then(
-                ()=>{
-                }
-
-            ).catch(
-                (info)=>{
+                () => {
                     debugger
-                        taskInstance.createTask(info, 'Warning')
+                }
+            ).catch(
+                (response) => {
+                    debugger
+                    if (response.data.info === 'Devices with this type doesn\'t exists') {
+                        taskInstance.createTask(response.data.info, 'Warning')
                         device.cleanSelectedBrands()
                         device.returnPriceRangeToInitial()
                         device.setCurrentPage(1)
-                        history.push(`/home/${typeUrl}`)
-                        doRequest()
-                        // device.cleanSelectedBrands()
-                        // device.setCurrentPage(1)
-                        // taskInstance.createTask(info, 'Warning')
-                        // history.push(`/home`)
+                        history.push(`/home`)
+                        return
+                    }
+                    if (response.status === 500){
+                        user.checkRefresh().then(()=>{
+                            device.cleanSelectedBrands()
+                            device.returnPriceRangeToInitial()
+                            device.setCurrentPage(1)
+                            doRequest()
+                        }).catch(()=>{
+                            doRequest()
+                        })
+                        return
+                    }
+                    taskInstance.createTask(response.data.info, 'Warning')
+                    device.cleanSelectedBrands()
+                    device.returnPriceRangeToInitial()
+                    device.setCurrentPage(1)
+                    history.push(`/home/${typeUrl}`)
+                    // device.cleanSelectedBrands()
+                    // device.setCurrentPage(1)
+                    // taskInstance.createTask(info, 'Warning')
+                    // history.push(`/home`)
                 }
-            ).finally(()=>{
-                setTimeout(()=>{device.toggleStatusLoadDevices(false)}, 1000)
+            ).finally(() => {
+                setTimeout(() => {
+                    device.toggleStatusLoadDevices(false)
+                }, 1000)
             })
         }
 
-        if(typeUrl){
+        if (typeUrl) {
+            debugger
             device.toggleStatusLoadDevices(true)
             device.setPropertyFromUri(search)
             doRequest()
@@ -57,24 +76,22 @@ const DeviceList = observer(() => {
     }, [search, typeUrl])
 
 
-
-
     return (<>
 
             {typeUrl &&
-                <Row className={'d-flex mt-3 mb-3'}>
+            <Row className={'d-flex mt-3 mb-3'}>
 
-                    {
-                        device.IsLoadDevices
-                            ?
-                            <div style={{margin:'auto', height: '70vh', display: 'flex', alignItems: 'center'}}>
-                                <MoonLoader color={'#007bff'}/>
-                            </div>
-                            :
-                            device.Devices.map(device=>
-                                <DeviceItem key={device.id} device={device}/>
-                            )
-                    }
+                {
+                    device.IsLoadDevices
+                        ?
+                        <div style={{margin: 'auto', height: '70vh', display: 'flex', alignItems: 'center'}}>
+                            <MoonLoader color={'#007bff'}/>
+                        </div>
+                        :
+                        device.Devices.map(device =>
+                            <DeviceItem key={device.id} device={device}/>
+                        )
+                }
             </Row>}
         </>
     );

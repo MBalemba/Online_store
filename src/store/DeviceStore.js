@@ -35,9 +35,8 @@ export default class DeviceStore {
     }
 
 
-    setBrandInType(types) {
+    setBrandInType() {
         getTypeBrand().then((r) => {
-
             this._brandInType = r.data
         })
     }
@@ -210,8 +209,7 @@ export default class DeviceStore {
                     return Promise.resolve()
                 }
             ).catch((r)=>{
-                debugger
-                return Promise.reject(r.response.data.info)
+                return Promise.reject(r.response)
             })
     }
 

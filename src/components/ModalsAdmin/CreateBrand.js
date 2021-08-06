@@ -6,7 +6,7 @@ import {Context} from "../../index";
 const CreateBrand = ({show, onHide}) => {
 
 
-    const {device, taskInstance} = useContext(Context)
+    const {device, user, taskInstance} = useContext(Context)
     const [typeSelected, setTypeSelected] = useState(null)
     const [brandSelected, setBrandSelected] = useState('')
 
@@ -15,8 +15,19 @@ const CreateBrand = ({show, onHide}) => {
             setBrandSelected('')
             taskInstance.createTask('Успешно добавлен бренд', 'success')
             device.setBrandInType()
-        }).catch(()=>{
-            taskInstance.createTask('Возникла какая-то ошибка', 'Danger')
+        }).catch(({response})=>{
+            debugger
+            if(response.data.info === 'Such Brand of this Type already exist'){
+                taskInstance.createTask('Возникла какая-то ошибка', 'Danger')
+            }
+
+            if(response.data.status === 500){
+                user.checkRefresh().then(()=>{
+                    sendToServer()
+                })
+            }
+
+
         })
 
     }

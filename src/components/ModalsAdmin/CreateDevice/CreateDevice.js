@@ -10,7 +10,7 @@ import LoadImage from "./ChildComponentDevice/LoadImage/LoadImage";
 
 
 const CreateDevice = observer(({show, onHide, createDevice}) => {
-    const {device, taskInstance} = useContext(Context)
+    const {device, user, taskInstance} = useContext(Context)
     const [info, setInfo] = useState([])
 
     const addInfo = () => {
@@ -99,10 +99,20 @@ const CreateDevice = observer(({show, onHide, createDevice}) => {
 
                     <Modal.Footer>
                         <Button variant={'outline-danger'} onClick={onHide}>Закрыть</Button>
-                        <Button variant={'outline-success'} onClick={async () => {
+                        <Button variant={'outline-success'} onClick={(event) => {
                             let characteristic = info.filter(el => el.title && el.description).map(el=>({title: el.title, description: el.description }))
                             if(createDevice.IsGetReadyToRequest()){
-                                await createDevice.giveSomeDataToServer(characteristic, taskInstance)
+                                 createDevice.giveSomeDataToServer(characteristic, taskInstance)
+                                     .then()
+                                     .catch((response)=>{
+                                         debugger
+                                         if(response.status === 500){
+                                             user.checkRefresh().then(()=>{
+                                                 event.target.click()
+                                             })
+
+                                         }
+                                     })
                             } else {
                                 taskInstance.createTask('Заполненны не все данные', 'Warning')
                             }

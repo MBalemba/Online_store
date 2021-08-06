@@ -6,7 +6,7 @@ import {Context} from "../../index";
 
 const CreateType = observer(({show, onHide}) => {
     const [typeValue, setTypeValue] = useState('')
-    const {taskInstance, device} = useContext(Context)
+    const {taskInstance, device, user} = useContext(Context)
     function add() {
         postType(typeValue.trim()).then((r)=>{
             onHide()
@@ -14,8 +14,19 @@ const CreateType = observer(({show, onHide}) => {
             setTypeValue('')
             device.setBrandInType()
         }). catch(
-            ()=>{
-                taskInstance.createTask('Ошибка, возможно такой тип уже существует', 'warning')
+            ({response})=>{
+                debugger
+                if('Such Type already exits' === response.data.info){
+                    taskInstance.createTask('Ошибка, возможно такой тип уже существует', 'warning')
+                    return
+                }
+                if(response.data.status === 500){
+                    user.checkRefresh().then(()=>{
+                        add()
+                    })
+                }
+
+
             }
         )
     }

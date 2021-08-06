@@ -1,4 +1,4 @@
-import {$authHost, $host} from "./index";
+import {$authHost, $authHostRefresh, $host} from "./index";
 
 export const registration = async (email, password) => {
 
@@ -23,6 +23,10 @@ export const login = async (email, password) => {
 
 export const check = async () => {
     const response = await $authHost.get('user/checkAdminRole')
+    return response
+}
+
+export const refresh = async () => {    const response = await $authHostRefresh.post('refreshToken')
     return response
 }
 
@@ -53,3 +57,6 @@ export const postBrand = async (data) => {
     const response = await $authHost.post('brand/add', data)
     return response
 }
+
+
+
