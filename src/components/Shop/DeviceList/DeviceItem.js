@@ -1,28 +1,67 @@
-import React from 'react';
-import {Card, Col, Image} from "react-bootstrap";
+import React, {useContext, useEffect, useState} from 'react';
+import {Button, Card, Col, Image} from "react-bootstrap";
 import star from './../../../assets/star.svg'
 import {useHistory} from 'react-router-dom'
 import {DEVICE_ROUTE} from "../../../utils/consts";
+import {Transition} from "react-transition-group";
+import {Context} from "../../../index";
+import './Device.css'
 
 const DeviceItem = ({device}) => {
     const history = useHistory()
+    const {basket} = useContext(Context)
+    const [basketButton, setBasketButton] = useState(false)
+
+    function clickCard(e){
+        if(e.target.tagName === 'BUTTON'){
+            return
+        }
+
+        history.push('/device/'+device.id)
+    }
+
+    function buttonClick(id) {
+        basket.toggleBasket(id)
+    }
+
+    useEffect(()=>{
+
+    }, [basket.allCards])
+
 
     return (
-        <Col className={'mt-3'} md={6} onClick={() => history.push('/device/'+device.id)}>
+        <Col onMouseEnter={()=> setBasketButton(true)} onMouseLeave={()=> setBasketButton(false)} className={'mt-3 pb-5'} md={6} onClick={clickCard }>
 
             <Card style={{width: 200, cursor: 'pointer', margin: '0 auto'}} border={'light'}>
 
-                <Image style={{objectFit: 'contain',}} src={!device.isName? device.pathFile : (process.env.REACT_APP_API_URL+'takeImage/'+ device.pathFile) } width={150} height={150}/>
+                <Image style={{objectFit: 'contain', width: '100%'}} src={!device.isName? device.pathFile : (process.env.REACT_APP_API_URL+'takeImage/'+ device.pathFile) } width={150} height={150}/>
 
-                <div className={'text-black-50 d-flex justify-content-between mt-2'}>
-                    <div>{device.brandName}...</div>
+                <div  className={'text-black-50 d-flex justify-content-between mt-2'}>
+                    <div className={'mb-1'}>{device.brandName}</div>
                     <div className={'d-flex align-items-center justify-content-between'}>
                         <div>{device.ratings}</div>
                         <Image src={star}/>
                     </div>
                 </div>
+                <h6>{device.name}</h6>
 
-                <div>{device.name}</div>
+
+
+                <div className={'basketContainer'}>
+                    <Button
+                        onClick={() => {
+                            buttonClick(Number(device.id))
+                            setBasketButton(false)
+                            setBasketButton(true)
+                        }}
+                        className={`basketButton`}
+                        variant={!basket.isBasketItem(Number(device.id)) ?'primary': 'danger'}
+                    >
+                        {basket.isBasketItem(Number(device.id)) && 'Убрать из корзины'}
+                        {basket.isBasketItem(Number(device.id)) || 'В корзину'}
+                    </Button>
+                </div>
+
             </Card>
 
         </Col>

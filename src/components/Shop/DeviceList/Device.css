@@ -1,0 +1,37 @@
+
+
+
+
+
+.basketContainer{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}
+
+.basketButton{
+}
+
+.basketButton.entering {
+    animation: buttonAppear 250ms;
+
+}
+
+.basketButton.entered{
+    opacity: 1;
+}
+
+
+.basketButton.exiting {
+    animation: buttonAppear 250ms reverse;
+}
+
+
+@keyframes buttonAppear {
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

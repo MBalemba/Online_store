@@ -47,6 +47,11 @@ export const giveDeviceServer = async (data) =>{
     return response
 }
 
+export const giveDeviceById = async (id) => {
+    const response = await $host.get(`device/getById/id`)
+    return response
+}
+
 
 export const postType = async (name) => {
     const response = await $authHost.post('type/add', {name: name})

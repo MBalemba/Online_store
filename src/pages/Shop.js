@@ -30,7 +30,7 @@ const Shop = observer(() => {
                     <SettingsBar />
 
                 </Col>
-                <Col md={9}>
+                <Col style={{marginTop: '60px'}} md={9}>
                     <SettingsBar />
                     <MyPagination />
                     <DeviceList />
