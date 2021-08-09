@@ -31,7 +31,7 @@ const SettingsBar = observer(() => {
         device.returnPriceRangeToInitial()
     }, [typeUrl])
 
-    useEffect(()=> {
+    useEffect(() => {
 
     }, [device.MaxPrice, device.MinPrice])
 
@@ -118,71 +118,67 @@ const SettingsBar = observer(() => {
                             }
                         </Row>
 
+                        {Number(device.MaxPrice) !== Number(device.MinPrice) && <>
+                            <Row className={'mt-2 flex justify-content-between'}>
+                                <p>{device.MinPrice}</p>
+                                <p>{device.MaxPrice}</p>
+                            </Row>
 
-                        <Row className={'mt-2 flex justify-content-between'} >
-                            <p>{device.MinPrice}</p>
-                            <p>{device.MaxPrice}</p>
-                        </Row>
+                            <Row>
+                                <Col md={12} className={'slider-container'}>
 
-                        <Row>
-                            <Col md={12} className={'slider-container'}>
-                                {/*<input type={'range'} min/>*/}
-                                {/*<input className={'slider'} type="range" min="12" max="2175" value="12" className="slider" id="lower"/>*/}
-                                {/*<input className={'slider'} type="range" min="12" max="2175" value="12" className="slider" id="lower"/>*/}
+                                    <InputRange
+                                        maxValue={Number(device.MaxPrice)}
+                                        minValue={Number(device.MinPrice)}
+                                        formatLabel={value => ``}
+                                        value={value1}
+                                        onChange={value => {
+                                            console.log('value: ', value)
+                                            // if (value.max - value.min >= (device.MaxPrice - device.MinPrice) / 8) {
+                                            //
+                                            // }
+                                            SetValue1(value)
+                                        }
+                                        }
 
-                                <InputRange
-                                    maxValue={Number(device.MaxPrice)}
-                                    minValue={Number(device.MinPrice)}
-                                    formatLabel={value =>``}
-                                    value={value1}
-                                    onChange={value => {
-                                        console.log('value: ', value)
-                                        // if (value.max - value.min >= (device.MaxPrice - device.MinPrice) / 8) {
-                                        //
-                                        // }
-                                        SetValue1(value)
-                                    }
-                                    }
-
-                                    onChangeComplete={value => console.log(value)}
-                                />
+                                        onChangeComplete={value => console.log(value)}
+                                    />
 
 
-                            </Col>
+                                </Col>
 
 
+                                <Col md={12}>
+                                    <Row style={{marginTop: '-100px'}}>
+                                        <Col md={6}>
+                                            <InputGroup className="mb-3"
+                                                        disabled={true}
+                                            >
+                                                <InputGroup.Text>Цена от</InputGroup.Text>
+                                                <FormControl
+                                                    placeholder="Recipient's username"
+                                                    value={value1.min}
+                                                />
+                                            </InputGroup>
+                                        </Col>
+
+                                        <Col md={6}>
+                                            <InputGroup className="mb-3">
+                                                <InputGroup.Text>Цена до</InputGroup.Text>
+                                                <FormControl
+                                                    placeholder="Recipient's username"
+                                                    value={value1.max}
+                                                />
+                                            </InputGroup>
+                                        </Col>
+                                    </Row>
+                                </Col>
 
 
+                            </Row>
+                        </>
 
-
-                            <Col md={12}>
-                                <Row style={{marginTop: '-100px'}}>
-                                    <Col md={6}>
-                                        <InputGroup className="mb-3"
-                                                    disabled = {true}
-                                        >
-                                            <InputGroup.Text>Цена от</InputGroup.Text>
-                                            <FormControl
-                                                placeholder="Recipient's username"
-                                                value={value1.min}
-                                            />
-                                        </InputGroup>
-                                    </Col>
-
-                                    <Col md={6}>
-                                        <InputGroup className="mb-3">
-                                            <InputGroup.Text>Цена до</InputGroup.Text>
-                                            <FormControl
-                                                placeholder="Recipient's username"
-                                                value={value1.max}
-                                            />
-                                        </InputGroup>
-                                    </Col>
-                                </Row>
-                            </Col>
-
-
-                        </Row>
+                        }
 
                         <Row className={'flex justify-content-end'}>
                             <Button onClick={() => {
@@ -203,6 +199,7 @@ const SettingsBar = observer(() => {
 
         </Container>
     );
-})
+}
+)
 
 export default SettingsBar;

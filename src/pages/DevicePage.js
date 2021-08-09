@@ -5,6 +5,9 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {useParams} from "react-router-dom";
 import {toJS} from "mobx";
+import './general.css'
+
+
 const DevicePage = observer(() => {
     const {device} = useContext(Context)
     const {id} = useParams()
@@ -16,7 +19,7 @@ const DevicePage = observer(() => {
     console.log('Device:', toJS(device.Devices), oneDevice)
     const description = oneDevice.deviceInfosDTO
     return (
-        <Container className={'mt-3'}>
+        <Container className={'mt'}>
             <Row>
                 <Col md={4}>
                     <Image style={{objectFit: ' contain',}} width={300} height={300} src={!oneDevice.isName ? oneDevice.pathFile :(process.env.REACT_APP_API_URL+'takeImage/'+ oneDevice.pathFile) }/>

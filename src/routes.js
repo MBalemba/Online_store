@@ -8,8 +8,8 @@ import {
     SHOP_ROUTE,
     USER_ROUTE
 } from "./utils/consts";
-import Basket from "./pages/Basket";
-import Shop from "./pages/Shop";
+import Basket from "./pages/Basket/Basket";
+import Shop from "./pages/Shop/Shop";
 import Auth from "./pages/Auth";
 import DevicePage from "./pages/DevicePage";
 import UserPage from "./pages/UserPage";

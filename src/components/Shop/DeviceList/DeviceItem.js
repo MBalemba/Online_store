@@ -6,8 +6,9 @@ import {DEVICE_ROUTE} from "../../../utils/consts";
 import {Transition} from "react-transition-group";
 import {Context} from "../../../index";
 import './Device.css'
+import {observer} from "mobx-react-lite";
 
-const DeviceItem = ({device}) => {
+const DeviceItem = observer(({device}) => {
     const history = useHistory()
     const {basket} = useContext(Context)
     const [basketButton, setBasketButton] = useState(false)
@@ -20,8 +21,8 @@ const DeviceItem = ({device}) => {
         history.push('/device/'+device.id)
     }
 
-    function buttonClick(id) {
-        basket.toggleBasket(id)
+    function buttonClick(id, price) {
+        basket.toggleBasket(id, price)
     }
 
     useEffect(()=>{
@@ -50,7 +51,7 @@ const DeviceItem = ({device}) => {
                 <div className={'basketContainer'}>
                     <Button
                         onClick={() => {
-                            buttonClick(Number(device.id))
+                            buttonClick(Number(device.id), device.price)
                             setBasketButton(false)
                             setBasketButton(true)
                         }}
@@ -66,6 +67,6 @@ const DeviceItem = ({device}) => {
 
         </Col>
     );
-};
+});
 
 export default DeviceItem;

@@ -16,7 +16,7 @@ const CreateBrand = ({show, onHide}) => {
             taskInstance.createTask('Успешно добавлен бренд', 'success')
             device.setBrandInType()
         }).catch(({response})=>{
-            debugger
+
             if(response.data.info === 'Such Brand of this Type already exist'){
                 taskInstance.createTask('Возникла какая-то ошибка', 'Danger')
             }

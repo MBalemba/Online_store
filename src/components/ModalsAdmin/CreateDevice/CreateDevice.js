@@ -105,7 +105,7 @@ const CreateDevice = observer(({show, onHide, createDevice}) => {
                                  createDevice.giveSomeDataToServer(characteristic, taskInstance)
                                      .then()
                                      .catch((response)=>{
-                                         debugger
+
                                          if(response.status === 500){
                                              user.checkRefresh().then(()=>{
                                                  event.target.click()

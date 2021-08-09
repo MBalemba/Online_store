@@ -48,7 +48,8 @@ export const giveDeviceServer = async (data) =>{
 }
 
 export const giveDeviceById = async (id) => {
-    const response = await $host.get(`device/getById/id`)
+    const response = await $host.get(`device/getById/${id}`)
+    debugger
     return response
 }
 

@@ -40,7 +40,7 @@ export default class UserStore {
     doAutorizate(email, password, taskInstance) {
         return login(email, password)
             .then((response) => {
-                debugger
+
                 localStorage.setItem('token', response.headers.jwtoken)
                 localStorage.setItem('RefreshToken', response.headers.refreshtoken)
                 this.checkAutorize()
@@ -52,16 +52,16 @@ export default class UserStore {
     }
 
     checkRefresh(promise) {
-    debugger
+
         return refresh()
             .then((response)=> {
-                debugger
+
                 localStorage.setItem('token', response.headers.jwtoken)
                 localStorage.setItem('RefreshToken', response.headers.refreshtoken)
                 return Promise.resolve()
             })
             .catch((error)=>{
-                debugger
+
                 localStorage.removeItem('token')
                 localStorage.removeItem('RefreshToken')
                 this._isAuthUser = false
@@ -71,7 +71,7 @@ export default class UserStore {
     }
 
     checkAutorize() {
-        debugger
+
         if (localStorage.getItem('token')) {
             return check().then((r) => {
                 if (r.data.info === 'ADMIN') {
@@ -85,7 +85,7 @@ export default class UserStore {
                 return Promise.resolve()
 
             }).catch((r)=>{
-                debugger
+
                 this.checkRefresh().then(()=>{})
                 console.log(r)
             }).finally(() => {

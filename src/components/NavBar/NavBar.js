@@ -16,7 +16,7 @@ const NavBar = observer(() => {
 
     return (
 
-        <Navbar fixed="top" bg="dark" variant="dark">
+        <Navbar  fixed="top" bg="dark" variant="dark">
             <Container className={'NavBar'} >
                 <Nav onClick={() => {
                     device.cleanSelectedBrands()

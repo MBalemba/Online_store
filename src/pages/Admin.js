@@ -8,6 +8,7 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import { toJS } from 'mobx'
 import {Redirect} from "react-router-dom";
+import './general.css'
 
 
 export const createDevice = new CreateDeviceStore()
