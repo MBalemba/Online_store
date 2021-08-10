@@ -24,7 +24,7 @@
 }
 
 .BasketH6:hover{
-    color: gray;
+    color: #0080fd;;
     cursor: pointer;
 }
 
@@ -51,4 +51,8 @@
     color: black;
     display: flex;
     justify-content: flex-end;
+}
+
+.cardBrandPriceBasket{
+    color: black;
 }

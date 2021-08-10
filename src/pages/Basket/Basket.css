@@ -25,3 +25,18 @@
     font-size: 30px;
     font-weight: 500;
 }
+
+.makeAnOrder{
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+}
+
+.makeAnOrder button{
+    width: inherit;
+    position: fixed;
+    bottom: 2rem;
+    right: 10rem;
+
+}

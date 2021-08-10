@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import BasketCard from "../../components/Basket/BasketCard";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
@@ -49,6 +49,18 @@ const Basket = observer(() => {
                 )}
 
             </Row>
+
+            <Container>
+                <Row>
+                    <Col md={12}>
+                        <div className={'makeAnOrder'}>
+                            <Button  variant="primary" size="lg">
+                                Сделать заказ
+                            </Button>
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
         </Container>
 
     );

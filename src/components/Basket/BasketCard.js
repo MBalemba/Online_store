@@ -45,7 +45,7 @@ const BasketCard = observer(({id, count}) => {
                                    src={!device.isName ? device.pathFile : (process.env.REACT_APP_API_URL + 'takeImage/' + device.pathFile)}
                                    width={150} height={150}/>
                         </div>
-
+                        <hr/>
                         <div className={'mb-2 mt-3 containerCloseButton'}>
 
                             <div className={'counterPanel'}>
@@ -81,13 +81,13 @@ const BasketCard = observer(({id, count}) => {
                         </div>
 
 
-                        <div className={'text-black-50 d-flex justify-content-between mt-2'}>
+                        <div className={'d-flex justify-content-between mt-2 cardBrandPriceBasket'}>
                             <div className={'mb-1'}>{device.brandName}</div>
                             <div className={'basketCardPrice'}>
-                                <strong >{(Number(device.price) * count).toLocaleString()} <i>₽</i></strong>
+                                <i >{(Number(device.price) * count).toLocaleString()} <i>₽</i></i>
                             </div>
-
                         </div>
+
 
                         <div className={'d-flex align-items-center justify-content-end'}>
                             <div>{device.ratings}</div>
@@ -97,6 +97,7 @@ const BasketCard = observer(({id, count}) => {
 
 
                         <p className={'BasketH6'} onClick={() => history.push('/device/' + device.id)}>{device.name}</p>
+
 
 
 
