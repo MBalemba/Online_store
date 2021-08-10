@@ -42,26 +42,28 @@ const BasketCard = observer(({id, count}) => {
 
                         <div className={'imageContainer'}>
                             <Image style={{objectFit: 'contain', width: '100%'}}
-                                    src={!device.isName ? device.pathFile : (process.env.REACT_APP_API_URL + 'takeImage/' + device.pathFile)}
-                                    width={150} height={150}/>
+                                   src={!device.isName ? device.pathFile : (process.env.REACT_APP_API_URL + 'takeImage/' + device.pathFile)}
+                                   width={150} height={150}/>
                         </div>
 
                         <div className={'mb-2 mt-3 containerCloseButton'}>
 
                             <div className={'counterPanel'}>
 
-                                <Button onClick={() => basket.decrease(id)} className={'counterPanel__button'}
-                                     variant="outline-secondary">
-                                    <BiMinus color={count===1 && 'gray'}/>
+                                <Button disabled={count === 1} onClick={() => basket.decrease(id)}
+                                        className={'counterPanel__button'}
+                                        variant="outline-s">
+                                    <BiMinus color={count === 1 && ''}/>
                                 </Button>
 
                                 <p className={'counterPanel__countTagP'}>
                                     {count}
                                 </p>
 
-                                <Button onClick={() => basket.increase(id)} className={'counterPanel__button'}
-                                     variant="outline-secondary">
-                                    <BiPlus color={count===10 && 'gray'}/>
+                                <Button disabled={count === 10} onClick={() => basket.increase(id)}
+                                        className={'counterPanel__button'}
+                                        variant="outline-s">
+                                    <BiPlus color={count === 10 && 'gray'}/>
                                 </Button>
 
                             </div>
@@ -95,6 +97,6 @@ const BasketCard = observer(({id, count}) => {
             </Col>
         </>
     );
-});
+})
 
 export default BasketCard;

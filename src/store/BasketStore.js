@@ -61,6 +61,21 @@ export default class BasketStore {
         return isElemWithIdExist
     }
 
+    SaveInCookie(){
+        localStorage.setItem('basket',JSON.stringify(toJS(this._basketElems)))
+    }
+
+    SetFromCookie(){
+        debugger
+        if(localStorage.getItem('basket')){
+            this._basketElems = JSON.parse(localStorage.getItem('basket'))
+            this._basketElems.forEach((el)=>{
+                this._countALL+= el.count
+            })
+            console.log(JSON.parse(localStorage.getItem('basket')))
+        }
+    }
+
     get allCards() {
         return this._basketElems
     }
@@ -79,6 +94,8 @@ export default class BasketStore {
 
         return priceSum
     }
+
+
 
 
 }

@@ -5,7 +5,7 @@ import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 import {toJS} from "mobx";
 import './Basket.css'
-import {BiDotsVertical, GoPrimitiveDot} from "react-icons/all";
+import {BiDotsVertical, BsDot, BsThreeDotsVertical, GoPrimitiveDot} from "react-icons/all";
 
 const Basket = observer(() => {
 
@@ -26,7 +26,7 @@ const Basket = observer(() => {
                         {basket.CountALl} товара
                     </span>
 
-                        <span className={'spanContainer__spanTop_middle'}><GoPrimitiveDot/></span>
+                        <span className={'spanContainer__spanTop_middle'}><BsDot/></span>
                         <span className={'spanContainer__spanTop'}>
                         {basket.AllPrice} ₽
                     </span>

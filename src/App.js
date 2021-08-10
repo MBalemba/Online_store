@@ -9,8 +9,24 @@ import {observer} from "mobx-react-lite";
 import {ClimbingBoxLoader, PuffLoader} from "react-spinners";
 
 const App = observer(function () {
-    const {user} = useContext(Context)
+
+    const {user, basket} = useContext(Context)
     const [loader, setLoader] = useState(true)
+
+
+    useEffect(()=>{
+        window.addEventListener('beforeunload', (event) => {
+            event.preventDefault()
+            // Chrome требует установки возвратного значения.
+            debugger
+
+            basket.SaveInCookie()
+        });
+    })
+
+    useEffect(()=>{
+        basket.SetFromCookie()
+    }, [])
 
 
     useEffect(()=>{
