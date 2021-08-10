@@ -12,11 +12,11 @@ const Basket = observer(() => {
     const history = useHistory()
     const {basket, user} = useContext(Context)
 
-    useEffect(()=>{
+    useEffect(() => {
 
     }, [basket])
 
-    if(user.isAuthAdmin){
+    if (user.isAuthAdmin) {
         history.push('/')
     }
 
@@ -25,42 +25,63 @@ const Basket = observer(() => {
 
         <Container className={'mt'}>
             <Row>
-                <Col md={9} >
-                    <div className={'spanContainer'}>
+                <Col md={9}>
+
+                    {basket.CountALl !== 0
+                        ?
+                        <div className={'spanContainer'}>
                         <span className={'spanContainer__spanTop'}>
                         {basket.CountALl} товара
                     </span>
 
-                        <span className={'spanContainer__spanTop_middle'}><BsDot/></span>
-                        <span className={'spanContainer__spanTop spanContainer__spanTop_right'}>
+                            <span className={'spanContainer__spanTop_middle'}><BsDot/></span>
+                            <span className={'spanContainer__spanTop spanContainer__spanTop_right'}>
                         {(basket.AllPrice.toLocaleString())} <i>₽</i>
                     </span>
-                    </div>
+                        </div>
+                        :
+                        <div>
+                            <span className={'spanContainer__spanTop'}>
+                        Нет товаров в корзине
+                            </span>
+                        </div>
+                    }
+
                 </Col>
 
             </Row>
             <Row>
-                {basket.allCards.map(el=>
-                    {
+                {basket.allCards.map(el => {
                         console.log(toJS(el))
                         debugger
-                        return  <BasketCard key={el.id} id={el.id} count={el.count} />
+                        return <BasketCard key={el.id} id={el.id} count={el.count}/>
                     }
                 )}
 
             </Row>
 
+            {basket.CountALl !== 0 && user.isAuthUser &&
             <Container>
                 <Row>
                     <Col md={12}>
                         <div className={'makeAnOrder'}>
-                            <Button  variant="primary" size="lg">
+                            <Button variant="primary" size="lg">
                                 Сделать заказ
                             </Button>
                         </div>
                     </Col>
                 </Row>
             </Container>
+            }
+
+            <Row>
+                <Col className={'mt-2 flex-row justify-content-end'} md={12}>
+                    {!user.isAuthUser &&
+                    <h6><i>Чтобы сделать заказ, войдите в аккаунт, если нет аккаунта, создайте</i></h6>
+                    }
+                </Col>
+            </Row>
+
         </Container>
 
     );

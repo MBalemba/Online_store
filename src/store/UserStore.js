@@ -55,13 +55,14 @@ export default class UserStore {
 
         return refresh()
             .then((response)=> {
-
+                debugger
                 localStorage.setItem('token', response.headers.jwtoken)
                 localStorage.setItem('RefreshToken', response.headers.refreshtoken)
+                this.checkAutorize()
                 return Promise.resolve()
             })
             .catch((error)=>{
-
+                debugger
                 localStorage.removeItem('token')
                 localStorage.removeItem('RefreshToken')
                 this._isAuthUser = false
