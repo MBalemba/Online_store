@@ -9,6 +9,10 @@
     margin-top: 2rem;
 }
 
+.basketContainer__transparent{
+    opacity: 0;
+}
+
 .basketButton{
 }
 

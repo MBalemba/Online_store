@@ -17,7 +17,6 @@ const DeviceItem = observer(({device}) => {
         if(e.target.tagName === 'BUTTON'){
             return
         }
-
         history.push('/device/'+device.id)
     }
 
@@ -48,20 +47,23 @@ const DeviceItem = observer(({device}) => {
 
 
                 {!user.isAuthAdmin &&
-                <div className={'basketContainer'}>
-                    <Button
-                        onClick={() => {
-                            buttonClick(Number(device.id), device.price)
-                            setBasketButton(false)
-                            setBasketButton(true)
-                        }}
-                        className={`basketButton`}
-                        variant={!basket.isBasketItem(Number(device.id)) ?'primary': 'danger'}
-                    >
-                        {basket.isBasketItem(Number(device.id)) && 'Убрать из корзины'}
-                        {basket.isBasketItem(Number(device.id)) || 'В корзину'}
-                    </Button>
-                </div>
+                <>
+                     <div className={`basketContainer ${!basketButton && 'basketContainer__transparent'}`}>
+                        <Button
+                            onClick={() => {
+                                buttonClick(Number(device.id), device.price)
+                                setBasketButton(false)
+                                setBasketButton(true)
+                            }}
+                            className={`basketButton`}
+                            variant={!basket.isBasketItem(Number(device.id)) ?'primary': 'danger'}
+                        >
+                            {basket.isBasketItem(Number(device.id)) && 'Убрать из корзины'}
+                            {basket.isBasketItem(Number(device.id)) || 'В корзину'}
+                        </Button>
+                    </div>
+
+                </>
                 }
 
 
