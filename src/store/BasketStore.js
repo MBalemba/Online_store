@@ -20,8 +20,11 @@ export default class BasketStore {
         debugger
 
         if (isElemWithIdExist) {
+            const elem = this._basketElems.find(el=>el.id===id)
+            
+            this._countALL -= 1*elem.count
             this._basketElems = this._basketElems.filter(el => el.id !== id)
-            this._countALL -= 1
+
         } else {
             this._basketElems.push({id: id, count: 1, price: price})
             this._countALL += 1
