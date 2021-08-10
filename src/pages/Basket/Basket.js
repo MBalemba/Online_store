@@ -27,8 +27,8 @@ const Basket = observer(() => {
                     </span>
 
                         <span className={'spanContainer__spanTop_middle'}><BsDot/></span>
-                        <span className={'spanContainer__spanTop'}>
-                        {basket.AllPrice} ₽
+                        <span className={'spanContainer__spanTop spanContainer__spanTop_right'}>
+                        {(basket.AllPrice.toLocaleString())} <i>₽</i>
                     </span>
                     </div>
                 </Col>

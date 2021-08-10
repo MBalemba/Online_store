@@ -18,11 +18,13 @@ const Auth = observer(() => {
         if(isLoginPage){
             user.doAutorizate(email, password, taskInstance)
                 .then((data)=>{
+                    debugger
                     console.log(data)
                     taskInstance.createTask('Успешно', 'Successful')
                     history.push(ADMIN_ROUTE)
                 })
                 .catch(()=>{
+                    debugger
                     taskInstance.createTask('Ошибка регистрации', 'Warning')
                 })
         } else{

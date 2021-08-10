@@ -16,8 +16,12 @@
     font-weight: 700;
 }
 
+.spanContainer__spanTop_right{
+    font-weight: 700;
+}
+
 .spanContainer__spanTop{
     text-align: center;
     font-size: 30px;
-    font-weight: 700;
+    font-weight: 500;
 }

@@ -40,7 +40,10 @@ export default class UserStore {
     doAutorizate(email, password, taskInstance) {
         return login(email, password)
             .then((response) => {
-
+                debugger
+                if(response.data.info === 'Authorized user'){
+                    this._isAuthUser = true
+                }
                 localStorage.setItem('token', response.headers.jwtoken)
                 localStorage.setItem('RefreshToken', response.headers.refreshtoken)
                 this.checkAutorize()

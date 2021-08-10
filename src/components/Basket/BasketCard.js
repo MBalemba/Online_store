@@ -18,7 +18,7 @@ const BasketCard = observer(({id, count}) => {
             console.log('response', response)
             SetDevice(response.data)
         }).catch(({response}) => {
-            debugger
+            basket.toggleBasket(id)
         })
     }, [])
 
