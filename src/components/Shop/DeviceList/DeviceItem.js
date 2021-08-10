@@ -10,7 +10,7 @@ import {observer} from "mobx-react-lite";
 
 const DeviceItem = observer(({device}) => {
     const history = useHistory()
-    const {basket} = useContext(Context)
+    const {basket, user} = useContext(Context)
     const [basketButton, setBasketButton] = useState(false)
 
     function clickCard(e){
@@ -47,7 +47,7 @@ const DeviceItem = observer(({device}) => {
                 <h6>{device.name}</h6>
 
 
-
+                {!user.isAuthAdmin &&
                 <div className={'basketContainer'}>
                     <Button
                         onClick={() => {
@@ -62,6 +62,8 @@ const DeviceItem = observer(({device}) => {
                         {basket.isBasketItem(Number(device.id)) || 'В корзину'}
                     </Button>
                 </div>
+                }
+
 
             </Card>
 

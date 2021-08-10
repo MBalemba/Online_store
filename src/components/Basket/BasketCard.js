@@ -80,14 +80,25 @@ const BasketCard = observer(({id, count}) => {
                             </Button>
                         </div>
 
+
                         <div className={'text-black-50 d-flex justify-content-between mt-2'}>
                             <div className={'mb-1'}>{device.brandName}</div>
-                            <div className={'d-flex align-items-center justify-content-between'}>
-                                <div>{device.ratings}</div>
-                                <Image src={star}/>
+                            <div className={'basketCardPrice'}>
+                                <strong >{(Number(device.price) * count).toLocaleString()} <i>₽</i></strong>
                             </div>
+
                         </div>
+
+                        <div className={'d-flex align-items-center justify-content-end'}>
+                            <div>{device.ratings}</div>
+                            <Image src={star}/>
+                        </div>
+
+
+
                         <p className={'BasketH6'} onClick={() => history.push('/device/' + device.id)}>{device.name}</p>
+
+
 
 
                     </Card>

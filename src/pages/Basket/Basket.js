@@ -6,14 +6,19 @@ import {observer} from "mobx-react-lite";
 import {toJS} from "mobx";
 import './Basket.css'
 import {BiDotsVertical, BsDot, BsThreeDotsVertical, GoPrimitiveDot} from "react-icons/all";
+import {useHistory} from "react-router-dom";
 
 const Basket = observer(() => {
-
-    const {basket} = useContext(Context)
+    const history = useHistory()
+    const {basket, user} = useContext(Context)
 
     useEffect(()=>{
 
     }, [basket])
+
+    if(user.isAuthAdmin){
+        history.push('/')
+    }
 
     return (
 

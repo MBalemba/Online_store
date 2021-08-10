@@ -22,7 +22,7 @@ export const login = async (email, password) => {
 }
 
 export const check = async () => {
-    const response = await $authHost.get('user/checkAdminRole')
+    const response = await $authHost.get('user/checkRole')
     return response
 }
 
