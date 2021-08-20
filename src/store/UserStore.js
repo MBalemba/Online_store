@@ -102,7 +102,7 @@ export default class UserStore {
 
     checkStatus(status){
         debugger
-        if(status===500){
+        if(status===468){
             return this.checkRefresh()
         }
 

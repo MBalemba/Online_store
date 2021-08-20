@@ -21,7 +21,7 @@ const CreateBrand = ({show, onHide}) => {
                 taskInstance.createTask('Возникла какая-то ошибка', 'Danger')
             }
 
-            if(response.data.status === 500){
+            if(response.data.status === 468){
                 user.checkRefresh().then(()=>{
                     sendToServer()
                 })

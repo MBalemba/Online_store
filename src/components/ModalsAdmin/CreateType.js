@@ -20,7 +20,7 @@ const CreateType = observer(({show, onHide}) => {
                     taskInstance.createTask('Ошибка, возможно такой тип уже существует', 'warning')
                     return
                 }
-                if(response.data.status === 500){
+                if(response.data.status === 468){
                     user.checkRefresh().then(()=>{
                         add()
                     })

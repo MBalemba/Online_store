@@ -106,7 +106,7 @@ const CreateDevice = observer(({show, onHide, createDevice}) => {
                                          debugger
                                      })
                                      .catch((response)=>{
-                                         if(response.status === 500) {
+                                         if(response.status === 468) {
                                              debugger
                                              if (response.data.message !== 'Maximum upload size exceeded; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException: The field imgFile exceeds its maximum permitted size of 1048576 bytes.') {
                                                  user.checkRefresh().then(()=>{
