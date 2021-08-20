@@ -80,8 +80,10 @@ export const getAllOrders = async () =>{
 }
 
 export const changeOrderStatus = async (data) =>{
+
+    const response = await $authHost.post('order/changeStatusOfOrder', data)
+    console.log(response.data)
     debugger
-    const response = await $authHost.put('order/changeStatusOfOrder', data)
     return response
 }
 

@@ -35,25 +35,25 @@ export default class OrderStore {
                 taskInstance.createTask('Статус успешно изменен', 'Success')
                 callbackChangeStatus()
             })
-            .catch(({data}) => {
+            .catch(({response}) => {
                 debugger
-                //
-                // userCheckCallback(response.status).then(() => {
-                //     debugger
-                //
-                //     this.changeOrderStatus(userCheckCallback, taskInstance, callbackChangeStatus)
-                // }).catch(() => {
-                //     debugger
-                //     if (response.data.message) {
-                //         taskInstance.createTask(response.data.message, 'Danger')
-                //     }
-                //
-                //     if (response.data.info) {
-                //         taskInstance.createTask(response.data.info, 'Danger')
-                //     }
-                //
-                //
-                // })
+
+                userCheckCallback(response.status).then(() => {
+                    debugger
+
+                    this.changeOrderStatus(userCheckCallback, taskInstance, callbackChangeStatus)
+                }).catch(() => {
+                    debugger
+                    if (response.data.message) {
+                        taskInstance.createTask(response.data.message, 'Danger')
+                    }
+
+                    if (response.data.info) {
+                        taskInstance.createTask(response.data.info, 'Danger')
+                    }
+
+
+                })
             })
     }
 
