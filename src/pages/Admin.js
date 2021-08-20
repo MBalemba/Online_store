@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import {Button, Container} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 import CreateBrand from "../components/ModalsAdmin/CreateBrand";
 import CreateType from "../components/ModalsAdmin/CreateType";
 import CreateDevice from "../components/ModalsAdmin/CreateDevice/CreateDevice";
@@ -10,7 +10,7 @@ import { toJS } from 'mobx'
 import {Redirect} from "react-router-dom";
 import './general.css'
 import AdminOrderTable from "../components/ModalsAdmin/AdminOrderTable/AdminOrderTable";
-import {Grid, Paper} from "@material-ui/core";
+import {Button, Grid, Paper} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 
 
@@ -53,19 +53,19 @@ const Admin = observer(() => {
             <Grid className={classes.root} container spacing={3}>
                 <Grid item xs={4}>
                     <Paper className={classes.paper}>
-                        <Button onClick={()=> setTypeVisible(true)} className={'mt-2'}  variant={"outline-dark"}>
+                        <Button onClick={()=> setTypeVisible(true)} className={'mt-2'}  variant="outlined" color="primary">
                             Добавить тип
                         </Button>
                     </Paper>
                 </Grid>
                 <Grid item xs={4}>
                     <Paper className={classes.paper}>
-                        <Button onClick={()=> setBrandVisible(true)} className={'mt-2'} variant={"outline-dark"}>Добавить бренд</Button>
+                        <Button onClick={()=> setBrandVisible(true)} className={'mt-2'} variant="outlined" color="primary">Добавить бренд</Button>
                     </Paper>
                 </Grid>
                 <Grid item xs={4}>
                     <Paper className={classes.paper}>
-                        <Button onClick={()=> setDeviceVisible(true)} className={'mt-2'} variant={"outline-dark"}>
+                        <Button onClick={()=> setDeviceVisible(true)} className={'mt-2'} variant="outlined" color="primary">
                             Добавить устройста
                         </Button>
                     </Paper>

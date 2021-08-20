@@ -89,6 +89,8 @@ export default class BasketStore {
     formAnOrder(StatusCheckUser, taskStore) {
 
         const createData = this._basketElems.map((el) => ({id: el.id, amount: el.count}))
+
+
         AddOrderInfoToServer(createData)
             .then((response) => {
                 // this.returnInitialState()

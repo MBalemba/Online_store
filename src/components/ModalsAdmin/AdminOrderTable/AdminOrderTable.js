@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
-    Container,
+    Container, Divider, LinearProgress,
     Paper,
     Table,
     TableBody,
@@ -18,14 +18,16 @@ import CakeTable from "./CakeTable";
 
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     Container: {
         margin: '2rem 0px',
     }, // a style rule
     tableSize: {
-        maxHeight: 440,
+        maxHeight: 540,
+        margin: theme.spacing(5,0)
     }, // a nested style rule
-});
+})
+);
 
 
 
@@ -44,7 +46,7 @@ const AdminOrderTable = observer(() => {
     useEffect(()=>{
         const items = orderStore.OrderInfo
         console.log(items)
-        setOrderItems(items)
+        setTimeout(()=>{setOrderItems(items)}, 1000)
         debugger
     }, [orderStore.OrderInfo])
 
@@ -53,17 +55,23 @@ const AdminOrderTable = observer(() => {
 
     return (
         <Container component={Paper} className={classes.Container} maxWidth="lg">
-            <Typography variant="h3" component="h1" gutterBottom>
-                Заказы
+            <Typography variant="h4" component="h1" gutterBottom>
+                Заказы:
+                <Divider />
             </Typography>
+            {orderItems.length === 0 &&
+            <LinearProgress />
+            }
+
+
 
             <TableContainer className={classes.tableSize} component={Paper}>
-                <Table aria-label="collapsible table">
+                <Table stickyHeader aria-label="collapsible table">
                     <TableHead>
                         <TableRow>
                             <TableCell />
                             <TableCell>№ Заказа</TableCell>
-                            <TableCell align="right">Количество различных товаров</TableCell>
+                            <TableCell align="left">Количество различных товаров</TableCell>
                             <TableCell align="right">Сумма заказа</TableCell>
                             <TableCell align="right">Дата Создания</TableCell>
                             <TableCell align="right">Статус заказа</TableCell>
