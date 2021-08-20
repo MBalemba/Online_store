@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, Col, Image} from "react-bootstrap";
-import star from './../../../assets/star.svg'
+import star from '../../../assets/svg/star.svg'
 import {useHistory} from 'react-router-dom'
 import {DEVICE_ROUTE} from "../../../utils/consts";
 import {Transition} from "react-transition-group";

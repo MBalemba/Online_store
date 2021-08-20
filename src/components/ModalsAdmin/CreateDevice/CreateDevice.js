@@ -1,11 +1,10 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {Button, Col, Dropdown, Form, Image, Modal, Row} from "react-bootstrap";
-import {Context} from "../../../index";
+import {Context, taskInstance, user} from "../../../index";
 import {observer} from "mobx-react-lite";
 import Dropdowns from "./ChildComponentDevice/Dropdowns.jsx";
 import NameAndPriceInput from "./ChildComponentDevice/NameAndPriceInput.jsx";
 import LoadImage from "./ChildComponentDevice/LoadImage/LoadImage";
-
 
 
 
@@ -103,15 +102,26 @@ const CreateDevice = observer(({show, onHide, createDevice}) => {
                             let characteristic = info.filter(el => el.title && el.description).map(el=>({title: el.title, description: el.description }))
                             if(createDevice.IsGetReadyToRequest()){
                                  createDevice.giveSomeDataToServer(characteristic, taskInstance)
-                                     .then()
+                                     .then(()=>{
+                                         debugger
+                                     })
                                      .catch((response)=>{
-
-                                         if(response.status === 500){
-                                             user.checkRefresh().then(()=>{
-                                                 event.target.click()
-                                             })
-
+                                         if(response.status === 500) {
+                                             debugger
+                                             if (response.data.message !== 'Maximum upload size exceeded; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException: The field imgFile exceeds its maximum permitted size of 1048576 bytes.') {
+                                                 user.checkRefresh().then(()=>{
+                                                     debugger
+                                                     event.target.click()
+                                                 })
+                                             }
                                          }
+
+                                         if(response.status === 403){
+                                             user.Out()
+                                             taskInstance.createTask('Регистрируйся разбойник, что ты тут делаешь', 'Warning' )
+                                         }
+
+
                                      })
                             } else {
                                 taskInstance.createTask('Заполненны не все данные', 'Warning')

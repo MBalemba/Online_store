@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
-import bigStar from '../assets/starBig.svg'
+import bigStar from '../assets/svg/starBig.svg'
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {useParams} from "react-router-dom";

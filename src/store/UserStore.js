@@ -100,10 +100,26 @@ export default class UserStore {
         }
     }
 
+    checkStatus(status){
+        debugger
+        if(status===500){
+            return this.checkRefresh()
+        }
+
+        if(status===403){
+            this.Out()
+            return Promise.reject()
+        }
+
+    }
+
     Out() {
         localStorage.removeItem('token')
+        localStorage.removeItem('RefreshToken')
         this._isAuthUser = false
         this._isAuthAdmin = false
     }
+
+
 
 }

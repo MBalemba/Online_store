@@ -9,12 +9,29 @@ import {Context} from "../index";
 import { toJS } from 'mobx'
 import {Redirect} from "react-router-dom";
 import './general.css'
+import AdminOrderTable from "../components/ModalsAdmin/AdminOrderTable/AdminOrderTable";
+import {Grid, Paper} from "@material-ui/core";
+import {makeStyles} from "@material-ui/styles";
 
 
 export const createDevice = new CreateDeviceStore()
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+}));
+
 
 const Admin = observer(() => {
+
+    const classes = useStyles();
+
     const {device, user} = useContext(Context)
 
     const [brandVisible,setBrandVisible] = useState(false)
@@ -32,13 +49,35 @@ const Admin = observer(() => {
 
     return (
         <Container className={'d-flex flex-column align-items-start mt-5'}>
-            <Button onClick={()=> setTypeVisible(true)} className={'mt-2'}  variant={"outline-dark"}>
-                Добавить тип
-            </Button>
-            <Button onClick={()=> setBrandVisible(true)} className={'mt-2'} variant={"outline-dark"}>Добавить бренд</Button>
-            <Button onClick={()=> setDeviceVisible(true)} className={'mt-2'} variant={"outline-dark"}>
-                Добавить устройста
-            </Button>
+
+            <Grid className={classes.root} container spacing={3}>
+                <Grid item xs={4}>
+                    <Paper className={classes.paper}>
+                        <Button onClick={()=> setTypeVisible(true)} className={'mt-2'}  variant={"outline-dark"}>
+                            Добавить тип
+                        </Button>
+                    </Paper>
+                </Grid>
+                <Grid item xs={4}>
+                    <Paper className={classes.paper}>
+                        <Button onClick={()=> setBrandVisible(true)} className={'mt-2'} variant={"outline-dark"}>Добавить бренд</Button>
+                    </Paper>
+                </Grid>
+                <Grid item xs={4}>
+                    <Paper className={classes.paper}>
+                        <Button onClick={()=> setDeviceVisible(true)} className={'mt-2'} variant={"outline-dark"}>
+                            Добавить устройста
+                        </Button>
+                    </Paper>
+                </Grid>
+            </Grid>
+
+
+
+
+
+            <AdminOrderTable />
+
 
             <CreateBrand show={brandVisible} onHide={()=> setBrandVisible(false)}/>
             <CreateType show={typeVisible} onHide={()=> setTypeVisible(false)}/>

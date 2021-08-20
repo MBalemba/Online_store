@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, Col, Image} from "react-bootstrap";
-import star from "../../assets/star.svg";
+import star from "../../assets/svg/star.svg";
 import {giveDeviceById} from "../../http/UserApi";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";

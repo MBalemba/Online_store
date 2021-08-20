@@ -10,7 +10,7 @@ import {useHistory} from "react-router-dom";
 
 const Basket = observer(() => {
     const history = useHistory()
-    const {basket, user} = useContext(Context)
+    const {basket, user, taskInstance} = useContext(Context)
 
     useEffect(() => {
 
@@ -19,6 +19,16 @@ const Basket = observer(() => {
     if (user.isAuthAdmin) {
         history.push('/')
     }
+
+
+    const handlerCreatorOrder = () => (e) => {
+        basket.formAnOrder(callbackStatusCheck, taskInstance)
+    }
+
+    function callbackStatusCheck(status){
+        return user.checkStatus(status)
+    }
+
 
     return (
 
@@ -65,7 +75,7 @@ const Basket = observer(() => {
                 <Row>
                     <Col md={12}>
                         <div className={'makeAnOrder'}>
-                            <Button variant="primary" size="lg">
+                            <Button onClick={handlerCreatorOrder()} variant="primary" size="lg">
                                 Сделать заказ
                             </Button>
                         </div>

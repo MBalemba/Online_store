@@ -1,7 +1,12 @@
 import {$authHost, $authHostRefresh, $host} from "./index";
 
-export const registration = async (email, password) => {
 
+
+
+
+
+
+export const registration = async (email, password) => {
     console.log(process.env.REACT_APP_API_URL)
 
     try {
@@ -12,8 +17,6 @@ export const registration = async (email, password) => {
         console.log(err)
         return 'ошибка'
     }
-
-
 }
 
 export const login = async (email, password) => {
@@ -26,7 +29,7 @@ export const check = async () => {
     return response
 }
 
-export const refresh = async () => {    const response = await $authHostRefresh.post('refreshToken')
+export const refresh = async () => { const response = await $authHostRefresh.post('refreshToken')
     return response
 }
 
@@ -61,6 +64,18 @@ export const postType = async (name) => {
 
 export const postBrand = async (data) => {
     const response = await $authHost.post('brand/add', data)
+    return response
+}
+
+
+export const AddOrderInfoToServer = async (data) => {
+    debugger
+    const response = await $authHost.post('order/add', data)
+    return response
+}
+
+export const getAllOrders = async () =>{
+    const response = await $authHost.get('order/getAll')
     return response
 }
 

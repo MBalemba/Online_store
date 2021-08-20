@@ -114,11 +114,13 @@ export default class CreateDeviceStore {
 
         return giveDeviceServer(data)
             .then((response) => {
+
                 (taskStore.createTask('Успешно', 'Success'))
                 return Promise.resolve()
             })
             .catch((e) => {
-                if(e.response.status!== 500){
+                debugger
+                if(e.response.status!== 500 && e.response.data.info){
                     taskStore.createTask(e.response.data.info, 'Danger')
                 }
                 return Promise.reject(e.response)

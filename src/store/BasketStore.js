@@ -1,4 +1,5 @@
 import {makeAutoObservable, toJS} from "mobx";
+import {AddOrderInfoToServer} from "../http/UserApi";
 
 
 export default class BasketStore {
@@ -20,9 +21,9 @@ export default class BasketStore {
         debugger
 
         if (isElemWithIdExist) {
-            const elem = this._basketElems.find(el=>el.id===id)
-            
-            this._countALL -= 1*elem.count
+            const elem = this._basketElems.find(el => el.id === id)
+
+            this._countALL -= 1 * elem.count
             this._basketElems = this._basketElems.filter(el => el.id !== id)
 
         } else {
@@ -64,20 +65,47 @@ export default class BasketStore {
         return isElemWithIdExist
     }
 
-    SaveInCookie(){
-        localStorage.setItem('basket',JSON.stringify(toJS(this._basketElems)))
+    SaveInCookie() {
+        localStorage.setItem('basket', JSON.stringify(toJS(this._basketElems)))
     }
 
-    SetFromCookie(){
+    SetFromCookie() {
         debugger
-        if(localStorage.getItem('basket')){
+        if (localStorage.getItem('basket')) {
             this._basketElems = JSON.parse(localStorage.getItem('basket'))
-            this._basketElems.forEach((el)=>{
-                this._countALL+= el.count
+            this._basketElems.forEach((el) => {
+                this._countALL += el.count
             })
             console.log(JSON.parse(localStorage.getItem('basket')))
         }
     }
+
+    returnInitialState() {
+        this._basketElems = []
+        this._countALL = 0
+        localStorage.setItem('basket', JSON.stringify(toJS(this._basketElems)))
+    }
+
+    formAnOrder(StatusCheckUser, taskStore) {
+
+        const createData = this._basketElems.map((el) => ({id: el.id, amount: el.count}))
+        AddOrderInfoToServer(createData)
+            .then((response) => {
+                // this.returnInitialState()
+                taskStore.createTask('Заказ сделан', 'Success')
+            })
+            .catch(({response}) => {
+                StatusCheckUser(response.status)
+                    .then(() => {
+                        // this.returnInitialState()
+                        taskStore.createTask('Заказ сделан', 'Success')
+                    })
+                    .catch(()=>{
+                        taskStore.createTask('Не удается сделать заказ', 'Danger')
+                    })
+            })
+    }
+
 
     get allCards() {
         return this._basketElems
@@ -91,14 +119,11 @@ export default class BasketStore {
         let priceSum = 0
 
         this._basketElems.forEach((el) => {
-            priceSum += Number(el.price)*Number(el.count)
+            priceSum += Number(el.price) * Number(el.count)
         })
-
 
         return priceSum
     }
-
-
 
 
 }

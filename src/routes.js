@@ -12,7 +12,7 @@ import Basket from "./pages/Basket/Basket";
 import Shop from "./pages/Shop/Shop";
 import Auth from "./pages/Auth";
 import DevicePage from "./pages/DevicePage";
-import UserPage from "./pages/UserPage";
+import UserPage from "./pages/UserPage/UserPage";
 
 export const authRoutes = [
     {
