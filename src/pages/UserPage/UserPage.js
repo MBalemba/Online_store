@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
         },
     },
     Box: {
-        padding: '2rem 0rem',
+        padding: '2rem 0rem 0.2rem',
     }
 
 }));
@@ -114,14 +114,14 @@ const UserPage = observer(() => {
             </UserPagePaper>
 
             <UserPagePaper>
-                            <Box>
+                            <Box className={classes.Box}>
                                 <Typography variant="h2">Активные заказы</Typography>
                                 <TableUserOrder activeOrders/>
                             </Box>
             </UserPagePaper>
 
             <UserPagePaper>
-                            <Box>
+                            <Box className={classes.Box}>
                                 <Typography variant="h2">Завершенные заказы</Typography>
                                 <TableUserOrder/>
                             </Box>

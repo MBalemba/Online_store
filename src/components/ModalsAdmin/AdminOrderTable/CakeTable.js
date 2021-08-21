@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     hoverRowInsertedTable:{
+        padding: '0',
         backgroundColor: '#EEEEEE',
         transition: '0.5s',
         '&:hover': {
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     insertedTableTypography1: {
+        padding: '0 1rem',
         fontWeight: theme.typography.fontWeightRegular,
         color: theme.palette.common.black,
         /*transition: '0.25s',

@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     }, // a style rule
     tableSize: {
         maxHeight: 540,
-        margin: theme.spacing(5,0)
+        margin: theme.spacing(5,0,5)
     }, // a nested style rule
 })
 );

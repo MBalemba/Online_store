@@ -8,7 +8,7 @@ import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({
         Container: {
-            margin: '2rem 0px',
+            margin: '10rem 0px',
         }, // a style rule
         tableSize: {
             maxHeight: 540,
