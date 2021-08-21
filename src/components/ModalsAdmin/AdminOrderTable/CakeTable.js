@@ -29,7 +29,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const CakeTable = ({row}) => {
+const CakeTable = ({isUserTable=false, row }) => {
+
+    console.log('totalSum: ', row?.totalSumCheck)
 
     const {taskInstance, user} = useContext(Context)
 
@@ -71,9 +73,9 @@ const CakeTable = ({row}) => {
                     {row.id}
                 </TableCell>
                 <TableCell align="left">{row?.order_devices?.length}</TableCell>
-                <TableCell align="right">{(32321322).toLocaleString()} ₽</TableCell>
+                <TableCell align="right">{row?.totalSumCheck?.toLocaleString()} ₽</TableCell>
                 <TableCell align="right">{date.format(new Date(), 'YYYY/MM/DD HH:mm:ss')}</TableCell>
-                <TableCell align="right">
+                {isUserTable || <TableCell align="right">
                     <FormControl variant="outlined" className={classes.formControl}>
                         <InputLabel>Status</InputLabel>
                         <Select
@@ -92,7 +94,8 @@ const CakeTable = ({row}) => {
                         </Select>
                     </FormControl>
 
-                </TableCell>
+                </TableCell>}
+
             </TableRow>
             {open &&
             <TableRow>

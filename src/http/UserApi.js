@@ -87,5 +87,10 @@ export const changeOrderStatus = async (data) =>{
     return response
 }
 
+export const getOrderItemsUser = async ()=>{
+    const response = await $authHost.get('/order/getAllByUser')
+    return response
+}
+
 
 

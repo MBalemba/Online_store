@@ -88,8 +88,11 @@ export default class BasketStore {
 
     formAnOrder(StatusCheckUser, taskStore) {
 
-        const createData = this._basketElems.map((el) => ({id: el.id, amount: el.count}))
-
+        const orderItems = this._basketElems.map((el) => ({id: el.id, amount: el.count}))
+        const createData = {
+            totalSumCheck: this.AllPrice,
+            orderItems: orderItems
+        }
 
         AddOrderInfoToServer(createData)
             .then((response) => {

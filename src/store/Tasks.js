@@ -7,6 +7,8 @@ export default class TaskStore{
         makeAutoObservable(this)
     }
 
+
+
     createTask(message, status=''){
         this.task.push({message, status: status, id: new Date().getTime()})
     }

@@ -1,12 +1,12 @@
-import {makeAutoObservable} from "mobx";
-import {check, checkAdmin, login, refresh} from "../http/UserApi";
+import {makeAutoObservable, toJS} from "mobx";
+import {check, checkAdmin, getOrderItemsUser, login, refresh} from "../http/UserApi";
 
 export default class UserStore {
-
 
     constructor() {
         this._isAuthUser = false
         this._isAuthAdmin = false
+        this._orderItems = []
         this._user = {}
         makeAutoObservable(this)
     }
@@ -31,7 +31,9 @@ export default class UserStore {
         return this._isAuthAdmin
     }
 
-
+    get OrderItems() {
+        return toJS(this._orderItems)
+    }
 
     get user() {
         return this._user
@@ -111,6 +113,28 @@ export default class UserStore {
             return Promise.reject()
         }
 
+        return Promise.reject()
+
+    }
+
+    getOrderItems(taskInstance) {
+        debugger
+        getOrderItemsUser()
+            .then((response)=>{
+                debugger
+                this._orderItems = response.data
+                taskInstance.createTask('Данные о заказе пришли', 'Success')
+            })
+            .catch(({response})=>{
+                this.checkStatus()
+                    .then(()=>{
+                        this.getOrderItems(taskInstance)
+                    })
+                    .catch(()=>{
+                        taskInstance.createTask(response.message, 'Danger')
+                    })
+
+            })
     }
 
     Out() {
