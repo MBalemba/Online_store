@@ -116,6 +116,7 @@ const UserPage = observer(() => {
             <UserPagePaper>
                             <Box className={classes.Box}>
                                 <Typography variant="h2">Активные заказы</Typography>
+
                                 <TableUserOrder activeOrders/>
                             </Box>
             </UserPagePaper>
