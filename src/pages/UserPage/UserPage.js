@@ -114,14 +114,10 @@ const UserPage = observer(() => {
             </UserPagePaper>
 
             <UserPagePaper>
-                    <Grid spacing={3} container>
-                        <Grid item lg={12}>
                             <Box>
                                 <Typography variant="h2">Активные заказы</Typography>
                                 <TableUserOrder activeOrders/>
                             </Box>
-                        </Grid>
-                    </Grid>
             </UserPagePaper>
 
             <UserPagePaper>

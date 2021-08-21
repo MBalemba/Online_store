@@ -6,15 +6,17 @@ import {
     IconButton,
     InputLabel,
     makeStyles,
-    MenuItem,
+    MenuItem, Paper,
     Select, Table, TableBody,
     TableCell, TableHead,
-    TableRow, Typography
+    TableRow, Typography, withStyles
 } from "@material-ui/core";
 import {MdKeyboardArrowDown, MdKeyboardArrowUp} from "react-icons/all";
 import date from 'date-and-time';
 import {Context} from "../../../index";
 import {orderStore} from "../../../store/OrderStore";
+import {styled} from "@material-ui/core/styles";
+
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -26,12 +28,71 @@ const useStyles = makeStyles((theme) => ({
     },
     cakeStyles: {
         margin: theme.spacing(5, 1, 10),
+        fontWeight: theme.typography.fontWeightLight,
+        color: theme.palette.primary.light,
     },
+    insertedTable:{
+        backgroundColor: '#EEEEEE'
+    },
+
+    insertedTableHead: {
+        ...theme.typography.subtitle1,
+        fontWeight: theme.typography.fontWeightMedium,
+        fontSize: '1.1rem',
+        color: theme.palette.common.black
+    },
+
+    hoverRowInsertedTable:{
+        backgroundColor: '#EEEEEE',
+        transition: '0.5s',
+        '&:hover': {
+            backgroundColor: theme.palette.common.white,
+        },
+    },
+    insertedTableTypography1: {
+        fontWeight: theme.typography.fontWeightRegular,
+        color: theme.palette.common.black,
+        /*transition: '0.25s',
+        '&:hover': {
+            backgroundColor: theme.palette.primary.light,
+        },*/
+    },
+    insertedTableTypography2: {
+        fontWeight: theme.typography.fontWeightBold,
+        color: theme.palette.secondary.light,
+        /*transition: '0.25s',
+        '&:hover': {
+            backgroundColor: theme.palette.primary.light,
+        },*/
+    }
 }));
 
-const CakeTable = ({isUserTable=false, row }) => {
 
-    console.log('totalSum: ', row?.totalSumCheck)
+export const InsertedTableCellHead = ({children, ...other}) =>{
+    const classes = useStyles()
+
+    return(
+        <TableCell className={classes.insertedTableHead} {...other} >
+            {children}
+        </TableCell>
+    )
+}
+
+const InsertedTableCellBody = ({children, ...other}) =>{
+    const classes = useStyles()
+
+    return(
+        <TableCell className={classes.insertedTableTypography1} {...other} >
+            {children}
+        </TableCell>
+    )
+}
+
+
+
+const CakeTable = ({isUserTable = false, row}) => {
+
+    console.log('totalSum: ', row.dataOfCreate)
 
     const {taskInstance, user} = useContext(Context)
 
@@ -72,9 +133,9 @@ const CakeTable = ({isUserTable=false, row }) => {
                 <TableCell component="th" scope="row">
                     {row.id}
                 </TableCell>
-                <TableCell align="left">{row?.order_devices?.length}</TableCell>
+                <TableCell align="left">{row?.order_devicesDTO?.length}</TableCell>
                 <TableCell align="right">{row?.totalSumCheck?.toLocaleString()} ₽</TableCell>
-                <TableCell align="right">{date.format(new Date(), 'YYYY/MM/DD HH:mm:ss')}</TableCell>
+                <TableCell align="right">{date.format(new Date(row.dataOfCreate), 'YYYY/MM/DD HH:mm:ss')}</TableCell>
                 {isUserTable || <TableCell align="right">
                     <FormControl variant="outlined" className={classes.formControl}>
                         <InputLabel>Status</InputLabel>
@@ -102,37 +163,37 @@ const CakeTable = ({isUserTable=false, row }) => {
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
 
                     <Box className={classes.cakeStyles}>
-                        <Typography variant="h6" gutterBottom component="div">
+                        <Typography className={classes.insertedTableTypography2} variant="h5" gutterBottom component="div">
                             History
                         </Typography>
-                        <Table size="small" aria-label="purchases">
+                        <Table className={classes.insertedTable} size="small" aria-label="purchases">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Имя товара</TableCell>
-                                    <TableCell>Тип устройства</TableCell>
-                                    <TableCell align="right">Цена за единицу (₽)</TableCell>
-                                    <TableCell align="right">Кол. товара</TableCell>
-                                    <TableCell align="right">Итого (₽)</TableCell>
-                                    <TableCell align="right">Открыть карточку товара</TableCell>
+                                    <InsertedTableCellHead>Имя товара</InsertedTableCellHead>
+                                    <InsertedTableCellHead>Тип устройства</InsertedTableCellHead>
+                                    <InsertedTableCellHead align="right">Цена за единицу (₽)</InsertedTableCellHead>
+                                    <InsertedTableCellHead align="right">Кол. товара</InsertedTableCellHead>
+                                    <InsertedTableCellHead align="right">Итого (₽)</InsertedTableCellHead>
+                                    <InsertedTableCellHead align="right">Открыть карточку товара</InsertedTableCellHead>
                                 </TableRow>
                             </TableHead>
-                            <TableBody>
-                                {row.order_devices.map((product) => (
-                                    <TableRow key={product.deviceDTO.id}>
-                                        <TableCell component="th" scope="row">
+                            <TableBody >
+                                {row.order_devicesDTO.map((product) => (
+                                    <TableRow className={classes.hoverRowInsertedTable} key={product.deviceDTO.id}>
+                                        <InsertedTableCellBody component="th" scope="row">
                                             {product.deviceDTO.name}
-                                        </TableCell>
-                                        <TableCell align="right">{product.deviceDTO.typeName}</TableCell>
-                                        <TableCell align="right">{product.deviceDTO.price}</TableCell>
-                                        <TableCell align="right">{product.amountOfProduct}</TableCell>
-                                        <TableCell align="right">
+                                        </InsertedTableCellBody>
+                                        <InsertedTableCellBody align="left">{product.deviceDTO.typeName}</InsertedTableCellBody>
+                                        <InsertedTableCellBody align="right">{product.deviceDTO.price.toLocaleString()} ₽</InsertedTableCellBody>
+                                        <InsertedTableCellBody align="right">{product.amountOfProduct}</InsertedTableCellBody>
+                                        <InsertedTableCellBody className={classes.insertedTableTypography2} align="right">
                                             {(Number(product.deviceDTO.price) * product.amountOfProduct).toLocaleString()} ₽
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            <Button>
+                                        </InsertedTableCellBody>
+                                        <InsertedTableCellBody align="right">
+                                            <Button className={classes.insertedTableTypography1}>
                                                 Открыть
                                             </Button>
-                                        </TableCell>
+                                        </InsertedTableCellBody>
                                     </TableRow>
                                 ))}
                             </TableBody>

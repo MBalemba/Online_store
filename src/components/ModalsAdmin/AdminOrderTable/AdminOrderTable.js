@@ -14,7 +14,7 @@ import {makeStyles} from "@material-ui/styles";
 import {observer} from "mobx-react-lite";
 import {orderStore} from "../../../store/OrderStore";
 import {Context} from "../../../index";
-import CakeTable from "./CakeTable";
+import CakeTable, {InsertedTableCellHead} from "./CakeTable";
 
 
 
@@ -69,11 +69,11 @@ const AdminOrderTable = observer(() => {
                     <TableHead>
                         <TableRow>
                             <TableCell />
-                            <TableCell>№ Заказа</TableCell>
-                            <TableCell align="left">Количество различных товаров</TableCell>
-                            <TableCell align="right">Сумма заказа</TableCell>
-                            <TableCell align="right">Дата Создания</TableCell>
-                            <TableCell align="right">Статус заказа</TableCell>
+                            <InsertedTableCellHead>№ Заказа</InsertedTableCellHead>
+                            <InsertedTableCellHead align="left">Количество различных товаров</InsertedTableCellHead>
+                            <InsertedTableCellHead align="right">Сумма заказа</InsertedTableCellHead>
+                            <InsertedTableCellHead align="right">Дата Создания</InsertedTableCellHead>
+                            <InsertedTableCellHead align="right">Статус заказа</InsertedTableCellHead>
                         </TableRow>
                     </TableHead>
                     <TableBody>
