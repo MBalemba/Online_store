@@ -46,7 +46,7 @@ const ButtonSlider = styled(Button)({
     transition: '0.25s',
     '&:hover': {
         transform:' scale(1.2)',
-        background: '#007bff',
+        background: 'rgba(0,0,0,0.4)',
     }
 })
 
@@ -281,7 +281,7 @@ class MainPage_v2 extends Component {
         return (
             <Paper ref={this.ref} id="gallery" className={'gallery'}>
                 <div className={'btnSlider btnSlider_prev'}>
-                    <ButtonSlider color="primary" variant="outlined">
+                    <ButtonSlider variant="outlined">
                         <BiLeftArrow/>
                     </ButtonSlider>
                 </div>
@@ -304,7 +304,7 @@ class MainPage_v2 extends Component {
                     </div>
                 </div>
                 <div className={'btnSlider btnSlider_next'}>
-                    <ButtonSlider color="primary" variant="outlined">
+                    <ButtonSlider variant="outlined">
                         <BiRightArrow/>
                     </ButtonSlider>
                 </div>
