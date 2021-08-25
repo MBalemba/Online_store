@@ -12,8 +12,11 @@
 
 
 .gallery{
+    position: relative;
     width: 100%;
     overflow: hidden;
+    cursor: grab;
+
 }
 
 .gallery-line{
@@ -28,6 +31,51 @@
     float: left;
 
 }
+
+.btnSlider{
+    position: absolute;
+    margin: auto 0;
+    z-index: 20;
+}
+
+.btnSlider_prev{
+    top:45%;
+    left: 2rem;
+}
+
+.btnSlider_next{
+    top:45%;
+    right: 2rem;
+}
+
+
+.dotsMenu{
+
+    bottom: -0.5rem;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrapperDotItem{
+    padding: 0 1.5rem;
+    cursor: pointer;
+}
+.wrapperDotItem:hover .dotItem{
+    background-color: gray;
+}
+.dotItem{
+    width: 0.5rem;
+    height: 0.5rem;
+    margin: 1rem 1rem;
+    border-radius: 50%;
+    background-color: black;
+}
+
+
 
 
 
