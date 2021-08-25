@@ -74,10 +74,10 @@ export default class UserStore {
     }
 
     checkAutorize() {
-        debugger
+
         if (localStorage.getItem('token')) {
             return check().then((r) => {
-                debugger
+                // debugger
                 if (r.data.info === 'ADMIN') {
                     this._isAuthAdmin = true
                 }
@@ -89,11 +89,11 @@ export default class UserStore {
                 return Promise.resolve()
 
             }).catch((r)=>{
-                debugger
+                // debugger
                 this.checkRefresh().then(()=>{})
                 console.log(r)
             }).finally(() => {
-                debugger
+                // debugger
                     return Promise.resolve()
                 }
             )

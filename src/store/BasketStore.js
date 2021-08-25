@@ -70,7 +70,7 @@ export default class BasketStore {
     }
 
     SetFromCookie() {
-        debugger
+
         if (localStorage.getItem('basket')) {
             this._basketElems = JSON.parse(localStorage.getItem('basket'))
             this._basketElems.forEach((el) => {

@@ -4,7 +4,7 @@ import {authRoutes, publicRoutes} from "../routes";
 import {DEVICE_ROUTE, SHOP_ROUTE} from "../utils/consts";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
-import Shop from "../pages/Shop/Shop";
+import MainPage_v2 from "../pages/Shop/MainPage_v2";
 import DevicePage from "../pages/DevicePage";
 
 
@@ -30,7 +30,7 @@ const AppRouter = observer(() => {
                         <Route exact={path !== DEVICE_ROUTE} key={path} path={path} component={Component}/>
                 )}
 
-                <Route exact={false} path={SHOP_ROUTE} component={Shop}/>
+                <Route exact={false} path={SHOP_ROUTE} component={MainPage_v2}/>
                 <Redirect to={SHOP_ROUTE}/>
             </Switch>
         </div>

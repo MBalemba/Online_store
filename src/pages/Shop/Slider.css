@@ -1,0 +1,34 @@
+.slide{
+    height: 20rem;
+    padding: 1rem;
+}
+
+.slide_slideImage__29MbQ {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+
+.gallery{
+    width: 100%;
+    overflow: hidden;
+}
+
+.gallery-line{
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-slide{
+    min-height: 1px;
+    float: left;
+
+}
+
+
+
+

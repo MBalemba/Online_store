@@ -9,7 +9,7 @@ import {
     USER_ROUTE
 } from "./utils/consts";
 import Basket from "./pages/Basket/Basket";
-import Shop from "./pages/Shop/Shop";
+import MainPage_v2 from "./pages/Shop/MainPage_v2";
 import Auth from "./pages/Auth";
 import DevicePage from "./pages/DevicePage";
 import UserPage from "./pages/UserPage/UserPage";
@@ -28,7 +28,7 @@ export const authRoutes = [
 export const publicRoutes = [
     {
         path: SHOP_ROUTE,
-        Component: Shop,
+        Component: MainPage_v2,
     },
     {
         path: LOGIN_ROUTE,
