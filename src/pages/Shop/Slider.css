@@ -63,11 +63,15 @@
 .wrapperDotItem{
     padding: 0 1.5rem;
     cursor: pointer;
+    transition: 0.25s;
 }
 .wrapperDotItem:hover .dotItem{
+
+    transform: scale(1.5);
     background-color: gray;
 }
 .dotItem{
+    transition: 0.25s;
     width: 0.5rem;
     height: 0.5rem;
     margin: 1rem 1rem;

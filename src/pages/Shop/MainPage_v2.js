@@ -43,7 +43,9 @@ const ButtonSlider = styled(Button)({
     minHeight: '3rem',
     borderRadius: '50%',
     color: 'white',
+    transition: '0.25s',
     '&:hover': {
+        transform:' scale(1.2)',
         background: '#007bff',
     }
 })
