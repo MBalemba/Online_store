@@ -284,16 +284,16 @@ class MainPage_v2 extends Component {
                     </ButtonSlider>
                 </div>
                 <div className={'gallery-line'}>
+                    <div className="slide slide-3">
+                        <img src="https://images.wbstatic.net/bners1/big_holodilnik_25_08.jpg" alt=""
+                             className="slide_slideImage__29MbQ"/>
+                    </div>
                     <div className="slide slide-1">
                         <img src="https://images.wbstatic.net/bners1/big_school_25_08.jpg" alt=""
                              className="slide_slideImage__29MbQ"/>
                     </div>
                     <div className="slide slide-2">
-                        <img src="https://images.wbstatic.net/bners1/big_school_25_08.jpg" alt=""
-                             className="slide_slideImage__29MbQ"/>
-                    </div>
-                    <div className="slide slide-3">
-                        <img src="https://images.wbstatic.net/bners1/big_school_25_08.jpg" alt=""
+                        <img src="https://images.wbstatic.net/bners1/pull_666.jpg" alt=""
                              className="slide_slideImage__29MbQ"/>
                     </div>
                     <div className="slide slide-4">
