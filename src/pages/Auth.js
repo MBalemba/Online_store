@@ -16,15 +16,21 @@ const useStyles = makeStyles((theme) => ({
             width: '770px'
         },
     },
-    h4:{
+    h4: {
         marginBottom: '26px'
     },
-    paperContent: {
+    paperContent: {},
 
+    accountDataWrapper: {
+        marginBottom: '26px'
     },
 
-    accountDataWrapper:{
-        marginBottom: '26px'
+    accountDataWrapper__inputGroup: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'stretch',
+        height: '48px',
+        marginBottom: '26px',
     },
 
     input: {
@@ -94,16 +100,36 @@ const Auth = observer(() => {
 
             <Paper className={classes.Paper}>
                 <form className={classes.paperContent}>
-                    <Typography className={classes.h4} variant="h4">{isLoginPage ? 'Авторизация' : 'Регистрация'}</Typography>
+
+                    <Typography className={classes.h4}
+                                variant="h4">{isLoginPage ? 'Авторизация' : 'Регистрация'}</Typography>
 
                     <div className={classes.accountDataWrapper}>
-                           <div className={classes.input}>
-                               <TextField  size="small"  fullWidth id="outlined-basic" label="Номер телефона" variant="outlined" />
-                           </div>
+                        {!isLoginPage &&
+                        <div className={classes.accountDataWrapper__inputGroup}>
+                            <div className={classes.input}>
+                                <TextField size="small"  id="outlined-basic" label="Фамилия"
+                                           variant="outlined"/>
+                            </div>
+                            <div className={classes.input}>
+                                <TextField size="small"  id="outlined-basic" label="Имя"
+                                           variant="outlined"/>
+                            </div>
+                            <div className={classes.input}>
+                                <TextField size="small"  id="outlined-basic" label="Отчество"
+                                           variant="outlined"/>
+                            </div>
+                        </div>}
 
-                           <div className={classes.input}>
-                               <TextField  size="small"  fullWidth id="outlined-basic" label="Пароль" variant="outlined" />
-                           </div>
+
+                        <div className={classes.input}>
+                            <TextField size="small" fullWidth id="outlined-basic" label="Номер телефона"
+                                       variant="outlined"/>
+                        </div>
+
+                        <div className={classes.input}>
+                            <TextField size="small" fullWidth id="outlined-basic" label="Пароль" variant="outlined"/>
+                        </div>
 
                     </div>
 
@@ -129,7 +155,7 @@ const Auth = observer(() => {
                 </form>
             </Paper>
 
-           {/* <Card style={{width: 600}} className={'p-5'}>
+            {/* <Card style={{width: 600}} className={'p-5'}>
                 <h2 className={'m-auto'}>{isLoginPage ? 'Авторизация' : 'Регистрация'}</h2>
                 <Form className={'d-flex flex-column'}>
                     <Form.Control
