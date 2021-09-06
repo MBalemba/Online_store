@@ -1,26 +1,20 @@
 import {$authHost, $authHostRefresh, $host} from "./index";
 
 
-
-
-
-
-
-export const registration = async (email, password) => {
+export const registration = async (obj) => {
     console.log(process.env.REACT_APP_API_URL)
-
     try {
-        const response = await $host.post('user/registration', {email, password, role: 'ADMIN'})
-        return response?.data?.info
-    } catch (err){
+        const response = await $host.post('user/registration', obj)
+        return response.data
+    } catch ({response}) {
         debugger
-        console.log(err)
+        console.log(response)
         return 'ошибка'
     }
 }
 
 export const login = async (email, password) => {
-    const response = await $host.post('login', {email: email, password: password })
+    const response = await $host.post('login', {email: email, password: password})
     return response
 }
 
@@ -29,7 +23,8 @@ export const check = async () => {
     return response
 }
 
-export const refresh = async () => { const response = await $authHostRefresh.post('refreshToken')
+export const refresh = async () => {
+    const response = await $authHostRefresh.post('refreshToken')
     return response
 }
 
@@ -41,11 +36,11 @@ export const getTypeBrand = async () => {
 
 export const getDevices = async (query) => {
     console.log('query', query)
-    const response = await $authHost.get('device/getByParams'+ query)
+    const response = await $authHost.get('device/getByParams' + query)
     return response
 }
 
-export const giveDeviceServer = async (data) =>{
+export const giveDeviceServer = async (data) => {
     const response = await $authHost.post('device/add', data)
     return response
 }
@@ -74,12 +69,19 @@ export const AddOrderInfoToServer = async (data) => {
     return response
 }
 
-export const getAllOrders = async () =>{
+export const getAllOrders = async () => {
     const response = await $authHost.get('order/getAll')
     return response
 }
 
-export const changeOrderStatus = async (data) =>{
+export const codeConfirmation = async (obj) => {
+    debugger
+    const response = await $host.put('/user/codeConfirmation', obj)
+    debugger
+    return response
+}
+
+export const changeOrderStatus = async (data) => {
 
     const response = await $authHost.post('order/changeStatusOfOrder', data)
     console.log(response.data)
@@ -87,7 +89,7 @@ export const changeOrderStatus = async (data) =>{
     return response
 }
 
-export const getOrderItemsUser = async ()=>{
+export const getOrderItemsUser = async () => {
     const response = await $authHost.get('/order/getAllByUser')
     return response
 }

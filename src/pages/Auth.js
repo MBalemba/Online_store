@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Button, Card, Form, Row} from "react-bootstrap";
 import {NavLink, Redirect, useHistory, useLocation} from "react-router-dom";
 import {ADMIN_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE} from "../utils/consts";
-import {login, registration} from "../http/UserApi";
+import {codeConfirmation, login, registration} from "../http/UserApi";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {
@@ -19,7 +19,6 @@ import {Formik, Form as FormFormik, useField, useFormik, Field} from 'formik';
 import * as Yup from 'yup';
 import MaskedInput from "react-text-mask/dist/reactTextMask";
 import NumberFormat from "react-number-format";
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -61,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
         }
     },
 
+    input_Up: {
+        maxWidth: '224px',
+    },
+
     buttonWrapper: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -97,7 +100,7 @@ function TextMaskCustom(props) {
 
 
 function NumberFormatCustom(props) {
-    const { inputRef, ...other } = props;
+    const {inputRef, ...other} = props;
 
     return (
         <NumberFormat
@@ -109,6 +112,21 @@ function NumberFormatCustom(props) {
     );
 }
 
+function KodFormatCustom(props) {
+    const {inputRef, ...other} = props;
+
+    return (
+        <NumberFormat
+            {...other}
+            getInputRef={inputRef}
+            format="#####"
+            mask="_"
+        />
+    );
+}
+
+
+
 
 const Auth = observer(() => {
     const location = useLocation()
@@ -116,6 +134,7 @@ const Auth = observer(() => {
     const isLoginPage = location.pathname === LOGIN_ROUTE
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [isKod, setIsKod] = useState({appear: false, value: ''})
     const history = useHistory()
 
 
@@ -144,11 +163,11 @@ const Auth = observer(() => {
 
     const validationSchema = Yup.object().shape({
         fullName: Yup.object().shape({
-            firstName: Yup.string().max(15, 'больше 15 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui,'Только русские буквы').required('Пустое поле'),
-            lastName: Yup.string().max(20, 'больше 20 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui,'Только русские буквы').required('Пустое поле'),
-            patronymic: Yup.string().max(20, 'больше 20 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui,'Только русские буквы').required('Пустое поле'),
+            firstName: Yup.string().max(15, 'больше 15 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui, 'Только русские буквы, без пробелов').required('Пустое поле'),
+            lastName: Yup.string().max(20, 'больше 20 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui, 'Только русские буквы, без пробелов').required('Пустое поле'),
+            patronymic: Yup.string().max(20, 'больше 20 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui, 'Только русские буквы, без пробелов').required('Пустое поле'),
         }),
-        number: Yup.string().required('Пустое поле')
+        number: Yup.string().required('Пустое поле'),
     })
 
 
@@ -161,6 +180,7 @@ const Auth = observer(() => {
             },
             number: '',
             password: '',
+
         },
         validationSchema: validationSchema,
         onSubmit: values => {
@@ -221,11 +241,37 @@ const Auth = observer(() => {
                             },
                             number: '',
                             password: '',
+                            kod: 'Введите код',
                         }
                     }
                     validationSchema={validationSchema}
-                    onSubmit={values => {
-                        alert(JSON.stringify(values, null))
+                    onSubmit={async (values, {setSubmitting}) => {
+                        const
+                            fullName = values.fullName.lastName + ' ' + values.fullName.firstName + ' ' + values.fullName.patronymic,
+                            telephoneNumber = values.number.match(/\d/g).join(''),
+                            password = values.password;
+                        if (isLoginPage) {
+                            user.doAutorizate(email, password, taskInstance)
+                                .then((data) => {
+                                    debugger
+                                    console.log(data)
+                                    taskInstance.createTask('Успешно', 'Successful')
+                                    history.push(ADMIN_ROUTE)
+                                })
+                                .catch(() => {
+                                    debugger
+                                    taskInstance.createTask('Ошибка регистрации', 'Warning')
+                                })
+                        } else {
+                            const response = await registration({FIO: fullName, telephoneNumber: telephoneNumber, password: password})
+                            debugger
+                            setIsKod({appear: true, value: ''})
+                            //taskInstance.createTask(response, 'Successful')
+                            setTimeout(() => {
+                                setSubmitting(false);
+                            }, 1000)
+                        }
+
                     }
                     }
                 >
@@ -300,7 +346,7 @@ const Auth = observer(() => {
 
                                     </MaskedInput>
                                     </div>*/}
-                                <div className={classes.input}>
+                                <div className={classes.input + ' ' + classes.input_Up}>
                                     <TextField
                                         type={'text'}
                                         onChange={formik.handleChange}
@@ -312,7 +358,7 @@ const Auth = observer(() => {
                                         size="small" id="outlined-basic" label="Фамилия"
                                         variant="outlined"/>
                                 </div>
-                                <div className={classes.input}>
+                                <div className={classes.input + ' ' + classes.input_Up}>
                                     <TextField
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
@@ -323,7 +369,7 @@ const Auth = observer(() => {
                                         size="small" id="outlined-basic" label="Имя"
                                         variant="outlined"/>
                                 </div>
-                                <div className={classes.input}>
+                                <div className={classes.input + ' ' + classes.input_Up}>
                                     <Field
                                         as={TextField}
                                         onChange={formik.handleChange}
@@ -336,8 +382,6 @@ const Auth = observer(() => {
                                         variant="outlined"/>
                                 </div>
                             </div>}
-
-
 
 
                             <div className={classes.input}>
@@ -366,21 +410,52 @@ const Auth = observer(() => {
                                     variant="outlined"/>
                             </div>
 
+
+                            {
+                                isKod.appear && <div className={classes.input}>
+                                    <TextField
+                                        onChange={(e)=>{
+                                            setIsKod({appear: true, value:e.target.value})
+                                        }}
+                                        value={isKod.value}
+                                        name={'kod'}
+                                        type={'text'} size="small"  id="outlined-basic" label="Код"
+                                        variant="outlined"
+
+                                    />
+
+
+                                    <ButtonM onClick={()=>{
+                                        codeConfirmation({
+                                            telephoneNumber:'+' + formik.values.number.match(/\d/g).join(''),
+                                            code: isKod.value
+                                        }) .then(()=>{
+                                            debugger
+                                        }).catch(({response})=>{
+                                            debugger
+                                        })
+                                    }}  variant="contained">Отправить код</ButtonM>
+
+
+
+                                </div>
+                            }
+
                             <div style={{maxWidth: '100%', wordWrap: 'break-word'}}>
 
-                                    <Typography style={{maxWidth: '100%', wordWrap: 'break-word'}} variant={'body1'} >
+                                <Typography style={{maxWidth: '100%', wordWrap: 'break-word'}} variant={'body1'}>
                                     {JSON.stringify(formik.values)}
                                 </Typography>
                                 <hr/>
                                 <br/>
-                                <Typography variant={'body1'} >
-                                    {'\n'+
+                                <Typography variant={'body1'}>
+                                    {'\n' +
                                     JSON.stringify(formik.errors)}
                                 </Typography>
                                 <hr/>
                                 <br/>
-                                <Typography variant={'body1'} >
-                                    {'\n'+JSON.stringify(formik.touched)}
+                                <Typography variant={'body1'}>
+                                    {'\n' + JSON.stringify(formik.touched)}
                                 </Typography>
                             </div>
                         </div>
@@ -401,7 +476,7 @@ const Auth = observer(() => {
                             }
 
 
-                            <ButtonM type="submit"
+                            <ButtonM disabled={formik.isSubmitting} type="submit"
                                      variant="contained">{isLoginPage ? 'Войти' : 'Зарегистрируйтесь'}</ButtonM>
 
                         </div>
