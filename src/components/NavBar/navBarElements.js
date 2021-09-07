@@ -22,3 +22,18 @@ export const NavElemWrapper = styled.div`
   align-items: center;
   margin-right: 0.5rem;
 `
+
+export const counterBasket = styled.div`
+  color: #e2e3e5;
+  position: relative;
+  padding: 0 4px;
+  left: -4px;
+  font-size: 12px;
+  bottom: 4px;
+  background-color: #007bff;
+  border: 1px solid white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`

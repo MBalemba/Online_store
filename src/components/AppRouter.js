@@ -4,7 +4,7 @@ import {authRoutes, publicRoutes} from "../routes";
 import {DEVICE_ROUTE, SHOP_ROUTE} from "../utils/consts";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
-import MainPage_v2 from "../pages/Shop/MainPage_v2";
+import MainPage_v2 from "../pages/Shop/Shop";
 import DevicePage from "../pages/DevicePage";
 
 

@@ -248,7 +248,7 @@ const Auth = observer(() => {
                     onSubmit={async (values, {setSubmitting}) => {
                         const
                             fullName = values.fullName.lastName + ' ' + values.fullName.firstName + ' ' + values.fullName.patronymic,
-                            telephoneNumber = values.number.match(/\d/g).join(''),
+                            telephoneNumber = '+' + values.number.match(/\d/g).join(''),
                             password = values.password;
                         if (isLoginPage) {
                             user.doAutorizate(email, password, taskInstance)
@@ -429,7 +429,7 @@ const Auth = observer(() => {
                                         codeConfirmation({
                                             telephoneNumber:'+' + formik.values.number.match(/\d/g).join(''),
                                             code: isKod.value
-                                        }) .then(()=>{
+                                        }) .then((r)=>{
                                             debugger
                                         }).catch(({response})=>{
                                             debugger

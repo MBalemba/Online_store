@@ -9,7 +9,7 @@ import {
     USER_ROUTE
 } from "./utils/consts";
 import Basket from "./pages/Basket/Basket";
-import MainPage_v2 from "./pages/Shop/MainPage_v2";
+import MainPage_v2 from "./pages/Shop/Shop";
 import Auth from "./pages/Auth";
 import DevicePage from "./pages/DevicePage";
 import UserPage from "./pages/UserPage/UserPage";

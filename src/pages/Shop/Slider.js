@@ -1,41 +1,19 @@
-import React, {Component, useContext, useEffect} from 'react';
-import {Col, Container, Row} from "react-bootstrap";
-import TypeBar from "../../components/Shop/TypeBar";
-import SettingsBar from "../../components/Shop/SettingsBar/SettingsBar";
-import DeviceList from "../../components/Shop/DeviceList/DeviceList";
-import {observer} from "mobx-react-lite";
-import {Context} from "../../index";
-import MyPagination from "../../components/Shop/Pagination";
-import '../general.css'
-import './Slider.css'
-import {Button, makeStyles, Paper} from "@material-ui/core";
-import {Gallery} from "../../utils/gallery";
-import {styled} from '@material-ui/core/styles';
-import {BiLeftArrow, BiRightArrow, BsDot} from "react-icons/all";
+import React, {Component} from "react";
+import {Button, Paper} from "@material-ui/core";
+import {BiLeftArrow, BiRightArrow} from "react-icons/all";
+import {styled} from "@material-ui/core/styles";
 
 
-const useStyles = makeStyles((theme) => ({
-        container: {
-            padding: '10px',
-            boxSizing: 'border-box',
-            position: 'related',
-            overflowX: 'hidden',
-        },
-        galleryLine: {
-            display: 'flex',
-            height: 'inherit',
-            minHeight: '500px',
-            position: 'relative',
-        },
-        item: {
-            boxSizing: 'border-box',
-            width: '70%',
-            padding: '1rem',
-            minHeight: '100%',
-            minWidth: ({numberVisibleItems}) => 100 / numberVisibleItems + '%',
-        }
-    })
-)
+function debounce(func, time = 140) {
+
+    let timer;
+
+    return function (event) {
+        clearTimeout(timer);
+        timer = setTimeout(func, time, event)
+    }
+}
+
 
 const ButtonSlider = styled(Button)({
     background: 'rgba(0,0,0,0.3)',
@@ -50,18 +28,7 @@ const ButtonSlider = styled(Button)({
     }
 })
 
-
-function debounce(func, time = 140) {
-
-    let timer;
-
-    return function (event) {
-        clearTimeout(timer);
-        timer = setTimeout(func, time, event)
-    }
-}
-
-class MainPage_v2 extends Component {
+class Slider extends Component {
 
     constructor(props) {
         super(props);
@@ -328,76 +295,4 @@ class MainPage_v2 extends Component {
 }
 
 
-function MainPage() {
-    const propsToStyle = {
-        numberVisibleItems: 2,
-    }
-
-    const ref = React.createRef();
-
-    let oldScroll = 0
-
-    const classes = useStyles(propsToStyle)
-
-    useEffect(() => {
-        const instGallery = new Gallery(ref.current)
-
-    })
-
-    return (<>
-        <div
-            className={classes.container}
-        >
-            <Paper ref={ref} id="gallery">
-                <div className="slide slide-1">
-                    <Paper className={classes.item}>
-
-                    </Paper>
-                </div>
-                <div className="slide slide-2">
-                    2
-                </div>
-                <div className="slide slide-3">
-                    3
-                </div>
-                <div className="slide slide-4">
-                    4
-                </div>
-            </Paper>
-
-        </div>
-    </>);
-}
-
-const Shop = observer(() => {
-    const {device, user} = useContext(Context)
-
-    useEffect(() => {
-            device.setBrandInType()
-            return () => {
-                device.toggleStatusLoadDevices(true)
-            }
-        }
-        , [])
-
-    return (
-        <Container>
-            <Row className={'mt'}>
-
-                <Col md={3}>
-                    <TypeBar/>
-                    <SettingsBar/>
-
-                </Col>
-                <Col md={9}>
-                    <SettingsBar/>
-                    <MyPagination/>
-                    <DeviceList/>
-                    <MainPage_v2/>
-                </Col>
-            </Row>
-        </Container>
-    );
-});
-
-export default Shop;
+export default Slider

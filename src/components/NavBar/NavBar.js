@@ -1,120 +1,222 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Context} from "../../index";
-import {Button, Container, Form, FormControl, Nav as NavB, Navbar} from "react-bootstrap";
+import { Container, Form, FormControl, Nav as NavB, Navbar} from "react-bootstrap";
 import {ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, SHOP_ROUTE, USER_ROUTE} from "../../utils/consts";
 import {ButtonS, Nav, NavElemWrapper} from "./navBarElements";
 import {observer} from "mobx-react-lite";
 import {useHistory} from 'react-router-dom'
 import {BiLogIn, BiLogOut, FaUserCircle, IoLogOutOutline, RiShoppingBasketFill} from "react-icons/all";
 import './NavBar.css'
+import {AppBar, Button, IconButton, makeStyles, Toolbar, Typography} from "@material-ui/core";
+import Unlock from "../Common/Svg/Unlock";
+import {NavLink} from "react-router-dom";
+import {useStylesHeader} from "./Styles";
+import Lock from "../Common/Svg/Lock";
+
+
+
+
 const NavBar = observer(() => {
     const {user, device, basket} = useContext(Context)
     const history = useHistory();
+    const [isLock, setIsLock] = useState(true)
+    const classes = useStylesHeader()
+
+
     const acountOut = () => {
         user.Out()
     }
 
     return (
+        <>
 
-        <Navbar  fixed="top" bg="dark" variant="dark">
-            <Container className={'NavBar'} >
-                <Nav onClick={() => {
-                    device.cleanSelectedBrands()
-                }} to={SHOP_ROUTE}>КупиДевайс</Nav>
-
-                <NavB className="ml-auto" style={{color: 'white'}}>
-                    {user.isAuthAdmin ? <>
-
-                            <ButtonS onClick={() => (history.push(ADMIN_ROUTE))} variant={'outline-light'}>
-                                <NavElemWrapper>
-                                    <p>Админ панель</p>
-                                </NavElemWrapper>
-                            </ButtonS>
-
-                            <ButtonS onClick={() => acountOut()} variant={'outline-light'}>
-                                <NavElemWrapper>
-                                    <p>Выйти</p>
-                                </NavElemWrapper>
-                                <BiLogOut/>
-                            </ButtonS>
-
-                        </>
-                        : ''
-                    }
+            <AppBar className={classes.navbar} position="fixed">
+                <Toolbar className={classes.toolbar} variant={'dense'}>
+                    <div className={classes.toolbar__item}>
+                        <NavLink className={classes.toolbar__buyDeviceLink} onClick={() => {
+                            device.cleanSelectedBrands()
+                        }} to={SHOP_ROUTE}>
+                            <Typography  variant={'h5'}>
+                                Купи девайс
+                            </Typography>
+                        </NavLink>
 
 
-                    {user.isAuthUser
-                        ?
-                        <>
-                            <ButtonS onClick={() => (history.push(USER_ROUTE))} variant={'outline-light'}>
-                                <NavElemWrapper>
-                                    <p>Профиль</p>
-                                </NavElemWrapper>
-                                <FaUserCircle/>
-                            </ButtonS>
+                        <Button onClick={()=>setIsLock(!isLock)}  className={classes.toolbar__headerButton+' '+classes.toolbar__headerButton_leftMargin}
+                                variant="primary"
+                                color="secondary"
+                        >
+                            <Typography variant={'button'}>
+                                каталог
+                            </Typography>
 
-                            <ButtonS onClick={() => (history.push(BASKET_ROUTE))} variant={'outline-light'}>
-                                <NavElemWrapper>
-                                    <p>Корзина</p>
-                                </NavElemWrapper>
-                                {basket.CountALl !== 0 &&
-                                <div className={'counterBasket'}>
-                                    <p> {basket.CountALl}</p>
-                                </div>}
-                            </ButtonS>
+                            {isLock ? <Lock className={classes.toolbar__icon} />:<Unlock className={classes.toolbar__icon} />}
+                        </Button>
+                    </div>
 
 
-                            <ButtonS onClick={() => acountOut()} variant={'outline-light'}>
-                                <NavElemWrapper>
-                                    <p>Выйти</p>
-                                </NavElemWrapper>
-                                <BiLogOut/>
-                            </ButtonS>
-                        </>
-                        :
-                        ''
-                    }
 
-                    {
-                        (user.isAuthAdmin || user.isAuthUser) === false
+                    <div className={classes.toolbar__item}>
+                        {user.isAuthAdmin
                             ?
                             <>
-                                <ButtonS onClick={() => (history.push(LOGIN_ROUTE))} variant={'outline-light'}>
+                                    <Button variant={'outlined'} className={classes.toolbar__headerButton} onClick={() => (history.push(ADMIN_ROUTE))} >
+                                        <NavElemWrapper>
+                                            <p>Админ панель</p>
+                                        </NavElemWrapper>
+                                    </Button>
+
+                                    <Button onClick={() => acountOut()} variant={'outline'}>
+                                        <NavElemWrapper>
+                                            <p>Выйти</p>
+                                        </NavElemWrapper>
+                                        <BiLogOut/>
+                                    </Button>
+
+                            </>
+                            :
+                            <>
+                                <Button className={classes.toolbar__headerButton} onClick={() => (history.push(LOGIN_ROUTE))} variant={'outline'}>
+                                    <NavElemWrapper>
+                                        <Typography variant={'button'}>
+                                            Профиль
+                                        </Typography>
+                                    </NavElemWrapper>
+                                    <FaUserCircle/>
+                                </Button>
+
+                                <Button className={classes.toolbar__headerButton+' '+classes.toolbar__headerButton_leftMargin} onClick={() => (history.push(BASKET_ROUTE))} variant={'outline'}>
+                                    <NavElemWrapper>
+                                        <Typography variant={'button'}>
+                                            Корзина
+                                        </Typography>
+                                    </NavElemWrapper>
+                                    <RiShoppingBasketFill/>
+                                    {basket.CountALl !== 0 &&
+                                    <counterBasket>
+                                        <p> {basket.CountALl}</p>
+                                    </counterBasket>}
+
+                                </Button>
+
+                                <Button  className={classes.toolbar__headerButton+' '+classes.toolbar__headerButton_leftMargin} onClick={() => history.push(LOGIN_ROUTE)}
+                                         variant={'outline'}>
+                                    <NavElemWrapper>
+                                        <Typography variant={'button'}>
+                                            Авторицация
+                                        </Typography>
+                                    </NavElemWrapper>
+
+                                    <BiLogIn/>
+                                </Button>
+                            </>
+                        }
+                    </div>
+                </Toolbar>
+            </AppBar>
+
+{/*
+            <Navbar fixed="top" bg="dark" variant="dark">
+                <Container className={'NavBar'}>
+                    <Nav onClick={() => {
+                        device.cleanSelectedBrands()
+                    }} to={SHOP_ROUTE}>КупиДевайс</Nav>
+
+                    <NavB className="ml-auto" style={{color: 'white'}}>
+                        {user.isAuthAdmin ? <>
+
+                                <ButtonS onClick={() => (history.push(ADMIN_ROUTE))} variant={'outline'}>
+                                    <NavElemWrapper>
+                                        <p>Админ панель</p>
+                                    </NavElemWrapper>
+                                </ButtonS>
+
+                                <ButtonS onClick={() => acountOut()} variant={'outline'}>
+                                    <NavElemWrapper>
+                                        <p>Выйти</p>
+                                    </NavElemWrapper>
+                                    <BiLogOut/>
+                                </ButtonS>
+
+                            </>
+                            : ''
+                        }
+
+
+                        {user.isAuthUser
+                            ?
+                            <>
+                                <ButtonS onClick={() => (history.push(USER_ROUTE))} variant={'outline'}>
                                     <NavElemWrapper>
                                         <p>Профиль</p>
                                     </NavElemWrapper>
                                     <FaUserCircle/>
                                 </ButtonS>
 
-                                <ButtonS onClick={() => (history.push(BASKET_ROUTE))} variant={'outline-light'}>
+                                <ButtonS onClick={() => (history.push(BASKET_ROUTE))} variant={'outline'}>
                                     <NavElemWrapper>
                                         <p>Корзина</p>
                                     </NavElemWrapper>
-                                    <RiShoppingBasketFill/>
                                     {basket.CountALl !== 0 &&
                                     <div className={'counterBasket'}>
                                         <p> {basket.CountALl}</p>
                                     </div>}
-
                                 </ButtonS>
 
-                                <ButtonS onClick={() => history.push(LOGIN_ROUTE)}
-                                         variant={'outline-light'}>
-                                    <NavElemWrapper>
-                                        Авторицация
-                                    </NavElemWrapper>
 
-                                    <BiLogIn/>
+                                <ButtonS onClick={() => acountOut()} variant={'outline'}>
+                                    <NavElemWrapper>
+                                        <p>Выйти</p>
+                                    </NavElemWrapper>
+                                    <BiLogOut/>
                                 </ButtonS>
                             </>
                             :
                             ''
-                    }
+                        }
 
-                </NavB>
+                        {
+                            (user.isAuthAdmin || user.isAuthUser) === false
+                                ?
+                                <>
+                                    <ButtonS onClick={() => (history.push(LOGIN_ROUTE))} variant={'outline-light'}>
+                                        <NavElemWrapper>
+                                            <p>Профиль</p>
+                                        </NavElemWrapper>
+                                        <FaUserCircle/>
+                                    </ButtonS>
 
-            </Container>
-        </Navbar>
+                                    <ButtonS onClick={() => (history.push(BASKET_ROUTE))} variant={'outline-light'}>
+                                        <NavElemWrapper>
+                                            <p>Корзина</p>
+                                        </NavElemWrapper>
+                                        <RiShoppingBasketFill/>
+                                        {basket.CountALl !== 0 &&
+                                        <div className={'counterBasket'}>
+                                            <p> {basket.CountALl}</p>
+                                        </div>}
+
+                                    </ButtonS>
+
+                                    <ButtonS onClick={() => history.push(LOGIN_ROUTE)}
+                                             variant={'outline-light'}>
+                                        <NavElemWrapper>
+                                            Авторицация
+                                        </NavElemWrapper>
+
+                                        <BiLogIn/>
+                                    </ButtonS>
+                                </>
+                                :
+                                ''
+                        }
+
+                    </NavB>
+
+                </Container>
+            </Navbar>*/}
+        </>
+
     );
 });
 
