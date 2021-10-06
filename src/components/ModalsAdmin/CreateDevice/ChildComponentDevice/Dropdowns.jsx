@@ -44,7 +44,7 @@ const Dropdowns = observer(() => {
                     {state => <Dropdown style={{width: '48%'}} className={`mt-2 mb-2 typeDropdown ${state}`}>
                         <Dropdown.Toggle style={{width: '100%'}}>{createDevice.Brand || 'Выберете бренд>'}</Dropdown.Toggle>
                         <Dropdown.Menu style={{width: '100%'}}>
-                            {device.BrandInType.filter(unit => unit.name === createDevice.Type)[0].brandDTOS.map((el) => {
+                            {device.BrandInType.filter(unit => unit.name === createDevice.Type)[0].brands.map((el) => {
                                     return  <Dropdown.Item
                                         onClick={() => createDevice.setBrand(el.name)}
                                         key={el.id}>

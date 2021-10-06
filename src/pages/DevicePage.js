@@ -11,13 +11,16 @@ import './general.css'
 const DevicePage = observer(() => {
     const {device} = useContext(Context)
     const {id} = useParams()
+
     const oneDevice = device.Devices.find((el)=>{
         if(el.id == id){
         return true
         } else return false
     })
     console.log('Device:', toJS(device.Devices), oneDevice)
-    const description = oneDevice.deviceInfosDTO
+    const description = oneDevice.device_infoResponseModels
+
+
     return (
         <Container className={'mt'}>
             <Row>

@@ -1,5 +1,5 @@
 import {makeAutoObservable, toJS} from "mobx";
-import {check, checkAdmin, getOrderItemsUser, login, refresh} from "../http/UserApi";
+import {check, checkAdmin, getOrderItemsUser, login, refresh, registration} from "../http/UserApi";
 
 export default class UserStore {
 
@@ -39,8 +39,20 @@ export default class UserStore {
         return this._user
     }
 
-    doAutorizate(email, password, taskInstance) {
-        return login(email, password)
+    doRegistaration(data, ){
+        return registration(data)
+            .then((response)=>{
+                debugger
+                return Promise.resolve()
+            })
+            .catch(()=>{
+                debugger
+                return Promise.reject()
+            })
+    }
+
+    doAutorizate(telephoneNumber, password, taskInstance) {
+        return login(telephoneNumber, password)
             .then((response) => {
                 debugger
                 localStorage.setItem('token', response.headers.jwtoken)
@@ -49,6 +61,7 @@ export default class UserStore {
                 return Promise.resolve(response)
             })
             .catch(() => {
+                debugger
                 return Promise.reject()
             })
     }

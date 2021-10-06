@@ -10,6 +10,7 @@ const DeviceList = observer(() => {
     const {device, user, taskInstance} = useContext(Context)
     const history = useHistory()
     const {type: typeUrl} = useParams();
+    debugger
     const {search} = useLocation();
     console.log('search: ', search)
 

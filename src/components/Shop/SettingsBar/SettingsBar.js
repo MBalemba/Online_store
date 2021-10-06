@@ -17,7 +17,7 @@ const SettingsBar = observer(() => {
     const {device} = useContext(Context)
     const {type: typeUrl} = useParams();
     const history = useHistory()
-    const brands = typeUrl ? (device.BrandInType.filter((type) => type.name === typeUrl))[0]?.brandDTOS : []
+    const brands = typeUrl ? (device.BrandInType.filter((type) => type.name === typeUrl))[0]?.brands : []
     const [isOpenMenu, setIsOpenMenu] = useState(false)
     const [selectedBrands, setSelectedBrands] = useState(device.SelectedBrands)
 
@@ -28,12 +28,9 @@ const SettingsBar = observer(() => {
 
 
     useEffect(() => {
+        debugger
         device.returnPriceRangeToInitial()
     }, [typeUrl])
-
-    useEffect(() => {
-
-    }, [device.MaxPrice, device.MinPrice])
 
     const clickCard = (nameBrand) => {
         // device.setSelectedBrands(nameBrand, Boolean(!device.SelectedBrands[nameBrand]));

@@ -7,6 +7,7 @@ import {toJS} from "mobx";
 import './Basket.css'
 import {BiDotsVertical, BsDot, BsThreeDotsVertical, GoPrimitiveDot} from "react-icons/all";
 import {useHistory} from "react-router-dom";
+import {Typography} from "@material-ui/core";
 
 const Basket = observer(() => {
     const history = useHistory()
@@ -51,9 +52,9 @@ const Basket = observer(() => {
                         </div>
                         :
                         <div>
-                            <span className={'spanContainer__spanTop'}>
+                            <Typography variant={'h4'}>
                         Нет товаров в корзине
-                            </span>
+                            </Typography>
                         </div>
                     }
 
@@ -87,7 +88,7 @@ const Basket = observer(() => {
             <Row>
                 <Col className={'mt-2 flex-row justify-content-end'} md={12}>
                     {!user.isAuthUser &&
-                    <h6><i>Чтобы сделать заказ, войдите в аккаунт, если нет аккаунта, создайте</i></h6>
+                    <Typography variant={'overline'}><i>Чтобы сделать заказ, войдите в аккаунт, если нет аккаунта, создайте</i></Typography>
                     }
                 </Col>
             </Row>

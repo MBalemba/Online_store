@@ -8,6 +8,7 @@ export const useStylesHeader = makeStyles((theme) => ({
 
     toolbar: {
         height: '54px',
+        position: 'relative',
         backgroundColor: theme.palette.background.default,
         display: 'flex',
         justifyContent: 'space-between',

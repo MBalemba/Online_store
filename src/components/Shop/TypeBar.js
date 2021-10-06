@@ -14,7 +14,7 @@ const TypeBar = observer(() => {
     return (
 
             <ListGroup className={'listGroup'} style={{backgroundColor: 'rgba(0,0,0,0.03)'}}>
-                {device?.BrandInType?.map(type =>
+                {device.BrandInType?.map(type =>
                     <NavLink activeStyle={{
                         fontWeight: "bold",
                         color: "white",

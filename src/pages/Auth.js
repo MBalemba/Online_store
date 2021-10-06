@@ -51,6 +51,11 @@ const useStyles = makeStyles((theme) => ({
         // transition:'margin-bottom 0.5s ease-in-out',
         marginBottom: '',
     },
+    accountDataWrapper__kodVerification: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'stretch',
+    },
 
     input: {
         marginBottom: '20px',
@@ -58,6 +63,10 @@ const useStyles = makeStyles((theme) => ({
         '& .MuiInputBase-input': {
             height: '27px',
         }
+    },
+
+    input_mr:{
+        marginRight: '1rem',
     },
 
     input_Up: {
@@ -119,13 +128,11 @@ function KodFormatCustom(props) {
         <NumberFormat
             {...other}
             getInputRef={inputRef}
-            format="#####"
+            format="######"
             mask="_"
         />
     );
 }
-
-
 
 
 const Auth = observer(() => {
@@ -136,7 +143,7 @@ const Auth = observer(() => {
     const [password, setPassword] = useState('')
     const [isKod, setIsKod] = useState({appear: false, value: ''})
     const history = useHistory()
-
+    const [customIsSubmitting, setCustomIsSubmitting ] = useState(false)
 
     const validate = values => {
         const errors = {};
@@ -161,41 +168,52 @@ const Auth = observer(() => {
         return errors;
     };
 
-    const validationSchema = Yup.object().shape({
-        fullName: Yup.object().shape({
-            firstName: Yup.string().max(15, 'больше 15 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui, 'Только русские буквы, без пробелов').required('Пустое поле'),
-            lastName: Yup.string().max(20, 'больше 20 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui, 'Только русские буквы, без пробелов').required('Пустое поле'),
-            patronymic: Yup.string().max(20, 'больше 20 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui, 'Только русские буквы, без пробелов').required('Пустое поле'),
-        }),
-        number: Yup.string().required('Пустое поле'),
-    })
+
+    const validationErrorObject = isLoginPage
+        ?
+        {
+            number: Yup.string().required('Пустое поле'),
+        }
+        : (isKod.appear
+                ?
+                {
+                    fullName: Yup.object().shape({
+                        firstName: Yup.string().max(15, 'больше 15 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui, 'Только русские буквы, без пробелов').required('Пустое поле'),
+                        lastName: Yup.string().max(20, 'больше 20 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui, 'Только русские буквы, без пробелов').required('Пустое поле'),
+                        patronymic: Yup.string().max(20, 'больше 20 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui, 'Только русские буквы, без пробелов').required('Пустое поле'),
+                    }),
+                    number: Yup.string().required('Пустое поле'),
+                    kod: Yup.string().test('kod', 'Должно быть 6 символов', val => {
+                        debugger;
+                        return val === '' ? true : val?.match(/\d/g)?.join('')?.length === 6
+                    }).required('Пустое поле')
+                }
+                :
+                {
+                    fullName: Yup.object().shape({
+                        firstName: Yup.string().max(15, 'больше 15 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui, 'Только русские буквы, без пробелов').required('Пустое поле'),
+                        lastName: Yup.string().max(20, 'больше 20 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui, 'Только русские буквы, без пробелов').required('Пустое поле'),
+                        patronymic: Yup.string().max(20, 'больше 20 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui, 'Только русские буквы, без пробелов').required('Пустое поле'),
+                    }),
+                    number: Yup.string().required('Пустое поле'),
+                }
+        )
 
 
-    const formik = useFormik({
-        initialValues: {
-            fullName: {
-                lastName: '',
-                firstName: '',
-                patronymic: '',
-            },
-            number: '',
-            password: '',
-
-        },
-        validationSchema: validationSchema,
-        onSubmit: values => {
-            alert(JSON.stringify(values, null))
-        },
-
-    })
+    const validationSchema = Yup.object().shape(validationErrorObject)
 
 
-    const classes = useStyles({
-        isInputGroupError:
-            formik.errors.lastName && formik.touched.fullName?.lastName ||
-            formik.errors.firstName && formik.touched.fullName?.firstName ||
-            formik.errors.patronymic && formik.touched.fullName?.patronymic
-    })
+    // const formik = useFormik({
+    //     initialValues,
+    //     validationSchema: validationSchema,
+    //     onSubmit: values => {
+    //         alert(JSON.stringify(values, null))
+    //     },
+    //
+    // })
+
+
+    const classes = useStyles()
 
     const click = async () => {
         if (isLoginPage) {
@@ -241,17 +259,18 @@ const Auth = observer(() => {
                             },
                             number: '',
                             password: '',
-                            kod: 'Введите код',
+                            kod: '',
                         }
                     }
                     validationSchema={validationSchema}
                     onSubmit={async (values, {setSubmitting}) => {
+                        setCustomIsSubmitting(true)
                         const
                             fullName = values.fullName.lastName + ' ' + values.fullName.firstName + ' ' + values.fullName.patronymic,
                             telephoneNumber = '+' + values.number.match(/\d/g).join(''),
                             password = values.password;
                         if (isLoginPage) {
-                            user.doAutorizate(email, password, taskInstance)
+                            user.doAutorizate(telephoneNumber, password, taskInstance)
                                 .then((data) => {
                                     debugger
                                     console.log(data)
@@ -260,16 +279,30 @@ const Auth = observer(() => {
                                 })
                                 .catch(() => {
                                     debugger
-                                    taskInstance.createTask('Ошибка регистрации', 'Warning')
+                                    setCustomIsSubmitting(false)
+                                    taskInstance.createTask('Ошибка авторизации', 'Warning')
                                 })
                         } else {
-                            const response = await registration({FIO: fullName, telephoneNumber: telephoneNumber, password: password})
                             debugger
-                            setIsKod({appear: true, value: ''})
-                            //taskInstance.createTask(response, 'Successful')
-                            setTimeout(() => {
-                                setSubmitting(false);
-                            }, 1000)
+                            user.doRegistaration({
+                                FIO: fullName,
+                                telephoneNumber: telephoneNumber,
+                                password: password
+                            }).then(() => {
+                                debugger
+                                taskInstance.createTask('Заполните код, который пришел на ваш номер телефона', 'Warning')
+                                setIsKod({appear: true, value: ''})
+                                setTimeout(() => {
+                                    setCustomIsSubmitting(false);
+                                }, 1000)
+                            })
+                                .catch(() => {
+                                    debugger
+                                    taskInstance.createTask('Проблема регистрации', 'Warning')
+                                    setTimeout(() => {
+                                        setCustomIsSubmitting(false);
+                                    }, 1000)
+                                })
                         }
 
                     }
@@ -280,161 +313,115 @@ const Auth = observer(() => {
                         <Typography className={classes.h4}
                                     variant="h3">
                             <center>
-                                {isLoginPage ? 'Авторизация' : 'Регистрация'}
+                                {isLoginPage ? 'Авторизация' : (!isKod.appear? 'Регистрация': 'Подтвердить код')}
                             </center>
                         </Typography>
 
                         <div className={classes.accountDataWrapper}>
-                            {!isLoginPage &&
-                            <div className={classes.accountDataWrapper__inputGroup}>
+                            {!isKod.appear && <>
 
-                                {/*<div className={classes.input}>
+                                {!isLoginPage &&
+                                <div className={classes.accountDataWrapper__inputGroup}>
+                                    <div className={classes.input + ' ' + classes.input_Up}>
+                                        <TextField
+                                            type={'text'}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.fullName.lastName}
+                                            name={'fullName.lastName'}
+                                            error={formik.touched.fullName?.lastName && Boolean(formik.errors.fullName?.lastName)}
+                                            helperText={formik.touched.fullName?.lastName && formik.errors.fullName?.lastName}
+                                            size="small" id="outlined-basic" label="Фамилия"
+                                            variant="outlined"/>
+                                    </div>
+                                    <div className={classes.input + ' ' + classes.input_Up}>
+                                        <TextField
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.fullName.firstName}
+                                            name={'fullName.firstName'}
+                                            error={formik.touched.fullName?.firstName && Boolean(formik.errors.fullName?.firstName)}
+                                            helperText={formik.touched.fullName?.firstName && formik.errors.fullName?.firstName}
+                                            size="small" id="outlined-basic" label="Имя"
+                                            variant="outlined"/>
+                                    </div>
+                                    <div className={classes.input + ' ' + classes.input_Up}>
+                                        <Field
+                                            as={TextField}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.fullName.patronymic}
+                                            name={'fullName.patronymic'}
+                                            error={formik.touched.fullName?.patronymic && Boolean(formik.errors.fullName?.patronymic)}
+                                            helperText={formik.touched.fullName?.patronymic && formik.errors.fullName?.patronymic}
+                                            size="small" id="outlined-basic" label="Отчество"
+                                            variant="outlined"/>
+                                    </div>
+                                </div>}
+
+
+                                <div className={classes.input}>
                                     <TextField
-                                        type={'text'}
+                                        value={formik.values.number}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                        value={formik.values.fullName.lastName}
-                                        name={'fullName.lastName'}
-                                        error={formik.touched.fullName?.lastName && Boolean(formik.errors.fullName?.lastName)}
-                                        helperText={formik.touched.fullName?.lastName && formik.errors.fullName?.lastName}
-                                        size="small" id="outlined-basic" label="Фамилия"
+                                        error={formik.touched.number && Boolean(formik.errors.number)}
+                                        helperText={formik.touched.number && formik.errors.number}
+                                        name={'number'}
+                                        size="small" fullWidth id="outlined-basic" label="Номер телефона"
                                         variant="outlined"
+
                                         InputProps={{
                                             inputComponent: NumberFormatCustom,
                                         }}
                                     />
-                                </div>*/}
-
-                                {/*<div className={classes.input}>
-                                    <TextField
-                                        type={'text'}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.fullName.lastName}
-                                        name={'fullName.lastName'}
-                                        error={formik.touched.fullName?.lastName && Boolean(formik.errors.fullName?.lastName)}
-                                        helperText={formik.touched.fullName?.lastName && formik.errors.fullName?.lastName}
-                                        size="small" id="outlined-basic" label="Фамилия"
-                                        variant="outlined"/>
-
-                                </div>*/}
-
-                                {/*<div className={classes.input}>
-
-                                    <MaskedInput
-                                        mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-                                        placeholder="Enter a phone number"
-                                        guide={false}
-                                        id="my-input-id"
-                                        type={'text'}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.fullName.lastName}
-                                        name={'fullName.lastName'}
-                                        error={formik.touched.fullName?.lastName && Boolean(formik.errors.fullName?.lastName)}
-                                        helperText={formik.touched.fullName?.lastName && formik.errors.fullName?.lastName}
-                                        size="small" id="outlined-basic" label="Фамилия"
-                                        variant="outlined"
-                                        render={(ref, props)=> <FormControl fullWidth className={classes.margin} variant="outlined">
-                                            <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
-                                            <Input
-                                                {...props} ref={(input) => ref(input)}
-                                                id="outlined-adornment-amount"
-                                            />
-                                        </FormControl>}
-                                    >
-
-                                    </MaskedInput>
-                                    </div>*/}
-                                <div className={classes.input + ' ' + classes.input_Up}>
-                                    <TextField
-                                        type={'text'}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.fullName.lastName}
-                                        name={'fullName.lastName'}
-                                        error={formik.touched.fullName?.lastName && Boolean(formik.errors.fullName?.lastName)}
-                                        helperText={formik.touched.fullName?.lastName && formik.errors.fullName?.lastName}
-                                        size="small" id="outlined-basic" label="Фамилия"
-                                        variant="outlined"/>
                                 </div>
-                                <div className={classes.input + ' ' + classes.input_Up}>
+
+                                <div className={classes.input}>
                                     <TextField
                                         onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.fullName.firstName}
-                                        name={'fullName.firstName'}
-                                        error={formik.touched.fullName?.firstName && Boolean(formik.errors.fullName?.firstName)}
-                                        helperText={formik.touched.fullName?.firstName && formik.errors.fullName?.firstName}
-                                        size="small" id="outlined-basic" label="Имя"
+                                        value={formik.values.password}
+                                        name={'password'}
+                                        type={'password'} size="small" fullWidth id="outlined-basic" label="Пароль"
                                         variant="outlined"/>
                                 </div>
-                                <div className={classes.input + ' ' + classes.input_Up}>
-                                    <Field
-                                        as={TextField}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        value={formik.values.fullName.patronymic}
-                                        name={'fullName.patronymic'}
-                                        error={formik.touched.fullName?.patronymic && Boolean(formik.errors.fullName?.patronymic)}
-                                        helperText={formik.touched.fullName?.patronymic && formik.errors.fullName?.patronymic}
-                                        size="small" id="outlined-basic" label="Отчество"
-                                        variant="outlined"/>
-                                </div>
-                            </div>}
 
-
-                            <div className={classes.input}>
-                                <TextField
-                                    value={formik.values.number}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    error={formik.touched.number && Boolean(formik.errors.number)}
-                                    helperText={formik.touched.number && formik.errors.number}
-                                    name={'number'}
-                                    size="small" fullWidth id="outlined-basic" label="Номер телефона"
-                                    variant="outlined"
-
-                                    InputProps={{
-                                        inputComponent: NumberFormatCustom,
-                                    }}
-                                />
-                            </div>
-
-                            <div className={classes.input}>
-                                <TextField
-                                    onChange={formik.handleChange}
-                                    value={formik.values.password}
-                                    name={'password'}
-                                    type={'password'} size="small" fullWidth id="outlined-basic" label="Пароль"
-                                    variant="outlined"/>
-                            </div>
+                            </>}
 
 
                             {
-                                isKod.appear && <div className={classes.input}>
-                                    <TextField
-                                        onChange={(e)=>{
-                                            setIsKod({appear: true, value:e.target.value})
-                                        }}
-                                        value={isKod.value}
-                                        name={'kod'}
-                                        type={'text'} size="small"  id="outlined-basic" label="Код"
-                                        variant="outlined"
+                                isKod.appear && <div className={classes.accountDataWrapper__kodVerification}>
+                                    <div className={classes.input + ' '+ classes.input_mr}>
+                                        <TextField
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.kod}
+                                            error={formik.touched.kod && Boolean(formik.errors.kod)}
+                                            helperText={formik.touched.kod && formik.errors.kod}
+                                            name={'kod'}
+                                            type={'text'} size="small" id="outlined-basic" label="Код"
+                                            variant="outlined"
+                                            InputProps={{
+                                                inputComponent: KodFormatCustom,
+                                            }}
 
-                                    />
+                                        />
+                                    </div>
 
-
-                                    <ButtonM onClick={()=>{
-                                        codeConfirmation({
-                                            telephoneNumber:'+' + formik.values.number.match(/\d/g).join(''),
-                                            code: isKod.value
-                                        }) .then((r)=>{
-                                            debugger
-                                        }).catch(({response})=>{
-                                            debugger
-                                        })
-                                    }}  variant="contained">Отправить код</ButtonM>
+                                    <div className={classes.buttonWrapper}>
+                                        <ButtonM disabled={formik.errors?.kod || formik.values.kod === ''} onClick={() => {
+                                            codeConfirmation({
+                                                telephoneNumber: '+' + formik.values.number.match(/\d/g).join(''),
+                                                code: formik.values.kod
+                                            }).then((r) => {
+                                                taskInstance.createTask('Вы успешно зарегистрироровались', 'Success')
+                                                history.push(LOGIN_ROUTE)
+                                            }).catch(({response}) => {
+                                                debugger
+                                                taskInstance.createTask('Неверный код отправлен', 'Warning')
+                                            })
+                                        }} variant="contained">Подтвердить код</ButtonM>
+                                    </div>
 
 
 
@@ -457,10 +444,15 @@ const Auth = observer(() => {
                                 <Typography variant={'body1'}>
                                     {'\n' + JSON.stringify(formik.touched)}
                                 </Typography>
+                                <hr/>
+                                <br/>
+                                <Typography variant={'body1'}>
+                                    {'\n' +'isSubmitting: ' +JSON.stringify(formik.isSubmitting)}
+                                </Typography>
                             </div>
                         </div>
 
-
+                        {!isKod.appear &&
                         <div className={classes.buttonWrapper}>
 
                             {isLoginPage ?
@@ -476,11 +468,11 @@ const Auth = observer(() => {
                             }
 
 
-                            <ButtonM disabled={formik.isSubmitting} type="submit"
+                            <ButtonM disabled={customIsSubmitting} type="submit"
                                      variant="contained">{isLoginPage ? 'Войти' : 'Зарегистрируйтесь'}</ButtonM>
 
                         </div>
-
+                        }
                     </form>
                     }
                 </Formik>

@@ -2,7 +2,7 @@ import {makeAutoObservable, toJS} from "mobx";
 import {getDevices, getTypeBrand} from "../http/UserApi";
 
 
-export default class DeviceStore {
+export default class MenuStore {
     constructor() {
 
         this._brandInType = []
@@ -38,6 +38,12 @@ export default class DeviceStore {
     setBrandInType() {
         debugger
         getTypeBrand().then((r) => {
+            const arr = r.data.map(el =>{
+                el.brands = el.brands.map(brandItem => ({...brandItem, isCheck: true}))
+                return el
+            })
+
+
             this._brandInType = r.data
         })
     }
@@ -169,48 +175,48 @@ export default class DeviceStore {
     setDevices(type) {
         const a = this.createStrParamsForRequest()
 
-            return getDevices(`?type=${type}&limit=${this._limitPage}${this.createStrParamsForRequest()}`).then(
-                (r)=>{
-                    debugger
-                    const dataMaxPrice = Number(r.data.maxPrice)
-                    const dataMinPrice = Number(r.data.minPrice)
+        return getDevices(`?type=${type}&limit=${this._limitPage}${this.createStrParamsForRequest()}`).then(
+            (r)=>{
+                debugger
+                const dataMaxPrice = Number(r.data.maxPrice)
+                const dataMinPrice = Number(r.data.minPrice)
 
-                    console.log('devices', r.data)
-                    this._devices = r.data.list
+                console.log('devices', r.data)
+                this._devices = r.data.list
 
-                    // if(this._minPrice !== dataMinPrice || this._maxPrice !== dataMaxPrice){
-                    //     this._clientMinPrice = dataMinPrice
-                    //     this._clientMaxPrice = dataMaxPrice
-                    // }
+                // if(this._minPrice !== dataMinPrice || this._maxPrice !== dataMaxPrice){
+                //     this._clientMinPrice = dataMinPrice
+                //     this._clientMaxPrice = dataMaxPrice
+                // }
 
-                    if(this._clientMinPrice=== null && this._clientMaxPrice===null){
-                        this._clientMinPrice = dataMinPrice
-                        this._clientMaxPrice = dataMaxPrice
-                    }
-
-                    if( this._clientMinPrice <= dataMinPrice ||  this._clientMinPrice >=dataMaxPrice ){
-                        this._clientMinPrice = dataMinPrice
-                    }
-
-                    if(this._clientMaxPrice>=dataMaxPrice ||  this._clientMaxPrice <= dataMinPrice){
-                        this._clientMaxPrice = dataMaxPrice
-                    }
-
-                    if(this._clientMaxPrice - this._clientMinPrice < (dataMaxPrice-dataMinPrice) / 8   ){
-                        this._clientMinPrice = dataMinPrice
-                        this._clientMaxPrice = dataMaxPrice
-                    }
-
-                    this._minPrice = dataMinPrice
-                    this._maxPrice = dataMaxPrice
-
-                    this._amountOfAllDevices = r.data.amountOfAllDevices
-                    this._pageCount = Math.ceil(r.data.amountOfAllDevices / this._limitPage)
-                    return Promise.resolve()
+                if(this._clientMinPrice=== null && this._clientMaxPrice===null){
+                    this._clientMinPrice = dataMinPrice
+                    this._clientMaxPrice = dataMaxPrice
                 }
-            ).catch((r)=>{
-                return Promise.reject(r.response)
-            })
+
+                if( this._clientMinPrice <= dataMinPrice ||  this._clientMinPrice >=dataMaxPrice ){
+                    this._clientMinPrice = dataMinPrice
+                }
+
+                if(this._clientMaxPrice>=dataMaxPrice ||  this._clientMaxPrice <= dataMinPrice){
+                    this._clientMaxPrice = dataMaxPrice
+                }
+
+                if(this._clientMaxPrice - this._clientMinPrice < (dataMaxPrice-dataMinPrice) / 8   ){
+                    this._clientMinPrice = dataMinPrice
+                    this._clientMaxPrice = dataMaxPrice
+                }
+
+                this._minPrice = dataMinPrice
+                this._maxPrice = dataMaxPrice
+
+                this._amountOfAllDevices = r.data.amountOfAllDevices
+                this._pageCount = Math.ceil(r.data.amountOfAllDevices / this._limitPage)
+                return Promise.resolve()
+            }
+        ).catch((r)=>{
+            return Promise.reject(r.response)
+        })
     }
 
 
@@ -247,7 +253,7 @@ export default class DeviceStore {
         return toJS(this._brandInType)
     }
 
-        get MinPrice(){
+    get MinPrice(){
         return this._minPrice
     }
     get MaxPrice() {
@@ -301,27 +307,27 @@ export default class DeviceStore {
                 }
             } else {
 
-                    if(this._currentPage - this._lengthMiddlePagination >= 1){
-                        for (let i=0; i<=this._lengthMiddlePagination; i++){
-                            arr = [this._currentPage-i, ...arr]
-                        }
-
-                    } else {
-                        for (let i = 1; i<=this._currentPage; i++){
-                            arr.push(i)
-                        }
+                if(this._currentPage - this._lengthMiddlePagination >= 1){
+                    for (let i=0; i<=this._lengthMiddlePagination; i++){
+                        arr = [this._currentPage-i, ...arr]
                     }
 
-                    if(this._currentPage+this._lengthMiddlePagination<= this._pageCount ){
-                        for (let i=1; i<=this._lengthMiddlePagination; i++){
-                            arr = [...arr, this._currentPage+i]
-                        }
-                    } else {
-                        for (let i = this._currentPage + 1; i<=this._pageCount ; i++){
-                            arr.push(i)
-                        }
+                } else {
+                    for (let i = 1; i<=this._currentPage; i++){
+                        arr.push(i)
                     }
-             }
+                }
+
+                if(this._currentPage+this._lengthMiddlePagination<= this._pageCount ){
+                    for (let i=1; i<=this._lengthMiddlePagination; i++){
+                        arr = [...arr, this._currentPage+i]
+                    }
+                } else {
+                    for (let i = this._currentPage + 1; i<=this._pageCount ; i++){
+                        arr.push(i)
+                    }
+                }
+            }
 
 
         }

@@ -12,6 +12,7 @@ import Unlock from "../Common/Svg/Unlock";
 import {NavLink} from "react-router-dom";
 import {useStylesHeader} from "./Styles";
 import Lock from "../Common/Svg/Lock";
+import UnderHeaderMenu from "./UnderheaderMenu/UnderheaderMenu";
 
 
 
@@ -60,7 +61,7 @@ const NavBar = observer(() => {
                         {user.isAuthAdmin
                             ?
                             <>
-                                    <Button variant={'outlined'} className={classes.toolbar__headerButton} onClick={() => (history.push(ADMIN_ROUTE))} >
+                                    <Button variant={'outline'} className={classes.toolbar__headerButton} onClick={() => (history.push(ADMIN_ROUTE))} >
                                         <NavElemWrapper>
                                             <p>Админ панель</p>
                                         </NavElemWrapper>
@@ -99,19 +100,30 @@ const NavBar = observer(() => {
 
                                 </Button>
 
-                                <Button  className={classes.toolbar__headerButton+' '+classes.toolbar__headerButton_leftMargin} onClick={() => history.push(LOGIN_ROUTE)}
-                                         variant={'outline'}>
-                                    <NavElemWrapper>
-                                        <Typography variant={'button'}>
-                                            Авторицация
-                                        </Typography>
-                                    </NavElemWrapper>
+                                {user.isAuthUser ?
+                                    <Button className={classes.toolbar__headerButton+' '+classes.toolbar__headerButton_leftMargin} onClick={() => acountOut()} variant={'outline'}>
+                                        <NavElemWrapper>
+                                            <p>Выйти</p>
+                                        </NavElemWrapper>
+                                        <BiLogOut/>
+                                    </Button>
+                                    :
+                                    <Button className={classes.toolbar__headerButton+' '+classes.toolbar__headerButton_leftMargin} onClick={() => history.push(LOGIN_ROUTE)}
+                                             variant={'outline'}>
+                                        <NavElemWrapper>
+                                            <Typography variant={'button'}>
+                                                Авторицация
+                                            </Typography>
+                                        </NavElemWrapper>
+                                        <BiLogIn/>
+                                    </Button>}
 
-                                    <BiLogIn/>
-                                </Button>
+
                             </>
                         }
                     </div>
+
+                    {!isLock && <UnderHeaderMenu/>}
                 </Toolbar>
             </AppBar>
 

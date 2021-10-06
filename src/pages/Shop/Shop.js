@@ -48,7 +48,6 @@ const Shop = observer(() => {
                 <Col md={3}>
                     <TypeBar/>
                     <SettingsBar/>
-
                 </Col>
                 <Col md={9}>
                     <SettingsBar/>

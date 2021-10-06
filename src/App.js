@@ -8,6 +8,9 @@ import {Context} from "./index";
 import {observer} from "mobx-react-lite";
 import {ClimbingBoxLoader, PuffLoader} from "react-spinners";
 
+
+
+
 const App = observer(function () {
 
     const {user, basket} = useContext(Context)
@@ -19,7 +22,6 @@ const App = observer(function () {
             event.preventDefault()
             // Chrome требует установки возвратного значения.
             debugger
-
             basket.SaveInCookie()
         });
     })
