@@ -66,10 +66,10 @@ const DeviceList = observer(() => {
             })
         }
 
-        if (typeUrl) {
+        if (typeUrl && device.BrandInType.length!==0) {
             debugger
             device.toggleStatusLoadDevices(true)
-            device.setPropertyFromUri(search)
+            device.setPropertyFromUri(search, typeUrl)
             doRequest()
         } else {
             device.returnToInitialState()

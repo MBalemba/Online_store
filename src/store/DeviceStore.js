@@ -37,12 +37,29 @@ export default class DeviceStore {
 
     setBrandInType() {
         debugger
-        getTypeBrand().then((r) => {
+        return getTypeBrand().then((r) => {
+            const arr = r.data.map(el =>{
+                el.brands = el.brands.map(brandItem => ({...brandItem, isCheck: true}))
+                return el
+            })
+            debugger
             this._brandInType = r.data
+            return 1
         })
     }
 
-    setPropertyFromUri(getReadyQueryFromUri = ''){
+    changeSelectedBrand(typeUrl, nameBrand) {
+        this._brandInType = this._brandInType.map(el=>{
+            if(el.name===typeUrl){
+                el.brands = el.brands.map(el=>el.name===nameBrand? {...el, isCheck: !el.isCheck} :el)
+            }
+
+            return el
+
+        })
+    }
+
+    setPropertyFromUri(getReadyQueryFromUri = '', typeUrl= ''){
         getReadyQueryFromUri = decodeURI(getReadyQueryFromUri)
         if(getReadyQueryFromUri!==''){
             const regexpPage = /page\s*(%20)*=\s*(%20)*\d+/
@@ -81,37 +98,63 @@ export default class DeviceStore {
             if(maxPriceQuery){
 
             }
-
+            debugger
             if(brandQuery){
                 let selectedBrands = {}
                 let copyBrandQuery = brandQuery
                 let arrOfBrands =  copyBrandQuery.replace(/(%20)/g,'').replace(/\s/g, '').replace(/brand=/g,'')
                 arrOfBrands = arrOfBrands.match(/\w+/g)
-                for(let k of arrOfBrands){
-                    selectedBrands[k] = true
+
+
+                for (let i in this._brandInType){
+                    if(this._brandInType[i].name === typeUrl){
+                        this._brandInType[i].brands = this._brandInType[i].brands.map(el=>{
+                            debugger
+                            let isDo = false
+
+                            arrOfBrands.forEach((k, index)=>{
+                                if(k===el.name){
+                                    isDo = true
+                                    el.isCheck =true
+                                }
+                                if(index === arrOfBrands.length-1){
+                                    if(!isDo){
+                                        el.isCheck =false
+                                    }
+                                }
+                            })
+
+                            return el
+
+                        })
+
+                    }
                 }
-                console.log('selectedBrands',selectedBrands)
-                this._selectedBrands = {...selectedBrands}
-                brandQuery ='&'+ brandQuery.replace(/%20/g,'')
+
+
             }
 
             // console.log('brandQuery&pageQuery: ' + `${brandQuery+pageQuery}` )
             // this._queryString = `${brandQuery+pageQuery}`
 
         } else {
-            this._selectedBrands = {}
             this._currentPage = 1
         }
 
 
     }
 
-    createStrParamsForRequest(){
+    createStrParamsForRequest(typeUrl) {
         let strQ = '&brand='
 
-        for (let i in this._selectedBrands){
-            if(this._selectedBrands[i]){
-                strQ += (i +',')
+        for (let i in this._brandInType){
+            if(this._brandInType[i].name === typeUrl){
+                this._brandInType[i].brands.forEach(el=>{
+                    if(el.isCheck){
+                        strQ += (el.name +',')
+                    }
+                })
+
             }
         }
 
@@ -134,9 +177,9 @@ export default class DeviceStore {
         } else {
             return `${strQ}`
         }
-
-
     }
+
+
 
     returnToInitialState(){
         this._brandInType = []
@@ -211,11 +254,6 @@ export default class DeviceStore {
             ).catch((r)=>{
                 return Promise.reject(r.response)
             })
-    }
-
-
-    setSelectedBrands(obj) {
-        this._selectedBrands = obj
     }
 
     setPriceQuery (obj) {

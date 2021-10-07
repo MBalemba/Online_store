@@ -19,7 +19,7 @@ const SettingsBar = observer(() => {
     const history = useHistory()
     const brands = typeUrl ? (device.BrandInType.filter((type) => type.name === typeUrl))[0]?.brands : []
     const [isOpenMenu, setIsOpenMenu] = useState(false)
-    const [selectedBrands, setSelectedBrands] = useState(device.SelectedBrands)
+    const {search} = useLocation();
 
     let [value1, SetValue1] = useState({
         min: 12,
@@ -31,15 +31,6 @@ const SettingsBar = observer(() => {
         debugger
         device.returnPriceRangeToInitial()
     }, [typeUrl])
-
-    const clickCard = (nameBrand) => {
-        // device.setSelectedBrands(nameBrand, Boolean(!device.SelectedBrands[nameBrand]));
-        setSelectedBrands({...selectedBrands, [nameBrand]: selectedBrands[nameBrand] ? false : true})
-    }
-
-    useEffect(() => {
-        setSelectedBrands(device.SelectedBrands)
-    }, [device.SelectedBrands])
 
     useEffect(() => {
         SetValue1({
@@ -54,10 +45,9 @@ const SettingsBar = observer(() => {
     }
 
     function approveSettings() {
-        device.setSelectedBrands(selectedBrands)
         device.setCurrentPage(1)
         device.setPriceQuery(value1)
-        history.push(`${typeUrl}?${device.createStrParamsForRequest()}`)
+        history.push(`${typeUrl}?${device.createStrParamsForRequest(typeUrl)}`)
     }
 
     return (
@@ -98,12 +88,12 @@ const SettingsBar = observer(() => {
                                 :
                                 brands.map(brand =>
                                     <Col xs={12} key={brand.id}>
-                                        <Card onClick={clickCard.bind(null, brand.name)}
+                                        <Card onClick={() => device.changeSelectedBrand(typeUrl, brand.name)}
                                               className={'p-3 flex-row align-items-center justify-content-between'}
                                               style={{cursor: 'pointer', margin: '0.5rem'}}
                                         >
                                             <p>{brand.name}</p>
-                                            {Boolean(selectedBrands[brand.name])
+                                            {brand.isCheck
                                                 ? <ImCheckboxChecked/>
                                                 : <ImCheckboxUnchecked/>
                                             }

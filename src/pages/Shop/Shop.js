@@ -13,6 +13,7 @@ import {Gallery} from "../../utils/gallery";
 import {styled} from '@material-ui/core/styles';
 import {BiLeftArrow, BiRightArrow, BsDot} from "react-icons/all";
 import Slider from "./Slider";
+import {useHistory, useLocation, useParams} from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -31,13 +32,74 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Shop = observer(() => {
-    const {device, user} = useContext(Context)
+    const {device, user, taskInstance} = useContext(Context)
+    const {type: typeUrl} = useParams();
+    const history = useHistory()
+    const {search} = useLocation();
 
     useEffect(() => {
-            device.setBrandInType()
+
+            function doRequest() {
+                device.setDevices(typeUrl).then(
+                    () => {
+                        debugger
+                    }
+                ).catch(
+                    (response) => {
+                        debugger
+                        if (response.data.info === 'Devices with this type doesn\'t exists') {
+                            taskInstance.createTask(response.data.info, 'Warning')
+                            device.cleanSelectedBrands()
+                            device.returnPriceRangeToInitial()
+                            device.setCurrentPage(1)
+                            history.push(`/home`)
+                            return
+                        }
+                        if (response.status === 500){
+                            user.checkRefresh().then(()=>{
+                                device.cleanSelectedBrands()
+                                device.returnPriceRangeToInitial()
+                                device.setCurrentPage(1)
+                                doRequest()
+                            }).catch(()=>{
+                                doRequest()
+                            })
+                            return
+                        }
+                        taskInstance.createTask(response.data.info, 'Warning')
+                        device.cleanSelectedBrands()
+                        device.returnPriceRangeToInitial()
+                        device.setCurrentPage(1)
+                        history.push(`/home/${typeUrl}`)
+                        // device.cleanSelectedBrands()
+                        // device.setCurrentPage(1)
+                        // taskInstance.createTask(info, 'Warning')
+                        // history.push(`/home`)
+                    }
+                ).finally(() => {
+                    setTimeout(() => {
+                        device.toggleStatusLoadDevices(false)
+                    }, 1000)
+                })
+            }
+
+
+            device.setBrandInType().then((answer)=>{
+                if (typeUrl) {
+                    debugger
+                    device.toggleStatusLoadDevices(true)
+                    device.setPropertyFromUri(search, typeUrl)
+                    doRequest()
+                } else {
+                }
+            })
+
             return () => {
                 device.toggleStatusLoadDevices(true)
             }
+
+
+
         }
         , [])
 
