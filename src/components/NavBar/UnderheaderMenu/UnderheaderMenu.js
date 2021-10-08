@@ -14,6 +14,7 @@ import {
 
 import MenuStore from "../../../store/menuStore";
 import {observer} from "mobx-react-lite";
+import {Link} from "react-router-dom";
 
 
 export const useStylesPopupCategory = makeStyles((theme) => ({
@@ -54,14 +55,14 @@ export const useStylesPopupCategory = makeStyles((theme) => ({
         },
 
         content_right: {
-            width: '854px',
+            width: '100%',
         },
 
         itemBrands: {
-            width: '750px',
-            margin: '0 auto',
+            width: '95%',
+            margin: '30px auto 0px',
             display: 'flex',
-            justifyContent: 'fleex-start',
+            justifyContent: 'flex-start',
             flexWrap : 'wrap',
 
         },
@@ -76,6 +77,7 @@ export const useStylesPopupCategory = makeStyles((theme) => ({
             justifyContent: 'space-between',
             alignItems: 'center',
             flexWrap: 'wrap',
+            cursor: 'pointer',
 
 }
 
@@ -87,9 +89,11 @@ export const useStylesPopupCategory = makeStyles((theme) => ({
 export const menu = new MenuStore()
 
 
-const UnderHeaderMenu = observer(() => {
+const UnderHeaderMenu = observer(({handleLock}) => {
     const classes = useStylesPopupCategory()
     const [selectedIndex, setSelectedIndex] = useState(0)
+    const [isOutCursor, setIsOutCursor] = useState(false)
+    const menuNode = React.createRef();
     function handleClickItemList(ind){
         setSelectedIndex(ind)
     }
@@ -99,6 +103,29 @@ const UnderHeaderMenu = observer(() => {
         menu.setBrandInType()
     },[])
 
+    useEffect(()=>{
+
+
+
+        function clickHolst(){
+
+            if(isOutCursor){
+                handleLock(true)
+            }
+        }
+
+
+        document.addEventListener('click', clickHolst)
+
+
+        return ()=>{
+            document.removeEventListener('click', clickHolst)
+        }
+    }, [isOutCursor])
+
+    useEffect(()=>{
+        console.log(isOutCursor)
+    }, [isOutCursor])
 
     function toggleCheckedStatus(id) {
 
@@ -106,9 +133,9 @@ const UnderHeaderMenu = observer(() => {
     }
 
     return (
-        <Paper className={classes.ContainerCategory}>
+        <Paper onMouseEnter={()=>{console.log(isOutCursor); setIsOutCursor(false)}} onMouseLeave={()=>{console.log(isOutCursor); setIsOutCursor(true)}}ref={menuNode} className={classes.ContainerCategory}>
             <div className={classes.content}>
-                <div className={classes.content_left}>
+               {/* <div className={classes.content_left}>
 
                     <List component="nav" aria-label="secondary mailbox folders">
 
@@ -136,35 +163,30 @@ const UnderHeaderMenu = observer(() => {
                     </div>
 
 
-                </div>
+                </div>*/}
 
 
                 <div className={classes.content_right}>
-                    <Typography variant="h3">
-                        Выбрать бренды
+                    <Typography variant="h4">
+                        Выбрать Категорию
                     </Typography>
+                    <Divider />
 
                     <div className={classes.itemBrands}>
 
-                        {menu.BrandInType.find((el,index)=> index === selectedIndex)?.brands
-                            .map((el,i)=>
-                                <label className={classes.label} key={el.name} htmlFor={el.name}>
-                                    <div className={classes.checkboxWrap}>
-                                        <Typography variant={'body1'}>
+                        {menu.BrandInType.map((el,i)=>
+                                    <Link onClick={()=>{handleLock(true)}} key={el.name} to={'/home/' + el.name} className={classes.checkboxWrap}>
+                                        <Typography variant={'h6'}>
                                             {el.name}
                                         </Typography>
-                                        <Checkbox onChange={()=>toggleCheckedStatus(el.id)} id={el.name} defaultChecked />
-                                    </div>
-                                    <Divider />
-                                </label>
+                                        <Divider />
+                                    </Link>
+
+
                             )}
 
                     </div>
 
-
-                    <Typography variant="h3">
-                        Установить цену
-                    </Typography>
 
 
                 </div>

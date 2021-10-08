@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../index";
 import { Container, Form, FormControl, Nav as NavB, Navbar} from "react-bootstrap";
 import {ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, SHOP_ROUTE, USER_ROUTE} from "../../utils/consts";
@@ -22,11 +22,19 @@ const NavBar = observer(() => {
     const history = useHistory();
     const [isLock, setIsLock] = useState(true)
     const classes = useStylesHeader()
-
+    const handleLock = (bool)=>{
+        debugger
+        setIsLock(bool);
+    }
 
     const acountOut = () => {
         user.Out()
     }
+
+    useEffect(()=>{
+        debugger
+        console.log(isLock)
+    }, [isLock])
 
     return (
         <>
@@ -43,7 +51,7 @@ const NavBar = observer(() => {
                         </NavLink>
 
 
-                        <Button onClick={()=>setIsLock(!isLock)}  className={classes.toolbar__headerButton+' '+classes.toolbar__headerButton_leftMargin}
+                        <Button onClick={()=>handleLock(!isLock)}  className={classes.toolbar__headerButton+' '+classes.toolbar__headerButton_leftMargin}
                                 variant="primary"
                                 color="secondary"
                         >
@@ -123,7 +131,7 @@ const NavBar = observer(() => {
                         }
                     </div>
 
-                    {!isLock && <UnderHeaderMenu/>}
+                    {!isLock && <UnderHeaderMenu handleLock = {handleLock}></UnderHeaderMenu> }
                 </Toolbar>
             </AppBar>
 

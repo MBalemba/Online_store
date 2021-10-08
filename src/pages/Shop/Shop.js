@@ -106,12 +106,12 @@ const Shop = observer(() => {
     return (
         <Container>
             <Row className={'mt'}>
-
-                <Col md={3}>
+                {typeUrl && <Col md={3}>
                     <TypeBar/>
                     <SettingsBar/>
-                </Col>
-                <Col md={9}>
+                </Col>}
+
+                <Col md={typeUrl ? 9: 12}>
                     <SettingsBar/>
                     <MyPagination/>
                     <DeviceList/>
