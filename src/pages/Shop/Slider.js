@@ -55,6 +55,7 @@ class Slider extends Component {
         this.increase = this.increase.bind(this)
         this.decrease = this.decrease.bind(this)
 
+        this.switchTimeInterval= this.switchTimeInterval.bind(this)
 
     }
 
@@ -66,6 +67,18 @@ class Slider extends Component {
     componentWillUnmount() {
         debugger
         this.removeEvents()
+    }
+
+    switchTimeInterval() {
+        if (this.currentSlide < this.numberItemsGallery - 1) {
+            this.currentSlide = this.currentSlide + 1;
+            this.x = this.getPosition()
+            this.resetStylePosition()
+        } else {
+            this.currentSlide = 0;
+            this.x = this.getPosition()
+            this.resetStylePosition()
+        }
     }
 
     setParameters() {
@@ -118,6 +131,8 @@ class Slider extends Component {
         this.btnSlider_next.addEventListener('click', (e) => {
             this.increase()
         })
+        this.setStyleTransition()
+        setInterval(this.switchTimeInterval, 3000)
 
     }
 
@@ -201,7 +216,7 @@ class Slider extends Component {
     }
 
     setStyleTransition() {
-        this.lineNode.style.transition = `all 0.5s ease 0s`
+        this.lineNode.style.transition = `all 1s ease 0s`
     }
 
     resetStyleTransition() {
