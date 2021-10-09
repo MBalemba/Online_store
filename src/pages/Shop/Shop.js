@@ -115,7 +115,9 @@ const Shop = observer(() => {
                     <SettingsBar/>
                     <MyPagination/>
                     <DeviceList/>
-                    <Slider/>
+                    <div style={{height: '70vh'}}>
+                        <Slider/>
+                    </div>
                 </Col>
             </Row>
         </Container>

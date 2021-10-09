@@ -115,11 +115,11 @@ const UnderHeaderMenu = observer(({handleLock}) => {
         }
 
 
-        document.addEventListener('click', clickHolst)
+        document.addEventListener('pointerdown', clickHolst)
 
 
         return ()=>{
-            document.removeEventListener('click', clickHolst)
+            document.removeEventListener('pointerdown', clickHolst)
         }
     }, [isOutCursor])
 

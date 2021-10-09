@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Button, Paper} from "@material-ui/core";
-import {BiLeftArrow, BiRightArrow} from "react-icons/all";
+import {BiLeftArrow, BiRightArrow, IoPause, IoPlay, IoPlayCircleSharp} from "react-icons/all";
 import {styled} from "@material-ui/core/styles";
 
 
@@ -33,9 +33,12 @@ class Slider extends Component {
     constructor(props) {
         super(props);
         this.currentSlide = 0
+
+
         this.state = {
             arr: [1, 2],
             activeItem: 1,
+            isPause: false,
         }
 
 
@@ -124,6 +127,7 @@ class Slider extends Component {
         this.containerNode.addEventListener('mouseenter', this.mouseEnter)
         this.containerNode.addEventListener('mouseleave', this.mouseLeave)
 
+
         this.btnSlider_prev.addEventListener('click', (e) => {
             this.decrease()
         })
@@ -132,8 +136,7 @@ class Slider extends Component {
             this.increase()
         })
         this.setStyleTransition()
-        setInterval(this.switchTimeInterval, 3000)
-
+        this.intervalId = setInterval(this.switchTimeInterval, 5000)
     }
 
     removeEvents() {
@@ -143,22 +146,27 @@ class Slider extends Component {
     }
 
     mouseEnter() {
-
         // console.log('mouseenter')
+        this.setState({isPause: true})
+        clearInterval(this.intervalId)
         this.isLeave = false
-        this.isStartDrag = false
         window.addEventListener('pointerdown', this.startDrag)
         window.addEventListener('pointerup', this.stopDrag)
     }
 
     mouseLeave() {
         // console.log('mouseleave')
+
         this.isLeave = true
         if (!this.isStartDrag) {
             window.removeEventListener('pointerdown', this.startDrag)
             window.removeEventListener('pointerup', this.stopDrag)
+            this.setState({isPause: false})
+            this.intervalId = setInterval(this.switchTimeInterval, 5000)
         }
     }
+
+
 
     startDrag(e) {
         e.preventDefault()
@@ -185,6 +193,7 @@ class Slider extends Component {
             console.log('width: ', this.width)
             this.currentSlide = this.currentSlide - 1;
             this.x = this.getPosition()
+
         }
 
         if (
@@ -198,10 +207,12 @@ class Slider extends Component {
 
         this.setStyleTransition()
         this.resetStylePosition()
+        this.setState({isPause: false})
         this.isStartDrag = false
         if (this.isLeave) {
             window.removeEventListener('pointerdown', this.startDrag)
             window.removeEventListener('pointerup', this.stopDrag)
+            this.intervalId = setInterval(this.switchTimeInterval, 5000)
         }
         window.removeEventListener('pointermove', this.pointerMove)
     }
@@ -267,43 +278,54 @@ class Slider extends Component {
                         <BiLeftArrow/>
                     </ButtonSlider>
                 </div>
-                <div className={'gallery-line'}>
-                    <div className="slide slide-3">
-                        <img src="https://images.wbstatic.net/bners1/big_holodilnik_25_08.jpg" alt=""
-                             className="slide_slideImage__29MbQ"/>
+
+                <div className={'slideInsides'}>
+                    <div className={'gallery-line'}>
+                        <div className="slide slide-3">
+                            <img src="https://images.wbstatic.net/bners1/big_holodilnik_25_08.jpg" alt=""
+                                 className="slide_slideImage__29MbQ"/>
+                        </div>
+                        <div className="slide slide-1">
+                            <img src="https://images.wbstatic.net/bners1/big_school_25_08.jpg" alt=""
+                                 className="slide_slideImage__29MbQ"/>
+                        </div>
+                        <div className="slide slide-2">
+                            <img src="https://images.wbstatic.net/bners1/pull_666.jpg" alt=""
+                                 className="slide_slideImage__29MbQ"/>
+                        </div>
+                        <div className="slide slide-4">
+                            <img src="https://images.wbstatic.net/bners1/big_school_25_08.jpg" alt=""
+                                 className="slide_slideImage__29MbQ"/>
+                        </div>
                     </div>
-                    <div className="slide slide-1">
-                        <img src="https://images.wbstatic.net/bners1/big_school_25_08.jpg" alt=""
-                             className="slide_slideImage__29MbQ"/>
-                    </div>
-                    <div className="slide slide-2">
-                        <img src="https://images.wbstatic.net/bners1/pull_666.jpg" alt=""
-                             className="slide_slideImage__29MbQ"/>
-                    </div>
-                    <div className="slide slide-4">
-                        <img src="https://images.wbstatic.net/bners1/big_school_25_08.jpg" alt=""
-                             className="slide_slideImage__29MbQ"/>
+
+                    <div className={'dotsMenu'}>
+                        {this.state.arr && this.state.arr.map((el) =>
+                            <div onClick={() => {
+                                this.dotTurn(el);
+                                debugger;
+                                this.setState({activeItem: el})
+                            }} key={el} className={'wrapperDotItem'}>
+                                <div style={this.state.activeItem === el ? {backgroundColor: '#007bff'} : {}}
+                                     className={'dotItem'}>
+
+                                </div>
+                            </div>)}
+
+                        <div className={'wrapperDotItem'}>
+                            {this.state.isPause ? <IoPlay />:
+                                <IoPause />}
+
+                        </div>
                     </div>
                 </div>
+
                 <div className={'btnSlider btnSlider_next'}>
                     <ButtonSlider variant="outlined">
                         <BiRightArrow/>
                     </ButtonSlider>
                 </div>
 
-                <div className={'dotsMenu'}>
-                    {this.state.arr && this.state.arr.map((el) =>
-                        <div onClick={() => {
-                            this.dotTurn(el);
-                            debugger;
-                            this.setState({activeItem: el})
-                        }} key={el} className={'wrapperDotItem'}>
-                            <div style={this.state.activeItem === el ? {backgroundColor: '#007bff'} : {}}
-                                 className={'dotItem'}>
-
-                            </div>
-                        </div>)}
-                </div>
             </Paper>
         );
     }
