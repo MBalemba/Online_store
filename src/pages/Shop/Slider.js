@@ -85,11 +85,11 @@ class Slider extends Component {
     }
 
     setParameters() {
-
-        this.containerNode = document.getElementById('gallery')
-        this.btnSlider_prev = document.querySelector('.btnSlider_prev>button')
-        this.btnSlider_next = document.querySelector('.btnSlider_next>button')
-        this.lineNode = this.containerNode.querySelector('.gallery-line')
+        debugger
+        this.containerNode = document.getElementById(`gallery_${this.props.id}`)
+        this.btnSlider_prev = document.querySelector( `.btnSlider_prev_${this.props.id}>button`)
+        this.btnSlider_next = document.querySelector(`.btnSlider_next_${this.props.id}>button`)
+        this.lineNode = this.containerNode.querySelector(`.gallery-line_${this.props.id}`)
         this.numberItemsGallery = this.lineNode.childElementCount;
 
 
@@ -207,11 +207,11 @@ class Slider extends Component {
 
         this.setStyleTransition()
         this.resetStylePosition()
-        this.setState({isPause: false})
         this.isStartDrag = false
         if (this.isLeave) {
             window.removeEventListener('pointerdown', this.startDrag)
             window.removeEventListener('pointerup', this.stopDrag)
+            this.setState({isPause: false})
             this.intervalId = setInterval(this.switchTimeInterval, 5000)
         }
         window.removeEventListener('pointermove', this.pointerMove)
@@ -272,31 +272,32 @@ class Slider extends Component {
 
         console.log('this.numberItemsGallery ', this.state.arr)
         return (
-            <Paper ref={this.ref} id="gallery" className={'gallery'}>
-                <div className={'btnSlider btnSlider_prev'}>
+            <Paper ref={this.ref} id={`gallery_${this.props.id}`} className={'gallery'}>
+                <div className={'btnSlider btnSlider_prev ' + `btnSlider_prev_${this.props.id}`}>
                     <ButtonSlider variant="outlined">
                         <BiLeftArrow/>
                     </ButtonSlider>
                 </div>
 
                 <div className={'slideInsides'}>
-                    <div className={'gallery-line'}>
-                        <div className="slide slide-3">
-                            <img src="https://images.wbstatic.net/bners1/big_holodilnik_25_08.jpg" alt=""
-                                 className="slide_slideImage__29MbQ"/>
-                        </div>
-                        <div className="slide slide-1">
-                            <img src="https://images.wbstatic.net/bners1/big_school_25_08.jpg" alt=""
-                                 className="slide_slideImage__29MbQ"/>
-                        </div>
-                        <div className="slide slide-2">
-                            <img src="https://images.wbstatic.net/bners1/pull_666.jpg" alt=""
-                                 className="slide_slideImage__29MbQ"/>
-                        </div>
-                        <div className="slide slide-4">
-                            <img src="https://images.wbstatic.net/bners1/big_school_25_08.jpg" alt=""
-                                 className="slide_slideImage__29MbQ"/>
-                        </div>
+                    <div className={'gallery-line '+`gallery-line_${this.props.id}` }>
+                        {this.props.render()}
+                        {/*<div className="slide slide-3">*/}
+                        {/*    <img src="https://images.wbstatic.net/bners1/big_holodilnik_25_08.jpg" alt=""*/}
+                        {/*         className="slide_slideImage__29MbQ"/>*/}
+                        {/*</div>*/}
+                        {/*<div className="slide slide-1">*/}
+                        {/*    <img src="https://images.wbstatic.net/bners1/big_school_25_08.jpg" alt=""*/}
+                        {/*         className="slide_slideImage__29MbQ"/>*/}
+                        {/*</div>*/}
+                        {/*<div className="slide slide-2">*/}
+                        {/*    <img src="https://images.wbstatic.net/bners1/pull_666.jpg" alt=""*/}
+                        {/*         className="slide_slideImage__29MbQ"/>*/}
+                        {/*</div>*/}
+                        {/*<div className="slide slide-4">*/}
+                        {/*    <img src="https://images.wbstatic.net/bners1/big_school_25_08.jpg" alt=""*/}
+                        {/*         className="slide_slideImage__29MbQ"/>*/}
+                        {/*</div>*/}
                     </div>
 
                     <div className={'dotsMenu'}>
@@ -320,7 +321,7 @@ class Slider extends Component {
                     </div>
                 </div>
 
-                <div className={'btnSlider btnSlider_next'}>
+                <div className={'btnSlider btnSlider_next '+ `btnSlider_next_${this.props.id}`}>
                     <ButtonSlider variant="outlined">
                         <BiRightArrow/>
                     </ButtonSlider>

@@ -1,5 +1,5 @@
 import React, {Component, useContext, useEffect} from 'react';
-import {Col, Container, Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import TypeBar from "../../components/Shop/TypeBar";
 import SettingsBar from "../../components/Shop/SettingsBar/SettingsBar";
 import DeviceList from "../../components/Shop/DeviceList/DeviceList";
@@ -8,20 +8,18 @@ import {Context} from "../../index";
 import MyPagination from "../../components/Shop/Pagination";
 import '../general.css'
 import './Slider.css'
-import {Button, makeStyles, Paper} from "@material-ui/core";
+import {Button, Container, Grid, makeStyles, Paper} from "@material-ui/core";
 import {Gallery} from "../../utils/gallery";
 import {styled} from '@material-ui/core/styles';
 import {BiLeftArrow, BiRightArrow, BsDot} from "react-icons/all";
 import Slider from "./Slider";
 import {useHistory, useLocation, useParams} from "react-router-dom";
+import MainShop from "../../components/Shop/MainShop/MainShop";
 
 
 const useStyles = makeStyles((theme) => ({
         container: {
-            padding: '10px',
-            boxSizing: 'border-box',
-            position: 'related',
-            overflowX: 'hidden',
+            marginTop: '70px'
         },
     })
 )
@@ -105,21 +103,23 @@ const Shop = observer(() => {
 
     return (
         <Container>
-            <Row className={'mt'}>
-                {typeUrl && <Col md={3}>
-                    <TypeBar/>
-                    <SettingsBar/>
-                </Col>}
 
-                <Col md={typeUrl ? 9: 12}>
-                    <SettingsBar/>
-                    <MyPagination/>
-                    <DeviceList/>
-                    <div style={{height: '70vh'}}>
-                        <Slider/>
-                    </div>
-                </Col>
-            </Row>
+
+            {typeUrl ?
+                <Grid container spacing={7.5}>
+                    <Grid item md={3}>
+                        <TypeBar/>
+                        <SettingsBar/>
+                    </Grid>
+                    <Grid item md={9}>
+                        <SettingsBar/>
+                        <MyPagination/>
+                        <DeviceList/>
+                    </Grid>
+
+                </Grid> :
+                <MainShop />
+            }
         </Container>
     );
 });

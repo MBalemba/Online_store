@@ -16,7 +16,7 @@ const AppRouter = observer(() => {
     const {user} = useContext(Context)
 
     return (
-        <div style={{marginTop: 54}}>
+        <div style={{marginTop: 74}}>
             <Switch>
                 {(user.isAuthUser || user.isAuthAdmin) && authRoutes.map(({path, Component}) =>
                     <Route exact key={path} path={path} component={Component}/>
