@@ -68,6 +68,14 @@ export const MainShopStyles = makeStyles((theme) => ({
 
         },
 
+        footer__header: {
+            borderBottom: '2px solid black',
+            marginBottom: '20px',
+            '&:hover': {
+                color: 'black',
+            },
+        },
+
         footer__middle: {},
         png: {
             margin: '20px 0 20px',
@@ -85,7 +93,7 @@ export const MainShopStyles = makeStyles((theme) => ({
         },
         number: {
             color: theme.palette.text.secondary,
-            verticalAlign:  'text-bottom',
+            verticalAlign: 'text-bottom',
             lineHeight: '0',
         },
 

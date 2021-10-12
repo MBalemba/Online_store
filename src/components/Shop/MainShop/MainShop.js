@@ -13,7 +13,7 @@ import {Vk, Youtube, Instagram, Facebook} from "../../../assets/svg/foooter";
 
 const mainPageStore = new MainPageStore()
 
-export const Footer = ()=> {
+export const Footer = observer(()=> {
     const history = useHistory()
     const classes = MainShopStyles()
     return (
@@ -23,12 +23,12 @@ export const Footer = ()=> {
                 <div className={classes.footer__left}>
                     <div onClick={()=> {
 
-                    }} className={classes.footer__left_item}>
+                    }} className={classes.footer__left_item+' '+classes.footer__header}>
                         <Typography variant={'h6'}>На главную</Typography>
                         <MdHome/>
                     </div>
 
-                    <Divider/>
+
 
                     {mainPageStore.topCategory.map((el, id) =>
                         <div className={classes.footer__left_item}
@@ -45,7 +45,7 @@ export const Footer = ()=> {
 
 
                 <div className={classes.footer__middle}>
-                    <Typography variant={'h6'}>Магазины в Москве</Typography>
+                    <Typography className={classes.footer__header} variant={'h6'}>Магазины в Москве</Typography>
                     <div className={classes.png}>
                         <img src={mapImg} alt=""/>
                     </div>
@@ -70,7 +70,7 @@ export const Footer = ()=> {
 
 
                 <div className={classes.footer__right}>
-                    <div className={classes.footer__left_item}>
+                    <div className={classes.footer__left_item+' '+classes.footer__header}>
                         <Typography variant={'h6'}>Покупателям</Typography>
                         <BsInfoCircle/>
                     </div>
@@ -103,7 +103,7 @@ export const Footer = ()=> {
 
         </div>
     )
-}
+});
 
 
 const MainShop = observer(() => {
@@ -189,7 +189,6 @@ const MainShop = observer(() => {
 
 
             </Paper>
-
 
 
         </div>
