@@ -272,7 +272,7 @@ class Slider extends Component {
 
         console.log('this.numberItemsGallery ', this.state.arr)
         return (
-            <Paper ref={this.ref} id={`gallery_${this.props.id}`} className={'gallery'}>
+            <div ref={this.ref} id={`gallery_${this.props.id}`} className={'gallery'}>
                 <div className={'btnSlider btnSlider_prev ' + `btnSlider_prev_${this.props.id}`}>
                     <ButtonSlider variant="outlined">
                         <BiLeftArrow/>
@@ -327,7 +327,7 @@ class Slider extends Component {
                     </ButtonSlider>
                 </div>
 
-            </Paper>
+            </div>
         );
     }
 }
