@@ -7,6 +7,8 @@ import TaskContainer from "./utils/TaskContainer";
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
 import {ClimbingBoxLoader, PuffLoader} from "react-spinners";
+import {Container} from "@material-ui/core";
+import {Footer} from "./components/Shop/MainShop/MainShop";
 
 
 
@@ -54,6 +56,9 @@ const App = observer(function () {
                 <>
                     <NavBar/>
                     <AppRouter/>
+                    <Container>
+                        <Footer />
+                    </Container>
                     <TaskContainer />
                 </>
             }

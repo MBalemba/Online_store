@@ -59,10 +59,35 @@ export const MainShopStyles = makeStyles((theme) => ({
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
+            marginBottom: '10px',
+            cursor: 'pointer',
+
+            '&:hover': {
+                color: 'red',
+            },
+
         },
 
         footer__middle: {},
-        number: {},
+        png: {
+            margin: '20px 0 20px',
+        },
+        button__middle: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+        },
+        icons: {
+            maxWidth: '162px',
+            width: '162px',
+            display: 'flex',
+            justifyContent: 'space-between',
+        },
+        number: {
+            color: theme.palette.text.secondary,
+            verticalAlign:  'text-bottom',
+            lineHeight: '0',
+        },
 
 
         footer__right: {
@@ -75,7 +100,6 @@ export const MainShopStyles = makeStyles((theme) => ({
             margin: '40px auto 20px',
             textAlign: 'center',
         },
-
 
 
     }))

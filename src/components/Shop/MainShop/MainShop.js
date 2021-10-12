@@ -7,9 +7,104 @@ import {observer} from "mobx-react-lite";
 import {Link} from "react-router-dom";
 import {useHistory} from "react-router-dom";
 import {BsInfoCircle, FaLink, MdHome} from "react-icons/all";
+import mapImg from './../../../assets/img/footer/Image.png'
+import {Vk, Youtube, Instagram, Facebook} from "../../../assets/svg/foooter";
 
 
 const mainPageStore = new MainPageStore()
+
+export const Footer = ()=> {
+    const history = useHistory()
+    const classes = MainShopStyles()
+    return (
+        <div className={classes.thirdPage}>
+            <div className={classes.footer}>
+
+                <div className={classes.footer__left}>
+                    <div onClick={()=> {
+
+                    }} className={classes.footer__left_item}>
+                        <Typography variant={'h6'}>На главную</Typography>
+                        <MdHome/>
+                    </div>
+
+                    <Divider/>
+
+                    {mainPageStore.topCategory.map((el, id) =>
+                        <div className={classes.footer__left_item}
+                             onClick={() => {
+                                 history.push(`/home${el === 'неопределено' ? '' : '/' + el}`)
+                             }}
+                             key={id}>
+                            <Typography variant={'body'}>{el}</Typography>
+                            <FaLink/>
+                        </div>
+                    )}
+
+                </div>
+
+
+                <div className={classes.footer__middle}>
+                    <Typography variant={'h6'}>Магазины в Москве</Typography>
+                    <div className={classes.png}>
+                        <img src={mapImg} alt=""/>
+                    </div>
+
+                    <div className={classes.button__middle}>
+                        <div className={classes.icons}>
+                            <Vk/>
+                            <Youtube/>
+                            <Instagram/>
+                            <Youtube/>
+                        </div>
+
+                        <div >
+                            <a className={classes.number} href="tel:+74957802002">
+                                <Typography variant={'body1'}>+7(495)780-20-02
+                                </Typography>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div className={classes.footer__right}>
+                    <div className={classes.footer__left_item}>
+                        <Typography variant={'h6'}>Покупателям</Typography>
+                        <BsInfoCircle/>
+                    </div>
+                    <div className={classes.footer__left_item}>
+                        <Typography variant={'body'}>Гарантия</Typography>
+                    </div>
+                    <div className={classes.footer__left_item}>
+                        <Typography variant={'body'}>Сервис доставки</Typography>
+                    </div>
+                    <div className={classes.footer__left_item}>
+                        <Typography variant={'body'}>Как сделать заказ ?</Typography>
+                    </div>
+                    <div className={classes.footer__left_item}>
+                        <Typography variant={'body'}>Как отменить заказ ?</Typography>
+                    </div>
+                    <div className={classes.footer__left_item}>
+                        <Typography variant={'body'}>Как зарегистрироваться ?</Typography>
+                    </div>
+
+                </div>
+            </div>
+
+            <Divider/>
+
+            <div className={classes.allRightsReserved}>
+                <Typography variant={'body2'}>
+                    © Купи девайс 2021
+                </Typography>
+            </div>
+
+        </div>
+    )
+}
+
 
 const MainShop = observer(() => {
     const classes = MainShopStyles()
@@ -47,13 +142,15 @@ const MainShop = observer(() => {
             </div>
 
             <Paper className={classes.secondPage}>
-                <Typography className={classes.titlePage_2} component={'h1'} variant={'h1'}>Топ категорий</Typography>
+                <Typography className={classes.titlePage_2} component={'h1'} variant={'h2'}>Топ категорий</Typography>
 
 
                 <div className={classes.cardList}>
                     {mainPageStore.topCategory.map((el, id) =>
                         <div className={classes.cardList__item}
-                             onClick={() =>{ history.push(`/home${el === 'неопределено' ? '' : '/'+el}`)}}
+                             onClick={() => {
+                                 history.push(`/home${el === 'неопределено' ? '' : '/' + el}`)
+                             }}
                              key={id}>
                             <div>
                                 {el}
@@ -93,81 +190,6 @@ const MainShop = observer(() => {
 
             </Paper>
 
-
-            <div className={classes.thirdPage}>
-                <div className={classes.footer}>
-
-                    <div className={classes.footer__left}>
-                        <div className={classes.footer__left_item}>
-                            <Typography variant={'h6'}>На главную</Typography>
-                            <MdHome />
-                        </div>
-
-                        <Divider />
-
-                        {mainPageStore.topCategory.map((el, id) =>
-                            <div className={classes.footer__left_item}
-                                 onClick={() =>{ history.push(`/home${el === 'неопределено' ? '' : '/'+el}`)}}
-                                 key={id}>
-                                <Typography variant={'body'}>{el}</Typography>
-                                <FaLink />
-                            </div>
-                        )}
-
-                    </div>
-
-
-                    <div className={classes.footer__middle}>
-                        <Typography variant={'h6'}>Магазины в Москве</Typography>
-                        <div className={classes.png}>
-
-                        </div>
-
-                        <div className={classes.button__middle}>
-                            <div className={classes.icons}>
-
-                            </div>
-
-                            <div className={classes.number}>
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div className={classes.footer__right}>
-                        <div className={classes.footer__left_item}>
-                            <Typography variant={'h6'}>Покупателям</Typography>
-                            <BsInfoCircle />
-                        </div>
-                        <div className={classes.footer__left_item}>
-                            <Typography variant={'body'}>Гарантия</Typography>
-                        </div>
-                        <div className={classes.footer__left_item}>
-                            <Typography variant={'body'}>Сервис доставки</Typography>
-                        </div>
-                        <div className={classes.footer__left_item}>
-                            <Typography variant={'body'}>Как сделать заказ ?</Typography>
-                        </div>
-                        <div className={classes.footer__left_item}>
-                            <Typography variant={'body'}>Как отменить заказ ?</Typography>
-                        </div>
-                        <div className={classes.footer__left_item}>
-                            <Typography variant={'body'}>Как зарегистрироваться ?</Typography>
-                        </div>
-
-                    </div>
-                </div>
-
-                <Divider />
-
-                <div className={classes.allRightsReserved}>
-                    <Typography variant={'body2'}>
-                        © Купи девайс 2021
-                    </Typography>
-                </div>
-
-            </div>
 
 
         </div>

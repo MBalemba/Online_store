@@ -273,13 +273,15 @@ class Slider extends Component {
         console.log('this.numberItemsGallery ', this.state.arr)
         return (
             <div ref={this.ref} id={`gallery_${this.props.id}`} className={'gallery'}>
-                <div className={'btnSlider btnSlider_prev ' + `btnSlider_prev_${this.props.id}`}>
-                    <ButtonSlider variant="outlined">
-                        <BiLeftArrow/>
-                    </ButtonSlider>
-                </div>
+
 
                 <div className={'slideInsides'}>
+                    <div className={'btnSlider btnSlider_prev ' + `btnSlider_prev_${this.props.id}`}>
+                        <ButtonSlider variant="outlined">
+                            <BiLeftArrow/>
+                        </ButtonSlider>
+                    </div>
+
                     <div className={'gallery-line '+`gallery-line_${this.props.id}` }>
                         {this.props.render()}
                         {/*<div className="slide slide-3">*/}
@@ -298,6 +300,12 @@ class Slider extends Component {
                         {/*    <img src="https://images.wbstatic.net/bners1/big_school_25_08.jpg" alt=""*/}
                         {/*         className="slide_slideImage__29MbQ"/>*/}
                         {/*</div>*/}
+                    </div>
+
+                    <div className={'btnSlider btnSlider_next '+ `btnSlider_next_${this.props.id}`}>
+                        <ButtonSlider variant="outlined">
+                            <BiRightArrow/>
+                        </ButtonSlider>
                     </div>
 
                     <div className={'dotsMenu'}>
@@ -321,11 +329,7 @@ class Slider extends Component {
                     </div>
                 </div>
 
-                <div className={'btnSlider btnSlider_next '+ `btnSlider_next_${this.props.id}`}>
-                    <ButtonSlider variant="outlined">
-                        <BiRightArrow/>
-                    </ButtonSlider>
-                </div>
+
 
             </div>
         );
