@@ -80,7 +80,7 @@ const DeviceList = observer(() => {
     return (<>
 
             {typeUrl &&
-            <Row className={'d-flex mt-3 mb-3'}>
+            <div className={'d-flex mt-3 mb-3'}>
 
                 {
                     device.IsLoadDevices
@@ -93,7 +93,7 @@ const DeviceList = observer(() => {
                             <DeviceItem key={device.id} device={device}/>
                         )
                 }
-            </Row>}
+            </div>}
         </>
     );
 })

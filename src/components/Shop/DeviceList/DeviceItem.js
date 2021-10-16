@@ -30,9 +30,9 @@ const DeviceItem = observer(({device}) => {
 
 
     return (
-        <Col onMouseEnter={()=> setBasketButton(true)} onMouseLeave={()=> setBasketButton(false)} className={'mt-3 pb-5'} md={6} onClick={clickCard }>
+        <div onMouseEnter={()=> setBasketButton(true)} onMouseLeave={()=> setBasketButton(false)} className={'mt-3 pb-5'} md={6} onClick={clickCard }>
 
-            <Card style={{width: 200, cursor: 'pointer', margin: '0 auto'}} border={'light'}>
+            <div style={{width: 200, cursor: 'pointer', margin: '0 auto'}} border={'light'}>
 
                 <Image style={{objectFit: 'contain', width: '100%'}} src={!device.isName? device.pathFile : (process.env.REACT_APP_API_URL+'takeImage/'+ device.pathFile) } width={150} height={150}/>
 
@@ -67,9 +67,9 @@ const DeviceItem = observer(({device}) => {
                 }
 
 
-            </Card>
+            </div>
 
-        </Col>
+        </div>
     );
 });
 

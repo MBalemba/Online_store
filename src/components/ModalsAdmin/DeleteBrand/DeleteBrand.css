@@ -1,0 +1,26 @@
+
+.wrapperSelect{
+    display: flex;
+    justify-content: space-around;
+}
+
+.itemSelect{
+    width: 40%;
+}
+
+.formControl{
+    width: 100%;
+}
+
+.multiSelect.entering{
+    animation: appearDropdowns 1s;
+}
+.multiSelect.entered{
+
+}
+.multiSelect.exiting{
+
+}
+.multiSelect.exited{
+
+}
