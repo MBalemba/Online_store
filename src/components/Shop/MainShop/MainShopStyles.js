@@ -11,6 +11,12 @@ export const MainShopStyles = makeStyles((theme) => ({
             height: '70vh',
             marginBottom: '20px',
         },
+        classList:{
+            display: 'flex',
+            justifyContent: 'space-between',
+            margin: '0 auto',
+        },
+
         secondPage: {
             marginBottom: '20px',
         },

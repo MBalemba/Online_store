@@ -1,5 +1,7 @@
 .slide{
     height: auto;
+    display: flex;
+    justify-content: center;
 }
 
 .slide_slideImage__29MbQ {

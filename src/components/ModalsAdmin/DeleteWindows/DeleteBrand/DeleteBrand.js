@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import {Button, Dropdown, Form, Modal} from "react-bootstrap";
 import {Box, Chip, FormControl, FormHelperText, InputLabel, MenuItem, OutlinedInput, Select} from "@material-ui/core";
-import StoreDeleteBrand from "./storeDeleteBrand";
+import StoreDeleteBrand from "../storeDeleteBrand";
 import {observer} from "mobx-react-lite";
 import {CSSTransition} from "react-transition-group";
-import {createDevice} from "../../../pages/Admin";
+import {createDevice} from "../../../../pages/Admin";
 import './DeleteBrand.css'
+import {store} from './../storeDeleteBrand'
 
-const store =  new StoreDeleteBrand()
 
 
 const DeleteBrand = observer(({show, onHide}) => {

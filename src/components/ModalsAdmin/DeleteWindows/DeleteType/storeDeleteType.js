@@ -1,12 +1,12 @@
 
 import {makeAutoObservable, toJS} from "mobx";
-import {getTypeBrand} from "../../../http/UserApi";
-import {deleteBrand} from "../../../http/DeleteApi";
+import {getTypeBrand} from "../../../../http/UserApi";
+import {deleteBrand} from "../../../../http/DeleteApi";
 
 
 
 
-export default class StoreDeleteBrand {
+export default class StoreDeleteType {
 
 
     constructor() {

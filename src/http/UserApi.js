@@ -37,6 +37,11 @@ export const getDevices = async (query) => {
     return response
 }
 
+export const getDevices_24 = async ()=>{
+    const response = await $authHost.get('/device/getTopDevices')
+    return response
+}
+
 export const giveDeviceServer = async (data) => {
     const response = await $authHost.post('device/add', data)
     return response

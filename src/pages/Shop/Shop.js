@@ -103,8 +103,6 @@ const Shop = observer(() => {
 
     return (
         <Container>
-
-
             {typeUrl ?
                 <Grid container spacing={7.5}>
                     <Grid item md={3}>

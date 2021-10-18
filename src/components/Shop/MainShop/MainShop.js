@@ -9,11 +9,12 @@ import {useHistory} from "react-router-dom";
 import {BsInfoCircle, FaLink, MdHome} from "react-icons/all";
 import mapImg from './../../../assets/img/footer/Image.png'
 import {Vk, Youtube, Instagram, Facebook} from "../../../assets/svg/foooter";
+import {CardProduct} from "../../Common/CardProduct/CardProduct";
 
 
 const mainPageStore = new MainPageStore()
 
-export const Footer = observer(()=> {
+export const Footer = observer(() => {
     const history = useHistory()
     const classes = MainShopStyles()
     return (
@@ -21,13 +22,12 @@ export const Footer = observer(()=> {
             <div className={classes.footer}>
 
                 <div className={classes.footer__left}>
-                    <div onClick={()=> {
+                    <div onClick={() => {
 
-                    }} className={classes.footer__left_item+' '+classes.footer__header}>
+                    }} className={classes.footer__left_item + ' ' + classes.footer__header}>
                         <Typography variant={'h6'}>На главную</Typography>
                         <MdHome/>
                     </div>
-
 
 
                     {mainPageStore.topCategory.map((el, id) =>
@@ -58,7 +58,7 @@ export const Footer = observer(()=> {
                             <Youtube/>
                         </div>
 
-                        <div >
+                        <div>
                             <a className={classes.number} href="tel:+74957802002">
                                 <Typography variant={'body1'}>+7(495)780-20-02
                                 </Typography>
@@ -70,7 +70,7 @@ export const Footer = observer(()=> {
 
 
                 <div className={classes.footer__right}>
-                    <div className={classes.footer__left_item+' '+classes.footer__header}>
+                    <div className={classes.footer__left_item + ' ' + classes.footer__header}>
                         <Typography variant={'h6'}>Покупателям</Typography>
                         <BsInfoCircle/>
                     </div>
@@ -112,6 +112,7 @@ const MainShop = observer(() => {
 
     useEffect(() => {
         mainPageStore.setBrandInType()
+        mainPageStore.doRequestFromDevices()
     }, [])
 
     useEffect(() => {
@@ -168,21 +169,11 @@ const MainShop = observer(() => {
                 <div className={classes.sliderContainer}>
                     <Slider id={'mainpage_2'} render={() =>
                         <>
-                            <div className="slide slide-3">
-
-                            </div>
-                            <div className="slide slide-1">
-                                <img src="https://images.wbstatic.net/bners1/big_school_25_08.jpg" alt=""
-                                     className="slide_slideImage__29MbQ"/>
-                            </div>
-                            <div className="slide slide-2">
-                                <img src="https://images.wbstatic.net/bners1/pull_666.jpg" alt=""
-                                     className="slide_slideImage__29MbQ"/>
-                            </div>
-                            <div className="slide slide-4">
-                                <img src="https://images.wbstatic.net/bners1/big_school_25_08.jpg" alt=""
-                                     className="slide_slideImage__29MbQ"/>
-                            </div>
+                            {mainPageStore.giveDevices.map((el, index)=><div className="slide">
+                                <div className={classes.classList}>
+                                    {el.map(device=> <CardProduct device={device} />)}
+                                </div>
+                            </div> )}
                         </>
                     }/>
                 </div>
@@ -194,5 +185,8 @@ const MainShop = observer(() => {
         </div>
     );
 })
+
+
+
 
 export default MainShop;

@@ -12,7 +12,7 @@ import './general.css'
 import AdminOrderTable from "../components/ModalsAdmin/AdminOrderTable/AdminOrderTable";
 import {Button, Grid, Paper} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
-import DeleteBrand from "../components/ModalsAdmin/DeleteBrand/DeleteBrand";
+import DeleteBrand from "../components/ModalsAdmin/DeleteWindows/DeleteBrand/DeleteBrand";
 
 
 export const createDevice = new CreateDeviceStore()

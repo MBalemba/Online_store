@@ -62,14 +62,28 @@ class Slider extends Component {
 
     }
 
+
+
     componentDidMount() {
         this.setParameters()
+        this.setParametersTimeInterval()
         this.setEvents()
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevProps.render() === this.props.render()){
+            this.setParameters()
+        }
     }
 
     componentWillUnmount() {
         debugger
+        clearInterval(this.updateSliderIntervalId)
         this.removeEvents()
+    }
+
+    setParametersTimeInterval() {
+        this.updateSliderIntervalId = setInterval(this.setParameters,2000 )
     }
 
     switchTimeInterval() {

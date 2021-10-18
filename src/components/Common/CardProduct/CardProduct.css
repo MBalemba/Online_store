@@ -1,0 +1,44 @@
+.card{
+    max-width: 200px;
+    width: 200px;
+    max-height: 290px;
+    padding: 6px 8px;
+}
+
+.card__picture{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.card__picture img{
+    objectFit: contain;
+    width: 100%;
+    width: 150px;
+    height: 150px;
+}
+
+.card__priceRating{
+    display: flex;
+    justify-content: space-between;
+}
+
+.card__price{
+
+}
+
+.card__rating{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.card__name{
+
+}
+
+.card__button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
