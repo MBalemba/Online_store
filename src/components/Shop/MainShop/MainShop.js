@@ -167,7 +167,7 @@ const MainShop = observer(() => {
             <Paper className={classes.secondPage}>
                 <Typography className={classes.titlePage_2} component={'h2'} variant={'h2'}>Новинки</Typography>
                 <div className={classes.sliderContainer}>
-                    <Slider id={'mainpage_2'} render={() =>
+                    <Slider devices={mainPageStore.giveDevices.length} id={'mainpage_2'} render={() =>
                         <>
                             {mainPageStore.giveDevices.map((el, index)=><div className="slide">
                                 <div className={classes.classList}>

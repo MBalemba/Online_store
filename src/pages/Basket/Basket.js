@@ -61,7 +61,7 @@ const Basket = observer(() => {
                 </Col>
 
             </Row>
-            <Row>
+            <div className={'cardWrapper'}>
                 {basket.allCards.map(el => {
                         console.log(toJS(el))
                         debugger
@@ -69,7 +69,7 @@ const Basket = observer(() => {
                     }
                 )}
 
-            </Row>
+            </div>
 
             {basket.CountALl !== 0 && user.isAuthUser &&
             <Container>

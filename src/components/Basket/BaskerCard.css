@@ -5,6 +5,12 @@
     padding: 10px ;
 }
 
+.cardBasket{
+    width: 170px;
+    max-width: 200px;
+    margin: 20px 10px;
+}
+
 .containerCloseButton{
     cursor: pointer;
     display: flex;

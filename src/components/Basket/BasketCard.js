@@ -34,10 +34,10 @@ const BasketCard = observer(({id, count}) => {
         <>
 
 
-            <Col md={2} className={'mt-3 pb-5'}>
+            <div className={'cardBasket'}>
                 {!device
                     ? 'load'
-                    : <Card style={{width: 'auto', cursor: 'pointer', margin: '0 auto'}} border={'light'}>
+                    : <div>
 
 
                         <div className={'imageContainer'}>
@@ -102,11 +102,11 @@ const BasketCard = observer(({id, count}) => {
 
 
 
-                    </Card>
+                    </div>
                 }
 
 
-            </Col>
+            </div>
         </>
     );
 })

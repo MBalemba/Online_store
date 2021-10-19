@@ -26,6 +26,12 @@
     font-weight: 500;
 }
 
+.cardWrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
 .makeAnOrder{
     position: relative;
     display: flex;

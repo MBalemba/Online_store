@@ -66,12 +66,17 @@ class Slider extends Component {
 
     componentDidMount() {
         this.setParameters()
-        this.setParametersTimeInterval()
+        // this.setParametersTimeInterval()
         this.setEvents()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.render() === this.props.render()){
+        debugger
+        const prevDevices = prevProps?.devices
+        const currentDevices = this.props?.devices
+
+
+        if(prevDevices !== currentDevices){
             this.setParameters()
         }
     }

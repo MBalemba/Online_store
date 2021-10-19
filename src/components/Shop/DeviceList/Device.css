@@ -30,6 +30,15 @@
     animation: buttonAppear 250ms reverse;
 }
 
+.deviceList{
+    width: 100%;
+}
+
+.cardGrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+}
+
 
 @keyframes buttonAppear {
     50% {

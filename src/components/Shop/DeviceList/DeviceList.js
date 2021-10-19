@@ -5,6 +5,7 @@ import {Context} from "../../../index";
 import DeviceItem from "./DeviceItem";
 import {useHistory, useLocation, useParams} from "react-router-dom";
 import {DotLoader, FadeLoader, MoonLoader, PacmanLoader} from "react-spinners";
+import './Device.css'
 
 const DeviceList = observer(() => {
     const {device, user, taskInstance} = useContext(Context)
@@ -80,18 +81,24 @@ const DeviceList = observer(() => {
     return (<>
 
             {typeUrl &&
-            <div className={'d-flex mt-3 mb-3'}>
+            <div className={'deviceList'}>
 
                 {
                     device.IsLoadDevices
                         ?
-                        <div style={{margin: 'auto', height: '70vh', display: 'flex', alignItems: 'center'}}>
-                            <MoonLoader color={'#007bff'}/>
+                        <div style={{ width: '100%', display: 'flex', alignItems: 'center'}}>
+                            <div style={{height: '70vh', margin: '0 auto', display: 'flex', alignItems: 'center'}}>
+                                <MoonLoader color={'#007bff'}/>
+                            </div>
                         </div>
+
                         :
-                        device.Devices.map(device =>
-                            <DeviceItem key={device.id} device={device}/>
-                        )
+                        <div className={'cardGrid'}>
+                            {device.Devices.map(device =>
+                                <DeviceItem key={device.id} device={device}/>
+                            )}
+                        </div>
+
                 }
             </div>}
         </>

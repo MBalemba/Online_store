@@ -13,9 +13,6 @@ export const CardProduct = observer(({device}) => {
     const {basket, user} = useContext(Context)
 
     function clickCard(e){
-        if(e.target.tagName === 'BUTTON'){
-            return
-        }
         history.push('/device/'+device.id)
     }
 
@@ -41,7 +38,7 @@ export const CardProduct = observer(({device}) => {
                 </div>
             </div>
 
-            <div className="card__name">
+            <div onClick={clickCard} className="card__name">
                 <Typography variant={'body1'}>
                     {device.name}
                 </Typography>

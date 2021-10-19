@@ -3,6 +3,7 @@
     width: 200px;
     max-height: 290px;
     padding: 6px 8px;
+    margin: 10px;
 }
 
 .card__picture{
@@ -34,7 +35,7 @@
 }
 
 .card__name{
-
+    cursor: pointer;
 }
 
 .card__button{
