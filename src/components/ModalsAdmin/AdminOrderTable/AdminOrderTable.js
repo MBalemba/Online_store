@@ -58,12 +58,12 @@ const AdminOrderTable = observer(() => {
                 Заказы:
                 <Divider />
             </Typography>
-            {orderItems.length === 0 &&
+            {orderStore.FetchingStatus &&
             <LinearProgress />
             }
 
 
-
+            {orderItems.length !== 0 &&
             <TableContainer className={classes.tableSize} component={Paper}>
                 <Table stickyHeader aria-label="collapsible table">
                     <TableHead>
@@ -86,6 +86,13 @@ const AdminOrderTable = observer(() => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            }
+
+            {orderItems.length === 0 && !orderStore.FetchingStatus &&
+                <div>
+                    <Typography variant={'h5'}>Нет доступных заказов</Typography>
+                </div>
+            }
 
         </Container>
     );

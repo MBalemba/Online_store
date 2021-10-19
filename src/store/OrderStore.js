@@ -10,16 +10,21 @@ export default class OrderStore {
 
     constructor() {
         this._OrderInfo = []
+        this._isFetching = true
         makeAutoObservable(this)
     }
 
     getOrderInfo(callbackUserCheck) {
+        this._isFetching = true
+
         getAllOrders()
             .then((response) => {
+                this._isFetching = false
                 debugger
                 this._OrderInfo = response.data
             })
             .catch(({response}) => {
+                this._isFetching = false
                 debugger
                 callbackUserCheck(response.status).then(() => {
                     this.getOrderInfo()
@@ -55,6 +60,11 @@ export default class OrderStore {
 
                 })
             })
+    }
+
+
+    get FetchingStatus(){
+        return this._isFetching
     }
 
 
