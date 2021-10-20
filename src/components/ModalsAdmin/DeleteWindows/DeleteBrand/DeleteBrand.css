@@ -1,4 +1,23 @@
 
+.textFieldBrandEdit{
+    width: 100%;
+}
+
+.buttonsGroupEditBrand{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    height: 40px;
+}
+
+.editBrand{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
 .wrapperSelect{
     display: flex;
     justify-content: space-around;

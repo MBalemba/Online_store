@@ -2,6 +2,7 @@
 import {makeAutoObservable, toJS} from "mobx";
 import {getTypeBrand} from "../../../http/UserApi";
 import {deleteBrand, deleteType} from "../../../http/DeleteApi";
+import {editBrand} from "../../../http/EditApi";
 
 
 
@@ -49,6 +50,18 @@ export default class StoreDeleteBrand {
         this.selectedBrandId = id
     }
 
+    editBrand(newValue){
+
+
+        return editBrand(newValue, this.selectedBrandId).then(()=>{
+            this.returnToInitial()
+            return Promise.resolve()
+        }).catch(()=>{
+            return Promise.reject()
+        })
+
+    }
+
     deleteBrand(){
         debugger
 
@@ -73,6 +86,10 @@ export default class StoreDeleteBrand {
 
     get GetSelectedType(){
         return this.selectedTypeId
+    }
+
+    get GiveNameSelectedBrand(){
+        return this.brands.find((el)=> el.id === this.selectedBrandId)?.name
     }
 
     get GetSelectedTypeBrand(){

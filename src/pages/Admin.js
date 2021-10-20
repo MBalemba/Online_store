@@ -75,22 +75,25 @@ const Admin = observer(() => {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={4}>
-                    <Paper className={classes.paper}>
-                        <Button onClick={()=> setDeleteBrandVisible(true)} className={'mt-2'} variant="outlined" color="primary">
-                            Удалить бренд
-                        </Button>
-                    </Paper>
-                </Grid>
-
 
                 <Grid item xs={4}>
                     <Paper className={classes.paper}>
                         <Button onClick={()=> setDeleteTypeVisible(true)} className={'mt-2'} variant="outlined" color="primary">
-                            Удалить тип
+                            Удалить и редакировать тип
                         </Button>
                     </Paper>
                 </Grid>
+
+                <Grid item xs={4}>
+                    <Paper className={classes.paper}>
+                        <Button onClick={()=> setDeleteBrandVisible(true)} className={'mt-2'} variant="outlined" color="primary">
+                            Удалить и редактировать бренд
+                        </Button>
+                    </Paper>
+                </Grid>
+
+
+
             </Grid>
 
 
