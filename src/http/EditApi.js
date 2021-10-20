@@ -9,3 +9,12 @@ export const editBrand = async (name, id) => {
     })
     return response
 }
+export const editType = async (name, id) => {
+    debugger
+    const response = await $authHost.put('type/edit', {
+            id: id,
+            name: name,
+    })
+    return response
+}
+

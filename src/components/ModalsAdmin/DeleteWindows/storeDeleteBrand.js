@@ -2,7 +2,7 @@
 import {makeAutoObservable, toJS} from "mobx";
 import {getTypeBrand} from "../../../http/UserApi";
 import {deleteBrand, deleteType} from "../../../http/DeleteApi";
-import {editBrand} from "../../../http/EditApi";
+import {editBrand, editType} from "../../../http/EditApi";
 
 
 
@@ -71,6 +71,15 @@ export default class StoreDeleteBrand {
         }).catch(()=>{return Promise.reject()})
     }
 
+    editType(newValue) {
+        return editType(newValue, this.selectedTypeId).then(()=>{
+            this.returnToInitial()
+            return Promise.resolve()
+        }).catch(()=>{
+            return Promise.reject()
+        })
+    }
+
     deleteType() {
 
         return deleteType(this.selectedTypeId).then((response)=>{
@@ -90,6 +99,10 @@ export default class StoreDeleteBrand {
 
     get GiveNameSelectedBrand(){
         return this.brands.find((el)=> el.id === this.selectedBrandId)?.name
+    }
+
+    get GiveNameSelectedType() {
+        return this._brandInType.find((el)=> el.id === this.selectedTypeId)?.name
     }
 
     get GetSelectedTypeBrand(){

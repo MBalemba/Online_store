@@ -1,18 +1,19 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {store} from './../storeDeleteBrand'
 import {observer} from "mobx-react-lite";
-import {Button, Modal} from "react-bootstrap";
-import {FormControl, FormHelperText, InputLabel, MenuItem, Select} from "@material-ui/core";
+import { Modal} from "react-bootstrap";
+import {Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
 import './DeleteType.css'
+import {Context} from "../../../../index";
 
 
 
 export const DeleteType = observer(({show, onHide}) => {
 
+    const {taskInstance} = useContext(Context)
 
-    function doRequest(){
-        store.getBrandsInTypes()
-    }
+    const [isEdit, setIsEdit] = useState(false)
+    const [typeEdit, setTypeEdit] = useState('')
 
     useEffect(()=>{
         doRequest()
@@ -21,6 +22,17 @@ export const DeleteType = observer(({show, onHide}) => {
             store.returnToInitial()
         }
     }, [])
+
+
+    useEffect(()=>{
+        setTypeEdit(store.GiveNameSelectedType)
+    }, [store.selectedTypeId])
+
+    function doRequest(){
+        store.getBrandsInTypes()
+    }
+
+
 
     function deleteBrandHandler(){
         store.deleteType().then(()=>{
@@ -31,6 +43,17 @@ export const DeleteType = observer(({show, onHide}) => {
 
     function selectChange(e){
         store.setSelectedType(e.target.value)
+    }
+
+    function editTypeHandle() {
+        store.editType(typeEdit).then(()=>{
+            taskInstance.createTask('Тип успешно изменен', 'Success' )
+        }).catch(()=>{
+            taskInstance.createTask('Возникла какая-то ошибка, повторите попытку', 'Warning' )
+        }).finally(()=>{
+            doRequest()
+        })
+
     }
 
     return (
@@ -47,7 +70,18 @@ export const DeleteType = observer(({show, onHide}) => {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <div className={'wrapperSelect'}>
+
+
+                        {isEdit &&  <div className={'editBrand'}>
+                            <TextField onChange={(e)=>setTypeEdit(e.target.value)} className={'textFieldBrandEdit'} autoFocus value={typeEdit} fullWidth id="outlined-basic" label="Outlined" variant="outlined" />
+                            <div className={'buttonsGroupEditBrand'}>
+                                <Button onClick={()=>setIsEdit(false)}>Отмена</Button>
+                                <Button onClick={()=>{editTypeHandle(); setIsEdit(false)}}> Применить</Button>
+                            </div>
+                        </div>}
+
+                        {!isEdit && <div className={'wrapperSelect'}>
+
                             <div className={'itemSelect'}>
                                 <FormControl >
                                     <InputLabel id="demo-simple-select-helper-label">Типы</InputLabel>
@@ -72,15 +106,16 @@ export const DeleteType = observer(({show, onHide}) => {
                                     <FormHelperText>Выберите какого типа удалить бренд</FormHelperText>
                                 </FormControl>
                             </div>
-
-
-
-                        </div>
+                        </div> }
 
 
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button disabled={store.GetSelectedType === null} onClick={deleteBrandHandler} variant={'outline-danger'}>Удалить тип</Button>
+                        {!isEdit && <Button disabled={store.GetSelectedType === null } color={''} onClick={()=>{ setIsEdit(true)}} variant={'outlined'}>Редактировать</Button>
+                        }
+                        <Button disabled={store.GetSelectedType === null || isEdit} color={'error'} onClick={deleteBrandHandler} variant={'outlined'}> Удалить
+                            бренд</Button>
+
                     </Modal.Footer>
                 </Modal>
         </div>

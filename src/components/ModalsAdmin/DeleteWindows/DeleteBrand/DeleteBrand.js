@@ -64,7 +64,7 @@ const DeleteBrand = observer(({show, onHide}) => {
 
     function editBrandHandle() {
         store.editBrand(brandEdit).then(()=>{
-            taskInstance.createTask('Тип успешно изменен', 'Success' )
+            taskInstance.createTask('Бренд успешно изменен', 'Success' )
         }).catch(()=>{
             taskInstance.createTask('Возникла какая-то ошибка, повторите попытку', 'Warning' )
         }).finally(()=>{
