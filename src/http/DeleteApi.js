@@ -9,3 +9,11 @@ export const deleteBrand = async (id) => {
     })
     return response
 }
+
+export const deleteType = async (id) => {
+    const response = await $authHost.delete('type/delete', {
+        data: {
+            id: id
+        }
+    })
+}

@@ -13,6 +13,7 @@ import AdminOrderTable from "../components/ModalsAdmin/AdminOrderTable/AdminOrde
 import {Button, Grid, Paper} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import DeleteBrand from "../components/ModalsAdmin/DeleteWindows/DeleteBrand/DeleteBrand";
+import DeleteType from "../components/ModalsAdmin/DeleteWindows/DeleteType/DeleteType";
 
 
 export const createDevice = new CreateDeviceStore()
@@ -39,6 +40,7 @@ const Admin = observer(() => {
     const [typeVisible,setTypeVisible] = useState(false)
     const [deviceVisible,setDeviceVisible] = useState(false)
     const [deleteBrandVisible, setDeleteBrandVisible] = useState(false)
+    const [deleteTypeVisible, setDeleteTypeVisible] = useState(false)
 
     useEffect(()=>{
             device.setBrandInType()
@@ -80,6 +82,15 @@ const Admin = observer(() => {
                         </Button>
                     </Paper>
                 </Grid>
+
+
+                <Grid item xs={4}>
+                    <Paper className={classes.paper}>
+                        <Button onClick={()=> setDeleteTypeVisible(true)} className={'mt-2'} variant="outlined" color="primary">
+                            Удалить тип
+                        </Button>
+                    </Paper>
+                </Grid>
             </Grid>
 
 
@@ -93,6 +104,7 @@ const Admin = observer(() => {
             <CreateType show={typeVisible} onHide={()=> setTypeVisible(false)}/>
             <CreateDevice createDevice={createDevice} show={deviceVisible} onHide={()=> setDeviceVisible(false)}/>
             {deleteBrandVisible && <DeleteBrand show={deleteBrandVisible} onHide={()=> setDeleteBrandVisible(false)} />}
+            {deleteTypeVisible && <DeleteType show={deleteTypeVisible} onHide={()=> setDeleteTypeVisible(false)} />}
         </Container>
     );
 });

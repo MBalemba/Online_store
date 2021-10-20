@@ -77,5 +77,6 @@ export default class StoreDeleteType {
         return ! Boolean(this.selectedBrandId && this.selectedTypeId)
     }
 
-
 }
+
+export const storeDeleteType = new StoreDeleteType()

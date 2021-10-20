@@ -1,13 +1,38 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {store} from './../storeDeleteBrand'
 import {observer} from "mobx-react-lite";
 import {Button, Modal} from "react-bootstrap";
 import {FormControl, FormHelperText, InputLabel, MenuItem, Select} from "@material-ui/core";
-import {CSSTransition} from "react-transition-group";
+import './DeleteType.css'
 
 
 
-const DeleteType = observer(({show, onHide}) => {
+export const DeleteType = observer(({show, onHide}) => {
+
+
+    function doRequest(){
+        store.getBrandsInTypes()
+    }
+
+    useEffect(()=>{
+        doRequest()
+
+        return ()=>{
+            store.returnToInitial()
+        }
+    }, [])
+
+    function deleteBrandHandler(){
+        store.deleteType().then(()=>{
+            debugger
+            doRequest()
+        })
+    }
+
+    function selectChange(e){
+        store.setSelectedType(e.target.value)
+    }
+
     return (
         <div>
                 <Modal
@@ -18,7 +43,7 @@ const DeleteType = observer(({show, onHide}) => {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
-                            Удалить бренд
+                            Удалить Тип
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -55,7 +80,7 @@ const DeleteType = observer(({show, onHide}) => {
 
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button disabled={store.IsDisabled} onClick={deleteBrandHandler} variant={'outline-danger'}>Удалить бренд</Button>
+                        <Button disabled={store.GetSelectedType === null} onClick={deleteBrandHandler} variant={'outline-danger'}>Удалить тип</Button>
                     </Modal.Footer>
                 </Modal>
         </div>

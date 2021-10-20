@@ -1,6 +1,16 @@
 import React, {useEffect} from 'react';
 import {Button, Dropdown, Form, Modal} from "react-bootstrap";
-import {Box, Chip, FormControl, FormHelperText, InputLabel, MenuItem, OutlinedInput, Select} from "@material-ui/core";
+import {
+    Box,
+    Chip,
+    FormControl,
+    FormHelperText,
+    InputLabel,
+    MenuItem,
+    OutlinedInput,
+    Select,
+    Typography
+} from "@material-ui/core";
 import StoreDeleteBrand from "../storeDeleteBrand";
 import {observer} from "mobx-react-lite";
 import {CSSTransition} from "react-transition-group";
@@ -122,24 +132,35 @@ const MultipleSelectChip = observer(({store}) => {
 
     return (
 
-            <FormControl className={'formControl'} >
-                <InputLabel id="demo-simple-select-helper-label">Бренд</InputLabel>
-                <Select
-                    labelId="demo-multiple-chip-label"
-                    id="demo-multiple-chip"
-                    value={store.GetSelectedTypeBrand}
-                    onChange={handleChange}
-                >
-                    {store.Brands.map(({id,name}) => (
-                        <MenuItem
-                            key={name}
-                            value={id}
-                        >
-                            {name}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+            <div>
+                <FormControl className={'formControl'} >
+                    <InputLabel id="demo-simple-select-helper-label">Бренд</InputLabel>
+                    <Select
+                        labelId="demo-multiple-chip-label"
+                        id="demo-multiple-chip"
+                        value={store.GetSelectedTypeBrand}
+                        onChange={handleChange}
+                    >
+                        {store.Brands.map(({id,name}) => (
+                            <MenuItem
+                                key={name}
+                                value={id}
+                            >
+                                {name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                    <FormHelperText>
+                        {store.Brands.length === 0 &&
+                    <Typography variant={'caption'}>
+                        Нет брендов по типу "{store.GetSelectedType}"
+                    </Typography>
+                    }
+                    </FormHelperText>
+                </FormControl>
+
+
+            </div>
     );
 })
 
