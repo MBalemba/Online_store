@@ -66,7 +66,7 @@ export const DeleteType = observer(({show, onHide}) => {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
-                            Удалить Тип
+                            {isEdit ? 'Редактировать': 'Удалить'} Тип
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
