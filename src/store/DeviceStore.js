@@ -145,6 +145,7 @@ export default class DeviceStore {
     }
 
     createStrParamsForRequest(typeUrl) {
+        debugger
         let strQ = '&brand='
 
         for (let i in this._brandInType){
@@ -170,7 +171,6 @@ export default class DeviceStore {
             }
         }
 
-        debugger
 
         if(this._currentPage !== 1){
             return `${strQ}&page=${this._currentPage}`
@@ -210,9 +210,12 @@ export default class DeviceStore {
     }
 
     setDevices(type) {
-        const a = this.createStrParamsForRequest()
 
-            return getDevices(`?type=${type}&limit=${this._limitPage}${this.createStrParamsForRequest()}`).then(
+        const a = this.createStrParamsForRequest()
+        debugger
+
+
+            return getDevices(`?type=${type}&limit=${this._limitPage}${this.createStrParamsForRequest(type)}`).then(
                 (r)=>{
                     debugger
                     const dataMaxPrice = Number(r.data.maxPrice)
@@ -239,10 +242,10 @@ export default class DeviceStore {
                         this._clientMaxPrice = dataMaxPrice
                     }
 
-                    if(this._clientMaxPrice - this._clientMinPrice < (dataMaxPrice-dataMinPrice) / 8   ){
-                        this._clientMinPrice = dataMinPrice
-                        this._clientMaxPrice = dataMaxPrice
-                    }
+                    // if(this._clientMaxPrice - this._clientMinPrice < (dataMaxPrice-dataMinPrice) / 8   ){
+                    //     this._clientMinPrice = dataMinPrice
+                    //     this._clientMaxPrice = dataMaxPrice
+                    // }
 
                     this._minPrice = dataMinPrice
                     this._maxPrice = dataMaxPrice
@@ -257,8 +260,8 @@ export default class DeviceStore {
     }
 
     setPriceQuery (obj) {
-        this._clientMinPrice = obj.min
-        this._clientMaxPrice =  obj.max
+        this._clientMinPrice = obj[0]
+        this._clientMaxPrice =  obj[1]
     }
 
     get ClientMinPrice(){

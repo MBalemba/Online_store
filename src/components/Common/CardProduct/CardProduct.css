@@ -38,8 +38,14 @@
     cursor: pointer;
 }
 
-.card__button{
+.card__button__wrapper{
+    margin-top: 10px;
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
 }
+
+.card__button{
+    width: 100%;
+}
+

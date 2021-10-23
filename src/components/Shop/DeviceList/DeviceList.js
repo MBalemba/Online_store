@@ -6,6 +6,7 @@ import DeviceItem from "./DeviceItem";
 import {useHistory, useLocation, useParams} from "react-router-dom";
 import {DotLoader, FadeLoader, MoonLoader, PacmanLoader} from "react-spinners";
 import './Device.css'
+import {CardProduct} from "../../Common/CardProduct/CardProduct";
 
 const DeviceList = observer(() => {
     const {device, user, taskInstance} = useContext(Context)
@@ -95,7 +96,7 @@ const DeviceList = observer(() => {
                         :
                         <div className={'cardGrid'}>
                             {device.Devices.map(device =>
-                                <DeviceItem key={device.id} device={device}/>
+                                <CardProduct key={device.id} device={device}/>
                             )}
                         </div>
 

@@ -104,13 +104,13 @@ const Shop = observer(() => {
     return (
         <Container>
             {typeUrl ?
-                <Grid container spacing={7.5}>
+                <Grid container spacing={7}>
                     <Grid item md={3}>
                         <TypeBar/>
                         <SettingsBar/>
                     </Grid>
                     <Grid item md={9}>
-                        <SettingsBar/>
+                        {/*<SettingsBar/>*/}
                         <MyPagination/>
                         <DeviceList/>
                     </Grid>

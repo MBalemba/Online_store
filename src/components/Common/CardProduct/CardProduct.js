@@ -44,10 +44,10 @@ export const CardProduct = observer(({device}) => {
                 </Typography>
             </div>
 
-            <div className="card__button">
+            <div className="card__button__wrapper">
                 <Button
                     variant="contained"
-
+                    className={'card__button'}
                     onClick={() => {
                         buttonClick(Number(device.id), device.price)
                     }}

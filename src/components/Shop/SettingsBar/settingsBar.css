@@ -12,3 +12,23 @@
     position: absolute;
     left: 0;
 }
+
+
+
+.blockBrandsSettings{
+    margin-bottom: 50px;
+}
+
+.checkBlockBrand{
+    display: flex;
+    min-width: 100px;
+    justify-content: space-between;
+}
+
+.wrapperInputRangeSlider{
+    margin-bottom: 20px;
+}
+
+.buttonSettings{
+    width: 100%;
+}
