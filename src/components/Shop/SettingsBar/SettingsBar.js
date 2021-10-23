@@ -213,12 +213,28 @@ const SettingsBar = observer(() => {
                             }} >
                                 Применить
                             </Button>
-                            <Button color={'warning'} className={'buttonSettings'} variant="outlined" size="large" onClick={() => {
-                                approveSettings()
-                                setIsOpenMenu(!isOpenMenu)
-                            }} >
-                                Сбросить
-                            </Button>
+
+                            <Transition
+                                in={Boolean(search)}
+                                timeout={{
+                                    enter: 500,
+                                    exit: 500,
+                                }}
+                                exit={false}
+                                mountOnEnter={true}
+                                unmountOnExit={true}
+                            >
+                                {(state) =>  <Button color={'warning'} className={`buttonSettings settingsAppear ${state}`} variant="outlined" size="large" onClick={() => {
+                                    device.cleanSelectedBrands()
+                                    device.returnPriceRangeToInitial()
+                                    device.setCurrentPage(1)
+                                    history.push(`/home/${typeUrl}`)
+                                    setIsOpenMenu(!isOpenMenu)
+                                }} >
+                                    Сбросить
+                                </Button>}
+                                </Transition>
+
                         </Row>
 
                     </div>
