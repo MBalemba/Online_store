@@ -16,7 +16,7 @@
 
 
 .blockBrandsSettings{
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .checkBlockBrand{
@@ -26,9 +26,25 @@
 }
 
 .wrapperInputRangeSlider{
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .buttonSettings{
     width: 100%;
+    margin-bottom: 5px !important;
+}
+
+.additionalSettings{
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+}
+
+.choseBrandsHeader{
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.buttonSettingsBlock{
+    margin-top: 30px;
 }

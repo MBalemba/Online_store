@@ -11,6 +11,8 @@ export default class DeviceStore {
         this._queryString = ''
 
         this._selectedBrands = {}
+        this._isAllSelected = true
+
 
         this._amountOfAllDevices = 0
         this._pageCount = 1
@@ -57,6 +59,31 @@ export default class DeviceStore {
             return el
 
         })
+    }
+    toggleAllBrands(typeUrl){
+        if(this._isAllSelected){
+            this._brandInType = this._brandInType.map(el=>{
+                if(el.name===typeUrl){
+                    el.brands = el.brands.map(el=>({...el, isCheck: false}))
+                }
+
+                return el
+
+            })
+
+            this._isAllSelected = false
+        }else {
+            this._brandInType = this._brandInType.map(el=>{
+                if(el.name===typeUrl){
+                    el.brands = el.brands.map(el=>({...el, isCheck: true}))
+                }
+
+                return el
+
+            })
+
+            this._isAllSelected = true
+        }
     }
 
     setPropertyFromUri(getReadyQueryFromUri = '', typeUrl= ''){
@@ -282,6 +309,11 @@ export default class DeviceStore {
 
     setCurrentPage(number) {
         this._currentPage = number
+    }
+
+
+    get isAllSelected() {
+        return this._isAllSelected
     }
 
     get BrandInType() {

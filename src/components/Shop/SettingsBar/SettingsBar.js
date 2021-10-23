@@ -11,8 +11,8 @@ import '../Shop.css'
 import './settingsBar.css'
 import InputRange from "react-input-range";
 import 'react-input-range/lib/css/index.css'
-import {Button, Divider, Typography} from "@material-ui/core";
-import {Input, Slider} from "@mui/material";
+import { Divider, Typography} from "@material-ui/core";
+import {Button, Input, Slider} from "@mui/material";
 
 
 const minDistance = 1000
@@ -63,20 +63,20 @@ const SettingsBar = observer(() => {
     return (
         <div className={'mt-3 mb-3'}>
 
-            {typeUrl &&
-            <div className={'pb-3'}>
-                <Button className={'buttonSettings'} onClick={MenuVisible} variant="outlined" size="medium">
-                    <p>
-                        <span className={'mr-2'}>Дополнительные параметры поиска</span>
-                        <GoSettings viewBox="0 0 20 20" height="10" width="10"/>
-                    </p>
-                </Button>
-            </div>
-            }
+            {/*{typeUrl &&*/}
+            {/*<div className={'pb-3'}>*/}
+            {/*    <Button className={'buttonSettings'} onClick={MenuVisible} variant="outlined" size="medium">*/}
+            {/*        <p className={'additionalSettings'}>*/}
+            {/*            <span>Дополнительные параметры поиска</span>*/}
+            {/*            <GoSettings viewBox="0 0 20 20" height="10" width="10"/>*/}
+            {/*        </p>*/}
+            {/*    </Button>*/}
+            {/*</div>*/}
+            {/*}*/}
 
 
             <Transition
-                in={isOpenMenu}
+                in={true}
                 timeout={{
                     enter: 500,
                     exit: 500,
@@ -92,18 +92,24 @@ const SettingsBar = observer(() => {
 
                         <Row className={`flex-column`}>
 
+                            <Typography gutterBottom={true} variant={'h6'}>
+                            <span className={'choseBrandsHeader'}>
+                                бренды:
+                            </span>
+                            </Typography>
+
                             {device.BrandInType.length === 0
                                 ?
                                 <BarLoader/>
-                                :
-                                brands.map(brand =>
-                                    <div className={'blockBrandsSettings'} xs={12} key={brand.id}>
-                                        <div onClick={() => device.changeSelectedBrand(typeUrl, brand.name)}
-                                              className={'checkBlockBrand'}
-                                              style={{cursor: 'pointer', margin: '0.5rem'}}
+                                : <>
+
+                                    <div className={'blockBrandsSettings'} xs={12}>
+                                        <div onClick={() => device.toggleAllBrands(typeUrl)}
+                                             className={'checkBlockBrand'}
+                                             style={{cursor: 'pointer', margin: '0.5rem'}}
                                         >
-                                            <Typography variant={'body2'}>{brand.name}</Typography>
-                                            {brand.isCheck
+                                            <Typography variant={'body1'}>Выбрать Все</Typography>
+                                            {device.isAllSelected
                                                 ? <ImCheckboxChecked/>
                                                 : <ImCheckboxUnchecked/>
                                             }
@@ -111,17 +117,40 @@ const SettingsBar = observer(() => {
                                         <Divider/>
 
                                     </div>
-                                )
+
+                                    {brands.map(brand =>
+                                        <div className={'blockBrandsSettings'} xs={12} key={brand.id}>
+                                            <div onClick={() => device.changeSelectedBrand(typeUrl, brand.name)}
+                                                 className={'checkBlockBrand'}
+                                                 style={{cursor: 'pointer', margin: '0.5rem'}}
+                                            >
+                                                <Typography variant={'body2'}>{brand.name}</Typography>
+                                                {brand.isCheck
+                                                    ? <ImCheckboxChecked/>
+                                                    : <ImCheckboxUnchecked/>
+                                                }
+                                            </div>
+                                            <Divider/>
+
+                                        </div>
+                                    )}
+                                </>
+
                             }
                         </Row>
 
+
+
+
                         {Number(device.MaxPrice) !== Number(device.MinPrice) && <>
-                            {/*<Row className={'mt-2 flex justify-content-between'}>
-                                <p>{device.MinPrice}</p>
-                                <p>{device.MaxPrice}</p>
-                            </Row>
-*/}
                             <Row>
+
+                                <Typography gutterBottom={true} variant={'h6'}>
+                            <span className={'choseBrandsHeader'}>
+                                Диапазон цены:
+                            </span>
+                                </Typography>
+
                                 <Col md={12} className={'slider-container'}>
 
                                    {/* <InputRange
@@ -177,12 +206,18 @@ const SettingsBar = observer(() => {
 
                         }
 
-                        <Row className={'flex justify-content-end'}>
-                            <Button variant="outlined" size="large" onClick={() => {
+                        <Row className={'buttonSettingsBlock'}>
+                            <Button className={'buttonSettings'} variant="outlined" size="large" onClick={() => {
                                 approveSettings()
                                 setIsOpenMenu(!isOpenMenu)
                             }} >
                                 Применить
+                            </Button>
+                            <Button color={'warning'} className={'buttonSettings'} variant="outlined" size="large" onClick={() => {
+                                approveSettings()
+                                setIsOpenMenu(!isOpenMenu)
+                            }} >
+                                Сбросить
                             </Button>
                         </Row>
 

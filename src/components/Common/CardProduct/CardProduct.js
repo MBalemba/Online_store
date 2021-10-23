@@ -7,6 +7,7 @@ import {Image} from "react-bootstrap";
 import star from "../../../assets/svg/star.svg";
 
 import './CardProduct.css'
+import {Rating} from "@mui/material";
 
 export const CardProduct = observer(({device}) => {
     const history = useHistory()
@@ -31,19 +32,15 @@ export const CardProduct = observer(({device}) => {
                 <Typography variant={'subtitle2'} className={'card__price'}>
                     {(Number(device.price)).toLocaleString() + ' '} ₽
                 </Typography>
-
-                <div className={'card__rating'}>
-                    <Typography variant={'subtitle2'}>{device.ratings}</Typography>
-                    <Image src={star}/>
-                </div>
             </div>
-
             <div onClick={clickCard} className="card__name">
                 <Typography variant={'body1'}>
-                    {device.name}
+                    {device.name.length>30 ?device.name.slice(0,30)+ ' ...' : device.name}
                 </Typography>
             </div>
-
+            <div className={'card__rating'}>
+                <Rating name="read-only" value={Number(device.ratings)} readOnly />
+            </div>
             <div className="card__button__wrapper">
                 <Button
                     variant="contained"

@@ -1,7 +1,7 @@
 .card{
     max-width: 200px;
     width: 200px;
-    max-height: 290px;
+    min-height: 290px;
     padding: 6px 8px;
     margin: 10px;
 }
@@ -13,9 +13,8 @@
 }
 
 .card__picture img{
-    objectFit: contain;
+    object-fit: cover;
     width: 100%;
-    width: 150px;
     height: 150px;
 }
 
@@ -30,12 +29,14 @@
 
 .card__rating{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
+    line-height: 0 !important;
 }
 
 .card__name{
     cursor: pointer;
+    min-height: 50px;
 }
 
 .card__button__wrapper{
