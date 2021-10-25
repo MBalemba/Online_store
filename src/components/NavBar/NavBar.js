@@ -85,7 +85,7 @@ const NavBar = observer(() => {
                             </>
                             :
                             <>
-                                <Button className={classes.toolbar__headerButton} onClick={() => (history.push(LOGIN_ROUTE))} variant={'outline'}>
+                                <Button className={classes.toolbar__headerButton} onClick={() => (user.isAuthUser?history.push(USER_ROUTE) : history.push(LOGIN_ROUTE))} variant={'outline'}>
                                     <NavElemWrapper>
                                         <Typography variant={'button'}>
                                             Профиль

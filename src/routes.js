@@ -11,7 +11,7 @@ import {
 import Basket from "./pages/Basket/Basket";
 import MainPage_v2 from "./pages/Shop/Shop";
 import Auth from "./pages/Auth";
-import DevicePage from "./pages/DevicePage";
+import DevicePage from "./pages/DevicePage/DevicePage";
 import UserPage from "./pages/UserPage/UserPage";
 
 export const authRoutes = [

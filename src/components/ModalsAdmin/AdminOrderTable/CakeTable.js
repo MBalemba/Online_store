@@ -94,7 +94,7 @@ const InsertedTableCellBody = ({children, ...other}) =>{
 
 const CakeTable = ({isUserTable = false, row}) => {
 
-    console.log('totalSum: ', row.dataOfCreate)
+    console.log('totalSum: ', row)
 
     const {taskInstance, user} = useContext(Context)
 
@@ -180,16 +180,16 @@ const CakeTable = ({isUserTable = false, row}) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody >
-                                {row.order_devicesDTO.map((product) => (
-                                    <TableRow className={classes.hoverRowInsertedTable} key={product.deviceDTO.id}>
+                                {row.order_deviceResponseModels.map((product) => (
+                                    <TableRow className={classes.hoverRowInsertedTable} key={product.deviceResponseModel.id}>
                                         <InsertedTableCellBody component="th" scope="row">
-                                            {product.deviceDTO.name}
+                                            {product.deviceResponseModel.name}
                                         </InsertedTableCellBody>
-                                        <InsertedTableCellBody align="left">{product.deviceDTO.typeName}</InsertedTableCellBody>
-                                        <InsertedTableCellBody align="right">{product.deviceDTO.price.toLocaleString()} ₽</InsertedTableCellBody>
+                                        <InsertedTableCellBody align="left">{product.deviceResponseModel.typeName}</InsertedTableCellBody>
+                                        <InsertedTableCellBody align="right">{product.deviceResponseModel.price.toLocaleString()} ₽</InsertedTableCellBody>
                                         <InsertedTableCellBody align="right">{product.amountOfProduct}</InsertedTableCellBody>
                                         <InsertedTableCellBody className={classes.insertedTableTypography2} align="right">
-                                            {(Number(product.deviceDTO.price) * product.amountOfProduct).toLocaleString()} ₽
+                                            {(Number(product.deviceResponseModel.price) * product.amountOfProduct).toLocaleString()} ₽
                                         </InsertedTableCellBody>
                                         <InsertedTableCellBody align="right">
                                             <Button className={classes.insertedTableTypography1}>

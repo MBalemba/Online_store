@@ -13,7 +13,7 @@
 }
 
 .card__picture img{
-    object-fit: cover;
+    object-fit: contain;
     width: 100%;
     height: 150px;
 }
@@ -37,6 +37,11 @@
 .card__name{
     cursor: pointer;
     min-height: 50px;
+    margin-bottom: 10px;
+}
+
+.card__name:hover{
+    color: #3f51b5;
 }
 
 .card__button__wrapper{

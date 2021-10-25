@@ -1,4 +1,3 @@
-
 import React, {useContext, useEffect} from 'react';
 import {Col, Row} from "react-bootstrap";
 import './UserPage.css'
@@ -6,9 +5,7 @@ import '../general.css'
 import {MdAddAPhoto} from "react-icons/all";
 import img from './../../assets/svg/user.svg'
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary, Box,
+    Box,
     Container,
     Divider,
     Grid,
@@ -24,20 +21,18 @@ import TableUserOrder from "../../components/UserPage/TableActiveOrder";
 import {observer} from "mobx-react-lite";
 
 
-
-
 const UserPagePaper = styled(Paper)({
-    background: ({isGradient})=> isGradient? 'linear-gradient(110deg, rgba(156,156,156,0) 30%, rgba(0,123,255,1) 140%)': 'white',
+    background: ({isGradient}) => isGradient ? 'linear-gradient(110deg, rgba(156,156,156,0) 30%, rgba(0,123,255,1) 140%)' : 'white',
     border: 0,
     borderRadius: 3,
     padding: '0 30px',
-    marginBottom: '2rem' ,
+    marginBottom: '2rem',
 });
 
 const useStyles = makeStyles(theme => ({
     accordion: {
         backgroundColor: 'transparent',
-        '&:hover':{
+        '&:hover': {
             backgroundColor: 'white',
         },
     },
@@ -48,33 +43,29 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-
-
-
 const UserPage = observer(() => {
 
-    const classes =useStyles()
+    const classes = useStyles()
     const {taskInstance, user} = useContext(Context)
 
 
-
-    useEffect(()=>{
+    useEffect(() => {
 
         user.getOrderItems(taskInstance)
     }, [])
 
 
     return (
-        <Container >
+        <Container>
             <UserPagePaper isGradient elevation={3}>
                 <Grid lg={3}>
                     <div className={'avatarBlock'}>
-                        <div style={{ backgroundImage: `url(${img})` }} className={'avatarBlock__img'}>
+                        <div style={{backgroundImage: `url(${img})`}} className={'avatarBlock__img'}>
 
                             <label htmlFor="load_AvaImg">
-                               <div  className={'avatarBlock__modalMenu'}>
-                                   <MdAddAPhoto />
-                               </div>
+                                <div className={'avatarBlock__modalMenu'}>
+                                    <MdAddAPhoto/>
+                                </div>
                             </label>
 
 
@@ -93,20 +84,20 @@ const UserPage = observer(() => {
                 </Grid>
 
                 <Grid lg={12}>
-                    <List component="div" >
+                    <List component="div">
                         <ListItem button>
                             <ListItemText primary="Дата рождения" secondary="Jan 9, 2001"/>
                         </ListItem>
-                        <Divider />
+                        <Divider/>
                         <ListItem button divider>
                             <ListItemText primary="Ваш пол" secondary="Мужской"/>
                         </ListItem>
                         <ListItem button>
                             <ListItemText primary="Email" secondary={'balembamaks@gmail.com'}/>
                         </ListItem>
-                        <Divider light />
+                        <Divider light/>
                         <ListItem button>
-                            <ListItemText primary="Выйти из аккаунта" />
+                            <ListItemText primary="Выйти из аккаунта"/>
                         </ListItem>
                     </List>
 
@@ -114,18 +105,18 @@ const UserPage = observer(() => {
             </UserPagePaper>
 
             <UserPagePaper>
-                            <Box className={classes.Box}>
-                                <Typography variant="h2">Активные заказы</Typography>
+                <Box className={classes.Box}>
+                    <Typography variant="h2">Активные заказы</Typography>
 
-                                <TableUserOrder activeOrders/>
-                            </Box>
+                    <TableUserOrder activeOrders/>
+                </Box>
             </UserPagePaper>
 
             <UserPagePaper>
-                            <Box className={classes.Box}>
-                                <Typography variant="h2">Завершенные заказы</Typography>
-                                <TableUserOrder/>
-                            </Box>
+                <Box className={classes.Box}>
+                    <Typography variant="h2">Завершенные заказы</Typography>
+                    <TableUserOrder/>
+                </Box>
             </UserPagePaper>
 
         </Container>

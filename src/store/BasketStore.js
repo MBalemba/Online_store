@@ -14,6 +14,11 @@ export default class BasketStore {
 
     toggleBasket(id, price) {
         debugger
+
+        if(id===null){
+            return ''
+        }
+
         const isElemWithIdExist = this._basketElems.some((el) => {
             return el.id === id
         })

@@ -5,9 +5,31 @@ import {useHistory} from "react-router-dom";
 import {Context} from "../../../index";
 import {Image} from "react-bootstrap";
 import star from "../../../assets/svg/star.svg";
-
 import './CardProduct.css'
 import {Rating} from "@mui/material";
+
+
+export const ButtonBasket = observer(({id = null, price =null , classCust ='', color = 'primary'})=>{
+
+    const {basket} = useContext(Context)
+
+    function buttonClick(id, price) {
+
+        basket.toggleBasket(id!==null? Number(id): id, price)
+    }
+
+    return  <Button
+        variant="contained"
+        color = {color}
+        className={classCust}
+        onClick={() => {
+            buttonClick(id, price)
+        }}
+    >
+        {basket.isBasketItem(Number(id)) && 'Убрать из корзины'}
+        {basket.isBasketItem(Number(id)) || 'В корзину'}
+    </Button>
+})
 
 export const CardProduct = observer(({device}) => {
     const history = useHistory()
@@ -42,16 +64,9 @@ export const CardProduct = observer(({device}) => {
                 <Rating name="read-only" value={Number(device.ratings)} readOnly />
             </div>
             <div className="card__button__wrapper">
-                <Button
-                    variant="contained"
-                    className={'card__button'}
-                    onClick={() => {
-                        buttonClick(Number(device.id), device.price)
-                    }}
-                >
-                    {basket.isBasketItem(Number(device.id)) && 'Убрать из корзины'}
-                    {basket.isBasketItem(Number(device.id)) || 'В корзину'}
-                </Button>
+
+
+                <ButtonBasket id={device.id} price={device.price} classCust={'card__button'} />
             </div>
 
         </div>
