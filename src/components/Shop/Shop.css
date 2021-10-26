@@ -35,7 +35,6 @@
 }
 .settingsAppear.entered{
     opacity: 1;
-
 }
 .settingsAppear.exited{
     animation: widthAppear 0.5s;

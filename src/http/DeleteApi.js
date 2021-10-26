@@ -17,3 +17,11 @@ export const deleteType = async (id) => {
         }
     })
 }
+
+export const deleteDevice = async (id) => {
+    const response = await $authHost.delete('device/delete', {
+        data: {
+            id: id
+        }
+    })
+}

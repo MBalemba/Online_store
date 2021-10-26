@@ -106,6 +106,7 @@ const Admin = observer(() => {
             <CreateBrand show={brandVisible} onHide={()=> setBrandVisible(false)}/>
             <CreateType show={typeVisible} onHide={()=> setTypeVisible(false)}/>
             <CreateDevice createDevice={createDevice} show={deviceVisible} onHide={()=> setDeviceVisible(false)}/>
+
             {deleteBrandVisible && <DeleteBrand show={deleteBrandVisible} onHide={()=> setDeleteBrandVisible(false)} />}
             {deleteTypeVisible && <DeleteType show={deleteTypeVisible} onHide={()=> setDeleteTypeVisible(false)} />}
         </Container>

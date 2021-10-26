@@ -8,7 +8,7 @@ import LoadImage from "./ChildComponentDevice/LoadImage/LoadImage";
 
 
 
-const CreateDevice = observer(({show, onHide, createDevice}) => {
+const CreateDeviceContainer = observer(({show, onHide, createDevice}) => {
     const {device, user, taskInstance} = useContext(Context)
     const [info, setInfo] = useState([])
 
@@ -137,4 +137,7 @@ const CreateDevice = observer(({show, onHide, createDevice}) => {
     );
 });
 
-export default CreateDevice;
+
+
+
+export default CreateDeviceContainer;

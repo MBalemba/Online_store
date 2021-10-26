@@ -1,5 +1,4 @@
 import React, {useContext, useEffect} from 'react';
-import {Button, Card, Col, Image, Row} from "react-bootstrap";
 import bigStar from '../../assets/svg/starBig.svg'
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
@@ -7,15 +6,35 @@ import {useParams} from "react-router-dom";
 import {toJS} from "mobx";
 import '../general.css'
 import {Box, Container, Grid} from "@material-ui/core";
-import {Accordion, AccordionDetails, AccordionSummary, Paper, Rating, Typography} from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, Button, Paper, Rating, Typography} from "@mui/material";
 import OneDeviceStore from "./OneDeviceStore";
 import {ButtonBasket} from "../../components/Common/CardProduct/CardProduct";
 import './DevicePage.css'
+import {makeStyles} from "@material-ui/styles";
+import ModalDevice from "./ComponentsForAdmin/ModalDeviceEdit";
 
 
 const store = new OneDeviceStore()
 
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+}));
+
+
+
 const DevicePage = observer(() => {
+    const classes = useStyles()
+
+    const [open, setOpen] = React.useState(false);
+
     const {user} = useContext(Context)
     const {id} = useParams()
     const item = store.Device
@@ -96,14 +115,33 @@ const DevicePage = observer(() => {
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                     >
-                        <Typography>Для Админа</Typography>
+                        <Box sx={{padding: '0 10px 0'}}>
+                            <Typography variant={'h5'}>Для Админа</Typography>
+                        </Box>
                     </AccordionSummary>
                     <AccordionDetails>
 
+                        <Grid className={classes.root} container spacing={3}>
+                            <Grid item xs={4}>
+                                <Paper className={classes.paper}>
+                                    <Button onClick={()=>setOpen(true)} variant="outlined" color="primary">
+                                        Редактировать карточку
+                                    </Button>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Paper className={classes.paper}>
+                                    <Button variant="outlined" color="primary">Удалить карточку</Button>
+                                </Paper>
+                            </Grid>
+
+                        </Grid>
                     </AccordionDetails>
                 </Accordion>
             </Box>
 
+
+            <ModalDevice edit open={open} setOpen={setOpen} />
 
         </Container>
     );
