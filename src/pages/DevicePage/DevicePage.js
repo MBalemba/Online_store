@@ -141,7 +141,7 @@ const DevicePage = observer(() => {
             </Box>
 
 
-            <ModalDevice edit open={open} setOpen={setOpen} />
+            <ModalDevice info={item} edit open={open} setOpen={setOpen} />
 
         </Container>
     );
