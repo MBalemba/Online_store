@@ -7,6 +7,10 @@ import LoadImageLocal from "./LoadImageLocal";
 
 const LoadImage = observer(({createDevice, onFileUpload}) => {
 
+    function getFileImg(file){
+        createDevice.setImg(file);
+    }
+
     return (
         <>
             <hr/>
@@ -30,7 +34,7 @@ const LoadImage = observer(({createDevice, onFileUpload}) => {
                 </Tab>
 
                 <Tab eventKey="Загрузить изображение" title="Загрузить изображение">
-                    <LoadImageLocal createDevice={createDevice}/>
+                    <LoadImageLocal getFileImg={getFileImg} Img={createDevice.Img} createDevice={createDevice}/>
                     <hr/>
                 </Tab>
 

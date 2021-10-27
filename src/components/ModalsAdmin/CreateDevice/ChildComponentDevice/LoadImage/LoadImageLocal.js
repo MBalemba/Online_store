@@ -4,16 +4,17 @@ import {Button, Form} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../../../index";
 
-const LoadImageLocal = observer(({createDevice}) => {
+const LoadImageLocal = observer(({Img, getFileImg}) => {
     const {taskInstance} = useContext(Context)
     const [drag, setDrag] = useState(false)
     const ref = React.createRef()
 
     function onFileUpload(e) {
-        if (!createDevice.Image) {
-            createDevice.setImg(e.target.files[0]);
+        if(IsvalideFormatLoadingFile(e.target.files[0])){
+            getFileImg(e.target.files[0]);
+        } else{
+            taskInstance.createTask('Недопустимый формат', 'warning')
         }
-        console.log(createDevice.Img);
     }
 
 
@@ -48,6 +49,20 @@ const LoadImageLocal = observer(({createDevice}) => {
         e.preventDefault()
     }
 
+    function IsvalideFormatLoadingFile(file){
+
+        if(file.type==='image/jpeg'
+            || file.type==='image/pjpeg'
+            || file.type==='image/png'
+            || file.type==='image/tiff'
+            || file.type==='image/vnd.wap.wbmp'
+            || file.type==='image/webp') {
+            return true
+        } else {
+            return false
+        }
+    }
+
     function dragDrop(e) {
         e.preventDefault()
         let files = [...e.dataTransfer.files]
@@ -55,14 +70,10 @@ const LoadImageLocal = observer(({createDevice}) => {
             taskInstance.createTask('Можно загрузить только одну картинку', 'warning')
         } else if (files.length ===1){
             const file = files[0]
-            if(file.type==='image/jpeg'
-                || file.type==='image/pjpeg'
-                || file.type==='image/png'
-                || file.type==='image/tiff'
-                || file.type==='image/vnd.wap.wbmp'
-                || file.type==='image/webp') {
-                createDevice.setImg(file)
-            } else {
+
+            if(IsvalideFormatLoadingFile(file)){
+                getFileImg(file)
+            } else{
                 taskInstance.createTask('Недопустимый формат', 'warning')
             }
         }
@@ -70,8 +81,8 @@ const LoadImageLocal = observer(({createDevice}) => {
 
     return (
         <>
-            {createDevice.Img
-                ? <DivImg url={window.URL.createObjectURL(createDevice.Img)} className={'mt-2 mb-2 '}>
+            {Img
+                ? <DivImg url={window.URL.createObjectURL(Img)} className={'mt-2 mb-2 '}>
                     <div style={{
                         backgroundColor: 'rgba(0,0,0,0.5)',
                         borderRadius: '2%',
@@ -81,7 +92,7 @@ const LoadImageLocal = observer(({createDevice}) => {
                         padding: '2rem'
                     }} variant="secondary">
                         <h2 className={'ml-2'}>Файл выбран</h2>
-                        <Button className={'ml-2'} onClick={() => createDevice.setImg(null)} size="lg"
+                        <Button className={'ml-2'} onClick={() => getFileImg(null)} size="lg"
                                 variant={'warning'}>Изменить загруженный файл</Button></div>
                 </DivImg>
                 :

@@ -10,10 +10,24 @@ const LoadImageLink = observer(() => {
 
     const [link, setLink] = useState('')
     const [statusLinkLoad, setClick] = useState({click: false, isLoad: false})
+    function toStateLink(link){
+        createDevice.setLink(link)
+    }
 
 
-    console.log('Link', createDevice.Link)
+    return (
+        <>
+            <PresentationComponentLoadLink toStateLink ={toStateLink} Link={createDevice.Link} />
+        </>
 
+    );
+});
+
+
+export const PresentationComponentLoadLink = ({toStateLink, Link})=>{
+
+    const [link, setLink] = React.useState('')
+    const [statusLinkLoad, setClick] = React.useState({click: false, isLoad: false})
 
     return (
         <>
@@ -28,13 +42,13 @@ const LoadImageLink = observer(() => {
                     onKeyDown={(e)=>{
                         if (e.keyCode === 13) {
                             setClick({click: true, isLoad: false})
-                            createDevice.setLink(link)
+                            toStateLink(link)
                         }
                     }}
                 />
                 <Button onClick={() => {
                     setClick({click: true, isLoad: false})
-                    createDevice.setLink(link)
+                    toStateLink(link)
                 }}
                         disabled={!link || statusLinkLoad.click} style={{borderRadius: 0}}
                         variant="outline-secondary" id="button-addon2">
@@ -43,7 +57,7 @@ const LoadImageLink = observer(() => {
                 </Button>
                 <Button onClick={() => {
                     setClick({click: false, isLoad: false});
-                    createDevice.setLink(null)
+                    toStateLink(null)
                 }} disabled={!statusLinkLoad.click || !statusLinkLoad.isLoad}
                         style={{borderTopLeftRadius: 0, borderBottomLeftRadius: 0}} variant="outline-secondary"
                         id="button-addon2">
@@ -58,19 +72,19 @@ const LoadImageLink = observer(() => {
                 {statusLinkLoad.click &&
                 <Img
                     alt={'Изображение не смогло загрузиться из источника, повторите попытку'}
-                    src={'' + createDevice.Link}
+                    src={'' + Link}
                     disp={statusLinkLoad.click && statusLinkLoad.isLoad}
 
                     onLoad={(e) => {
                         setClick({click: true, isLoad: true})
-                        createDevice.setLink(link)
+                        toStateLink(link)
                     }
                     }
 
                     onError={(e) => {
 
                         setClick({click: true, isLoad: false})
-                        createDevice.setLink(null)
+                        toStateLink(null)
                         setTimeout(() => {
                             setClick({click: false, isLoad: false});
                             setLink('')
@@ -87,8 +101,7 @@ const LoadImageLink = observer(() => {
 
             </div>
         </>
-
-    );
-});
+    )
+}
 
 export default LoadImageLink;
