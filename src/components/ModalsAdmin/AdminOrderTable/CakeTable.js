@@ -104,8 +104,8 @@ const CakeTable = ({isUserTable = false, row}) => {
     const [isStatusDisabled, setIsStatusDisabled] = React.useState(false);
     const classes = useStyles()
 
-    const userCheckCallback = (status) => {
-        return user.checkStatus(status)
+    const userCheckCallback = (status, info) => {
+        return user.checkStatus(status, info)
     }
 
     const handleChange = (event) => {

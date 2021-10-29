@@ -105,7 +105,7 @@ export default class BasketStore {
                 taskStore.createTask('Заказ сделан', 'Success')
             })
             .catch(({response}) => {
-                StatusCheckUser(response.status)
+                StatusCheckUser(response.status, response.info)
                     .then(() => {
                         // this.returnInitialState()
                         taskStore.createTask('Заказ сделан', 'Success')

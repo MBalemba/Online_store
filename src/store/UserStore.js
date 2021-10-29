@@ -57,7 +57,14 @@ export default class UserStore {
                 debugger
                 localStorage.setItem('token', response.headers.jwtoken)
                 localStorage.setItem('RefreshToken', response.headers.refreshtoken)
-                this.checkAutorize()
+                if (response.data.info === 'ADMIN') {
+                    this._isAuthAdmin = true
+                }
+
+                if (response.data.info === 'USER') {
+                    this._isAuthUser = true
+                }
+                // this.checkAutorize() //Из за этого говна все поломалось
                 return Promise.resolve(response)
             })
             .catch(() => {
@@ -73,15 +80,13 @@ export default class UserStore {
                 debugger
                 localStorage.setItem('token', response.headers.jwtoken)
                 localStorage.setItem('RefreshToken', response.headers.refreshtoken)
-                this.checkAutorize()
+
+                this.checkAutorize() //Из за этого говна все поломалось
                 return Promise.resolve()
             })
             .catch((error)=>{
                 debugger
-                localStorage.removeItem('token')
-                localStorage.removeItem('RefreshToken')
-                this._isAuthUser = false
-                this._isAuthAdmin = false
+                this.Out()
                 return Promise.reject()
             })
     }
@@ -90,7 +95,7 @@ export default class UserStore {
 
         if (localStorage.getItem('token')) {
             return check().then((r) => {
-                // debugger
+                debugger
                 if (r.data.info === 'ADMIN') {
                     this._isAuthAdmin = true
                 }
@@ -101,12 +106,12 @@ export default class UserStore {
 
                 return Promise.resolve()
 
-            }).catch((r)=>{
-                // debugger
+            }).catch(({r})=>{
+                debugger
                 this.checkRefresh().then(()=>{})
                 console.log(r)
             }).finally(() => {
-                // debugger
+                    debugger
                     return Promise.resolve()
                 }
             )
@@ -115,13 +120,13 @@ export default class UserStore {
         }
     }
 
-    checkStatus(status){
+    checkStatus(status, message=''){
         debugger
-        if(status===468){
+        if(status===400 && message==='Token was expired'){
             return this.checkRefresh()
         }
 
-        if(status===403){
+        if(status===403 || status===401){
             this.Out()
             return Promise.reject()
         }
@@ -139,7 +144,7 @@ export default class UserStore {
                 taskInstance.createTask('Данные о заказе пришли', 'Success')
             })
             .catch(({response})=>{
-                this.checkStatus()
+                this.checkStatus(response.status, response.info)
                     .then(()=>{
                         this.getOrderItems(taskInstance)
                     })

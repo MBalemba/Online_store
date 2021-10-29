@@ -18,3 +18,10 @@ export const editType = async (name, id) => {
     return response
 }
 
+export const editDevice = async (obj) => {
+    debugger
+    const response = await $authHost.put('device/edit', obj)
+    return response
+}
+
+

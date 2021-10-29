@@ -21,6 +21,7 @@ const CreateType = observer(({show, onHide}) => {
                     return
                 }
                 if(response.data.status === 468){
+                    debugger
                     user.checkRefresh().then(()=>{
                         add()
                     })

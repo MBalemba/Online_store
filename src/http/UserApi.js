@@ -76,6 +76,12 @@ export const getAllOrders = async () => {
     return response
 }
 
+export const getImageByName = async (name) => {
+    debugger
+    const response = await $authHost.get(process.env.REACT_APP_API_URL + 'takeImage/'+ name)
+    return response
+}
+
 export const codeConfirmation = async (obj) => {
     debugger
     const response = await $host.put('/user/codeConfirmation', obj)
@@ -85,7 +91,7 @@ export const codeConfirmation = async (obj) => {
 
 export const changeOrderStatus = async (data) => {
 
-    const response = await $authHost.post('order/changeStatusOfOrder', data)
+    const response = await $authHost.put('order/changeStatusOfOrder', data)
     console.log(response.data)
     debugger
     return response

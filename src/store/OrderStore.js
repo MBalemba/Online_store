@@ -26,7 +26,7 @@ export default class OrderStore {
             .catch(({response}) => {
                 this._isFetching = false
                 debugger
-                callbackUserCheck(response.status).then(() => {
+                callbackUserCheck(response.status, response.info).then(() => {
                     this.getOrderInfo()
                 })
             })
@@ -43,9 +43,8 @@ export default class OrderStore {
             .catch(({response}) => {
                 debugger
 
-                userCheckCallback(response.status).then(() => {
+                userCheckCallback(response.status, response.info).then(() => {
                     debugger
-
                     this.changeOrderStatus(userCheckCallback, taskInstance, callbackChangeStatus)
                 }).catch(() => {
                     debugger

@@ -26,8 +26,8 @@ const Basket = observer(() => {
         basket.formAnOrder(callbackStatusCheck, taskInstance)
     }
 
-    function callbackStatusCheck(status){
-        return user.checkStatus(status)
+    function callbackStatusCheck(status, info){
+        return user.checkStatus(status, info)
     }
 
 

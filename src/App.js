@@ -34,6 +34,7 @@ const App = observer(function () {
 
 
     useEffect(()=>{
+        debugger
         user.checkAutorize()
             .then(()=>{
                 setTimeout(()=>{setLoader(false)}, 1000)

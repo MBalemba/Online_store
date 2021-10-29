@@ -1,12 +1,24 @@
 import React from 'react';
-import {Backdrop, Box, Button, Divider, Fade, Grid, Modal, Paper, TextField, Typography} from "@mui/material";
+import {
+    Backdrop,
+    Box,
+    Button,
+    CircularProgress,
+    Divider,
+    Fade,
+    Grid,
+    Modal,
+    Paper,
+    TextField,
+    Typography
+} from "@mui/material";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import {Formik, Form as FormFormik, useField, useFormik, Field, ErrorMessage, Form, FieldArray} from 'formik';
 import * as Yup from 'yup';
 import NumberFormat from "react-number-format";
 import MaskedInput from "react-text-mask/dist/reactTextMask";
-import LoadImageLink from "../../../components/ModalsAdmin/CreateDevice/ChildComponentDevice/LoadImage/LoadImageLink";
+import LoadImageLink, {PresentationComponentLoadLink} from "../../../components/ModalsAdmin/CreateDevice/ChildComponentDevice/LoadImage/LoadImageLink";
 import LoadImageLocal from "../../../components/ModalsAdmin/CreateDevice/ChildComponentDevice/LoadImage/LoadImageLocal";
 import {createDevice} from "../../Admin";
 import {makeStyles} from "@material-ui/core";
@@ -71,26 +83,27 @@ function a11yProps(index) {
 }
 
 
-const ModalDevice = ({edit = false, open, setOpen, info}) => {
+const ModalDevice = ({edit = false, open, setOpen, info, fishingData, isLoading=false }) => {
     const classes = useStyles()
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [value, setValue] = React.useState(0);
     const [imgFile, setImgFile] = React.useState(null)
+    const [link, setLink] = React.useState(null)
 
 
 
     const initialValues = {
         name: info.name,
         price: info.price,
-        categories: [
+        characteristic: [
             ...info.device_infoResponseModels
         ],
 
     }
 
     function toStateLink(link) {
-        createDevice.setLink(link)
+        setLink(link)
     }
 
     function getFileImg(file) {
@@ -100,8 +113,10 @@ const ModalDevice = ({edit = false, open, setOpen, info}) => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
     return (
         <div>
+
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -113,8 +128,31 @@ const ModalDevice = ({edit = false, open, setOpen, info}) => {
                     timeout: 500,
                 }}
             >
+
                 <Fade in={open}>
+
                     <Box component={Paper}  sx={style}>
+
+                        <Modal
+                            aria-labelledby="transition-modal-title"
+                            aria-describedby="transition-modal-description"
+                            open={isLoading}
+                            onClose={handleClose}
+                            closeAfterTransition
+                            BackdropComponent={Backdrop}
+                            BackdropProps={{
+                                timeout: 500,
+                            }}
+                        >
+                            <Backdrop
+                                open={isLoading}
+                            >
+                                <CircularProgress color="inherit" />
+                            </Backdrop>
+                        </Modal>
+
+
+
                         <Box sx={{display: 'flex', justifyContent: 'space-between',}}>
                             <Typography id="transition-modal-title" variant="h4" component="h2">
                                 {edit && 'Редактирование девайса'}
@@ -136,25 +174,35 @@ const ModalDevice = ({edit = false, open, setOpen, info}) => {
                                         .max(100, 'Must be 100 characters or less')
                                         .required('Required'),
                                     price: Yup.number().required('ошибка').positive().integer(),
-                                    categories: Yup.array()
+                                    characteristic: Yup.array()
                                         .of(
                                             Yup.object().shape({
                                                 title: Yup.string().required('Заполните или удалите'), // these constraints take precedence
                                                 description: Yup.string().required('Заполните или удалите'), // these constraints take precedence
                                             })
                                         )
-                                        .required('Must have friends') // these constraints are shown if and only if inner constraints are satisfied
-                                        .min(3, 'Minimum of 3 friends'),
 
                                 })}
                                 onSubmit={(values, {setSubmitting}) => {
                                     debugger
-                                    console.log(JSON.stringify(values, null, 2));
+                                    let data = values
+                                    if(link){
+                                        data = {...data, imgRef: link}
+                                    }
+
+                                    if(imgFile){
+                                        data = {...data, imgFile: imgFile}
+                                    }
+
+
+                                    fishingData(data)
+
+
                                 }}
                             >
                                 {({values, errors}) => (
                                     <Form>
-
+                                        {/*{JSON.stringify(errors)}*/}
                                         <Box sx={{marginBottom: '1rem'}}>
                                             <InputDevice
                                                 name={'name'}
@@ -182,16 +230,17 @@ const ModalDevice = ({edit = false, open, setOpen, info}) => {
                                             </Typography>
                                             <Typography variant={'caption'}>не хотите не надо, мне нужен копирайтер, памагите</Typography>
                                         </Box>
+
                                         <Box sx={{width: '100%', marginBottom: '2rem'}}>
                                             <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                                                 <Tabs value={value} onChange={handleChange}
                                                       aria-label="basic tabs example">
-                                                    <Tab label="Ссылка" {...a11yProps(0)} />
-                                                    <Tab label="Локально" {...a11yProps(1)} />
+                                                    <Tab onClick={()=>{setImgFile(null)} } label="Ссылка" {...a11yProps(0)} />
+                                                    <Tab onClick={()=>{setLink(null)} } label="Локально" {...a11yProps(1)} />
                                                 </Tabs>
                                             </Box>
                                             <TabPanel value={value} index={0}>
-                                                <LoadImageLink/>
+                                                <PresentationComponentLoadLink toStateLink ={toStateLink} Link={link}  />
                                             </TabPanel>
                                             <TabPanel value={value} index={1}>
                                                 <LoadImageLocal getFileImg={getFileImg} Img={imgFile}/>
@@ -201,26 +250,29 @@ const ModalDevice = ({edit = false, open, setOpen, info}) => {
 
 
                                         <Box>
-                                            <FieldArray name="categories">
+                                            <Typography variant={'h5'}>
+                                                Характеристики
+                                            </Typography>
+                                            <FieldArray name="characteristic">
                                                 {({insert, remove, push}) => (
                                                     <Box sx={{width: '100%', margin: '10px'}}>
-                                                        {values.categories?.length > 0 &&
-                                                        values.categories.map((item, index) => (
+                                                        {values.characteristic?.length > 0 &&
+                                                        values.characteristic.map((item, index) => (
                                                             <Box sx={{marginTop: '1rem'}} key={index}>
                                                                 <Grid container spacing={2}>
                                                                     <Grid item md={4}>
                                                                         <InputDevice
                                                                             className={classes.inputCategory}
-                                                                            name={`categories.${index}.title`}
-                                                                            id={`categories.${index}.title`}
+                                                                            name={`characteristic.${index}.title`}
+                                                                            id={`characteristic.${index}.title`}
                                                                             label="Имя категории"
                                                                         />
                                                                     </Grid>
                                                                     <Grid item md={6}>
                                                                         <InputDevice
                                                                             className={classes.inputCategory}
-                                                                            name={`categories.${index}.description`}
-                                                                            id={`categories.${index}.description`}
+                                                                            name={`characteristic.${index}.description`}
+                                                                            id={`characteristic.${index}.description`}
                                                                             label="Значение"
                                                                         />
                                                                     </Grid>
@@ -265,6 +317,7 @@ const ModalDevice = ({edit = false, open, setOpen, info}) => {
                                                 Редактировать
                                             </Button>
                                         </Box>
+
                                     </Form>
                                 )}
                             </Formik>

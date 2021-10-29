@@ -71,7 +71,7 @@ class Slider extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        debugger
+
         const prevDevices = prevProps?.devices
         const currentDevices = this.props?.devices
 
@@ -104,7 +104,6 @@ class Slider extends Component {
     }
 
     setParameters() {
-        debugger
         this.containerNode = document.getElementById(`gallery_${this.props.id}`)
         this.btnSlider_prev = document.querySelector( `.btnSlider_prev_${this.props.id}>button`)
         this.btnSlider_next = document.querySelector(`.btnSlider_next_${this.props.id}>button`)

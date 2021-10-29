@@ -35,8 +35,8 @@ const AdminOrderTable = observer(() => {
     const classes = useStyles()
     const {taskInstance, user} = useContext(Context)
 
-    const userCheckCallback = (status)=>{
-        return user.checkStatus(status)
+    const userCheckCallback = (status, info)=>{
+        return user.checkStatus(status, info)
     }
 
     useEffect(()=>{

@@ -41,6 +41,7 @@ const DeviceList = observer(() => {
                         return
                     }
                     if (response.status === 500){
+                        debugger
                         user.checkRefresh().then(()=>{
                             device.cleanSelectedBrands()
                             device.returnPriceRangeToInitial()

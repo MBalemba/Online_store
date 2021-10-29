@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react';
 import bigStar from '../../assets/svg/starBig.svg'
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {toJS} from "mobx";
 import '../general.css'
 import {Box, Container, Grid} from "@material-ui/core";
@@ -12,6 +12,7 @@ import {ButtonBasket} from "../../components/Common/CardProduct/CardProduct";
 import './DevicePage.css'
 import {makeStyles} from "@material-ui/styles";
 import ModalDevice from "./ComponentsForAdmin/ModalDeviceEdit";
+import {SHOP_ROUTE} from "../../utils/consts";
 
 
 const store = new OneDeviceStore()
@@ -32,15 +33,48 @@ const useStyles = makeStyles((theme) => ({
 
 const DevicePage = observer(() => {
     const classes = useStyles()
-
+    let history = useHistory()
     const [open, setOpen] = React.useState(false);
 
-    const {user} = useContext(Context)
+    const {user, taskInstance} = useContext(Context)
     const {id} = useParams()
     const item = store.Device
 
+
+    function fishingData(dataObj){
+
+
+        function doEditDevices(data){
+            store.editInfoDevice(data, taskInstance)
+                .then(()=>{
+                    setOpen(false)
+                    giveDeviceInfo()
+
+                })
+                .catch((resp)=>{
+                user.checkStatus(resp.status, resp.info).then(()=>{
+                    doEditDevices(data)
+                })
+            })
+        }
+
+        doEditDevices(dataObj)
+
+
+    }
+
+    function giveDeviceInfo(){
+        store.giveInfoDevice(id).then(()=>{
+
+        }).catch((err)=>{
+            if(err){
+                history.push(`${SHOP_ROUTE}`)
+            }
+        })
+    }
+
     useEffect(() => {
-        store.giveInfoDevice(id)
+        giveDeviceInfo()
     }, [])
 
 
@@ -109,7 +143,8 @@ const DevicePage = observer(() => {
                 </Grid>
             </Box>
 
-            <Box sx={{marginTop: '20px'}}>
+
+            {user._isAuthAdmin &&  <Box sx={{marginTop: '20px'}}>
                 <Accordion>
                     <AccordionSummary
                         aria-controls="panel1a-content"
@@ -138,10 +173,11 @@ const DevicePage = observer(() => {
                         </Grid>
                     </AccordionDetails>
                 </Accordion>
-            </Box>
+            </Box>}
 
 
-            <ModalDevice info={item} edit open={open} setOpen={setOpen} />
+
+            <ModalDevice info={item} edit open={open} setOpen={setOpen} fishingData={fishingData} isLoading={store.isEditDeviceProcess} />
 
         </Container>
     );
