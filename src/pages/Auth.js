@@ -172,7 +172,10 @@ const Auth = observer(() => {
     const validationErrorObject = isLoginPage
         ?
         {
-            number: Yup.string().required('Пустое поле'),
+            number: Yup.string().required('Пустое поле').test('kod', 'Не заполнен номер', val => {
+                return val === '' ? true : val?.match(/\d/g)?.join('')?.length === 11
+            }),
+            password: Yup.string().required('Заполните!'),
         }
         : (isKod.appear
                 ?
@@ -186,7 +189,8 @@ const Auth = observer(() => {
                     kod: Yup.string().test('kod', 'Должно быть 6 символов', val => {
                         debugger;
                         return val === '' ? true : val?.match(/\d/g)?.join('')?.length === 6
-                    }).required('Пустое поле')
+                    }).required('Пустое поле'),
+
                 }
                 :
                 {
@@ -196,6 +200,8 @@ const Auth = observer(() => {
                         patronymic: Yup.string().max(20, 'больше 20 символов запрещено').matches(/(^[\p{sc=Cyrillic}]+$)/ui, 'Только русские буквы, без пробелов').required('Пустое поле'),
                     }),
                     number: Yup.string().required('Пустое поле'),
+                    password: Yup.string().required('Заполните!'),
+
                 }
         )
 
@@ -381,6 +387,9 @@ const Auth = observer(() => {
                                     <TextField
                                         onChange={formik.handleChange}
                                         value={formik.values.password}
+                                        onBlur={formik.handleBlur}
+                                        error={formik.touched.password && Boolean(formik.errors.password)}
+                                        helperText={formik.touched.password && formik.errors.password}
                                         name={'password'}
                                         type={'password'} size="small" fullWidth id="outlined-basic" label="Пароль"
                                         variant="outlined"/>

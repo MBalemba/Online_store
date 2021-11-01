@@ -1,6 +1,7 @@
 import {makeAutoObservable, toJS} from "mobx";
 import {getImageByName, giveDeviceById} from "../../http/UserApi";
 import {editDevice} from "../../http/EditApi";
+import {deleteDevice} from "../../http/DeleteApi";
 
 
 export default class OneDeviceStore {
@@ -23,8 +24,31 @@ export default class OneDeviceStore {
             "typeName": ""
         }
         this._isEditDeviceProcess = false
+        this._isDeleteDeviceProcess = false
 
         makeAutoObservable(this)
+    }
+
+    toInitial(){
+        this.device = {
+            "brandName": "",
+            "device_infoResponseModels": [
+                {
+                    "description": "",
+                    "id": null,
+                    "title": ""
+                }
+            ],
+            "id": null,
+            "isName": true,
+            "name": "",
+            "pathFile": "",
+            "price": "",
+            "ratings": null,
+            "typeName": ""
+        }
+        this._isEditDeviceProcess = false
+        this._isDeleteDeviceProcess = false
     }
 
 
@@ -34,6 +58,16 @@ export default class OneDeviceStore {
             this.device = response.data
         }).catch(({response})=>{
             debugger
+            return Promise.reject(response)
+        })
+    }
+
+    deleteCard(){
+        this._isDeleteDeviceProcess = true
+        return deleteDevice(this.device.id).then(()=>{
+            this._isDeleteDeviceProcess = false
+            return Promise.resolve(this.device.typeName)
+        }).catch(({response})=>{
             return Promise.reject(response)
         })
     }
@@ -100,5 +134,9 @@ export default class OneDeviceStore {
 
     get isEditDeviceProcess(){
         return this._isEditDeviceProcess
+    }
+
+    get isDeleteDeviceProcess(){
+        return this._isDeleteDeviceProcess
     }
 }

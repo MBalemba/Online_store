@@ -1,5 +1,5 @@
 import {makeAutoObservable, toJS} from "mobx";
-import {check, checkAdmin, getOrderItemsUser, login, refresh, registration} from "../http/UserApi";
+import {check, checkAdmin, getInfoAboutUser, getOrderItemsUser, login, refresh, registration} from "../http/UserApi";
 
 export default class UserStore {
 
@@ -8,6 +8,11 @@ export default class UserStore {
         this._isAuthAdmin = false
         this._orderItems = []
         this._user = {}
+        this._personalInfo = {
+            "fio": 'Null Null Null',
+            "isMan": true,
+            telephone_number: 'none'
+        }
         makeAutoObservable(this)
     }
 
@@ -37,6 +42,25 @@ export default class UserStore {
 
     get user() {
         return this._user
+    }
+
+    get InfoProfile(){
+        const obj = {}
+        obj.name = this._personalInfo.fio.split(' ')
+        obj.isMan = this._personalInfo.isMan
+        obj.telephone_number = this._personalInfo.telephone_number
+
+        return obj
+    }
+
+    requestFromProfileData(){
+        return getInfoAboutUser().then((response)=>{
+            debugger
+            this._personalInfo = response.data
+            return Promise.resolve(1)
+        }).catch(({response})=>{
+            return Promise.reject(response.data)
+        })
     }
 
     doRegistaration(data, ){

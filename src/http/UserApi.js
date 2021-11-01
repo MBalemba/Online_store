@@ -102,5 +102,10 @@ export const getOrderItemsUser = async () => {
     return response
 }
 
+export const getInfoAboutUser = async () => {
+    const response = await $authHost.get ('/user/getInfoAboutUser')
+    return response
+}
+
 
 
