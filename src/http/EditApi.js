@@ -24,4 +24,18 @@ export const editDevice = async (obj) => {
     return response
 }
 
+export const editFio = async (fio) => {
+    debugger
+    const response = await $authHost.put(`user/changeFIO/${fio}`)
+    return response
+}
+
+export const editGender = async (gender) => {
+    debugger
+    const response = await $authHost.put(`user/changeGender/${gender}`)
+    return response
+}
+
+
+
 

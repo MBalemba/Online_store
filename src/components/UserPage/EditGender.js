@@ -2,7 +2,7 @@ import React from 'react';
 import {
     Backdrop,
     Box,
-    Button,
+    Button, CircularProgress,
     Divider,
     Fade, FormControl,
     FormControlLabel, FormLabel,
@@ -29,7 +29,7 @@ const style = {
     p: 4,
 };
 
-const EditGender = observer( ({open, handleClose, gender})=> {
+const EditGender = observer( ({open, handleClose, gender, isEditGender, getNewGender})=> {
     return (
         <div>
 
@@ -48,6 +48,25 @@ const EditGender = observer( ({open, handleClose, gender})=> {
                 <Fade in={open}>
 
                     <Box component={Paper}  sx={style}>
+
+                        <Modal
+                            aria-labelledby="transition-modal-title"
+                            aria-describedby="transition-modal-description"
+                            open={isEditGender}
+                            onClose={handleClose}
+                            closeAfterTransition
+                            BackdropComponent={Backdrop}
+                            BackdropProps={{
+                                timeout: 500,
+                            }}
+                        >
+                            <Backdrop
+                                open={isEditGender}
+                            >
+                                <CircularProgress color="inherit" />
+                            </Backdrop>
+                        </Modal>
+
                         <Box sx={{display: 'flex', justifyContent: 'space-between',}}>
                             <Typography id="transition-modal-title" variant="h4" component="h2">
                                 Редактирование пола
@@ -74,11 +93,11 @@ const EditGender = observer( ({open, handleClose, gender})=> {
 
                                 onSubmit={(values, {setSubmitting}) => {
                                     debugger
-                                    let data = values
-
+                                    let isMan = values.picked ==="мужчина"? true: false;
+                                    getNewGender(isMan)
                                 }}
                             >
-                                {({values, errors}) => (
+                                {({values, errors, touched, getFieldProps }) => (
                                     <Form>
                                         {/*{JSON.stringify(errors)}*/}
 
@@ -86,12 +105,14 @@ const EditGender = observer( ({open, handleClose, gender})=> {
                                         <FormControl component="fieldset">
                                             <FormLabel component="legend">Укажите свой пол</FormLabel>
                                             <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
-                                                <FormControlLabel value="мужчина" name="picked" control={<Radio />} label="Мужчина" />
-                                                <FormControlLabel value="женщина" name="picked" control={<Radio />} label="Женщина" />
+                                                <FormControlLabel {...getFieldProps('picked')} value="мужчина"  id={"мужчина"} name="picked" control={<Radio />} label="Мужчина" />
+                                                <FormControlLabel {...getFieldProps('picked')}  value="женщина"  id={"женщина"} name="picked" control={<Radio />} label="Женщина" />
                                             </RadioGroup>
                                         </FormControl>
 
-
+                                        {/*<Box>
+                                            {JSON.stringify(values)}
+                                        </Box>*/}
 
 
                                         <Box sx={{display:'flex', justifyContent: 'space-between', marginTop: '4rem'}}>

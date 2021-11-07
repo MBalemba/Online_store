@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     Backdrop,
     Box,
@@ -52,8 +52,10 @@ const style = {
     p: 4,
 };
 
-const EditFio = observer( ({open, handleClose, firstName, lastName, middleName}) => {
+const EditFio = observer( ({open, handleClose, firstName, lastName, middleName, getNewFio, isEditFio}) => {
     const classes = useStyles()
+
+
     return (
         <div>
 
@@ -72,6 +74,28 @@ const EditFio = observer( ({open, handleClose, firstName, lastName, middleName})
                 <Fade in={open}>
 
                     <Box component={Paper}  sx={style}>
+
+
+                        <Modal
+                            aria-labelledby="transition-modal-title"
+                            aria-describedby="transition-modal-description"
+                            open={isEditFio}
+                            onClose={handleClose}
+                            closeAfterTransition
+                            BackdropComponent={Backdrop}
+                            BackdropProps={{
+                                timeout: 500,
+                            }}
+                        >
+                            <Backdrop
+                                open={isEditFio}
+                            >
+                                <CircularProgress color="inherit" />
+                            </Backdrop>
+                        </Modal>
+
+
+
                         <Box sx={{display: 'flex', justifyContent: 'space-between',}}>
                             <Typography id="transition-modal-title" variant="h4" component="h2">
                                Редактирование фамилии
@@ -87,9 +111,9 @@ const EditFio = observer( ({open, handleClose, firstName, lastName, middleName})
                         <Box sx={{marginTop: '2rem'}}>
                             <Formik
                                 initialValues={{
-                                    firstName: '',
-                                    lastName: '',
-                                    middleName: '',
+                                    firstName: firstName,
+                                    lastName: lastName,
+                                    middleName: middleName,
                                 }}
 
                                 validationSchema={
@@ -102,7 +126,9 @@ const EditFio = observer( ({open, handleClose, firstName, lastName, middleName})
 
                                 onSubmit={(values, {setSubmitting}) => {
                                     debugger
-                                    let data = values
+                                    let fio =  values.lastName + ' '+values.firstName +' '+values.middleName;
+                                    getNewFio(fio)
+
 
                                 }}
                             >

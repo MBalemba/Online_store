@@ -1,5 +1,6 @@
 import {makeAutoObservable, toJS} from "mobx";
 import {check, checkAdmin, getInfoAboutUser, getOrderItemsUser, login, refresh, registration} from "../http/UserApi";
+import {editFio, editGender} from "../http/EditApi";
 
 export default class UserStore {
 
@@ -13,6 +14,10 @@ export default class UserStore {
             "isMan": true,
             telephone_number: 'none'
         }
+
+        this.isEditFio = false
+        this.isEditGender = false
+
         makeAutoObservable(this)
     }
 
@@ -184,6 +189,51 @@ export default class UserStore {
         localStorage.removeItem('RefreshToken')
         this._isAuthUser = false
         this._isAuthAdmin = false
+    }
+
+    editFio(fio){
+        debugger
+        return editFio(fio).then(()=>{
+            debugger
+            this._personalInfo.fio = fio
+            return Promise.resolve()
+        }).catch(({response})=>{
+            debugger
+            return Promise.reject(response.data)
+        })
+
+
+    }
+
+    editGender(gender){
+        debugger
+        return editGender(gender).then(()=>{
+            debugger
+            this._personalInfo.isMan = gender
+            return Promise.resolve()
+        }).catch(({response})=>{
+            debugger
+            return Promise.reject(response.data)
+        })
+
+
+    }
+
+
+    setIsEditFio(bool) {
+        this.isEditFio = bool
+    }
+
+    setIsEditGender(bool) {
+        this.isEditGender = bool
+    }
+
+    get EditFio(){
+        return this.isEditFio
+    }
+
+    get EditGender() {
+        return this.isEditGender
     }
 
 

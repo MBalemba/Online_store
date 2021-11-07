@@ -64,6 +64,57 @@ const UserPage = observer(() => {
         })
     }
 
+
+    function getNewFio(fio) {
+
+        function endLoadEditStatusFio(bool){
+            user.setIsEditFio(bool)
+        }
+
+        function editFio() {
+            user.setIsEditFio(true)
+            user.editFio(fio).then(() => {
+                debugger
+                setTimeout(()=> {
+                    endLoadEditStatusFio(false)
+                    taskInstance.createTask('Успешно изменено имя', 'success')
+                }, 1000);
+            }).catch((mistake) => {
+                user.checkStatus(mistake.status, mistake.info).then(() => [
+                    editFio()
+                ]).catch(()=>{
+                    setTimeout(()=>endLoadEditStatusFio(false), 1000);
+                })
+            })
+        }
+        editFio();
+    }
+
+    function getNewGender(isMan) {
+
+        function endLoadEditStatusGender(bool){
+            user.setIsEditGender(bool)
+        }
+
+        function editGender() {
+            user.setIsEditGender(true)
+            user.editGender(isMan).then(() => {
+                debugger
+                setTimeout(()=> {
+                    endLoadEditStatusGender(false)
+                    taskInstance.createTask('Успешно изменен гендер', 'success')
+                }, 1000);
+            }).catch((mistake) => {
+                user.checkStatus(mistake.status, mistake.info).then(() => {
+                    editGender()
+                }).catch(()=>{
+                    setTimeout(()=>endLoadEditStatusGender(false), 1000);
+                })
+            })
+        }
+        editGender();
+    }
+
     useEffect(() => {
         user.getOrderItems(taskInstance)
         getPersonalData()
@@ -73,7 +124,7 @@ const UserPage = observer(() => {
     return (
         <Container>
             <UserPagePaper isGradient elevation={3}>
-                <Grid lg={3}>
+                {/* <Grid lg={3}>
                     <div className={'avatarBlock'}>
                         <div style={{backgroundImage: `url(${img})`}} className={'avatarBlock__img'}>
 
@@ -93,14 +144,14 @@ const UserPage = observer(() => {
                             <Typography variant="subtitle2" gutterBottom>{user.InfoProfile.name[2]}</Typography>
                         </div>
                     </div>
-                </Grid>
+                </Grid>*/}
 
                 <Grid lg={12}>
                     <List component="div">
 
                         <ListItem button divider>
-                            {user.InfoProfile.isMan === null && <ListItemText primary="Имя"
-                                                                              secondary={user.InfoProfile.name[0] + ' ' + user.InfoProfile.name[1] + ' ' + user.InfoProfile.name[2]}/>}
+                           <ListItemText primary="Имя"
+                                                                              secondary={user.InfoProfile.name[0] + ' ' + user.InfoProfile.name[1] + ' ' + user.InfoProfile.name[2]}/>
                             <Box sx={{display: 'flex', justifyContent: 'flex-end', marginTop: '10px'}}>
                                 <Button onClick={() => setEditFio(true)} variant={'contained'}>
                                     Редактировать
@@ -111,6 +162,11 @@ const UserPage = observer(() => {
                         <ListItem button divider>
                             {user.InfoProfile.isMan === null && <ListItemText primary="Пол"
                                                                               secondary={'Не указано редактируйте информацию о себе, укажите пол'}/>}
+
+                            {user.InfoProfile.isMan === false && <ListItemText primary="Пол"
+                                                                               secondary={'Женщина'}/>}
+                            {user.InfoProfile.isMan === true && <ListItemText primary="Пол"
+                                                                               secondary={'Мужчина'}/>}
 
                             <Box sx={{display: 'flex', justifyContent: 'flex-end', marginTop: '10px'}}>
                                 <Button onClick={() => setEditGender(true)} variant={'contained'}>
@@ -145,22 +201,30 @@ const UserPage = observer(() => {
             </UserPagePaper>
 
 
-            <EditFio open={editFio} handleClose={() => {
-                setEditFio(false)
-            }} firstName={user.InfoProfile.name[0]} lastName={user.InfoProfile.name[1]}
-                     middleName={user.InfoProfile.name[2]}/>
+            <EditFio getNewFio={getNewFio} open={editFio}
+                     isEditFio={user.EditFio}
+                     handleClose={() => {
+                         setEditFio(false)
+                     }}
+                     firstName={user.InfoProfile.name[1]}
+                     lastName={user.InfoProfile.name[0]}
+                     middleName={user.InfoProfile.name[2]}
 
-            <EditGender open={editGender} handleClose={() => {
-                setEditGender(false)
-            }} gender={user.InfoProfile.isMan?'мужчина': 'женщина'}/>
+            />
+
+            <EditGender getNewGender={getNewGender} open={editGender}
+                        handleClose={() => {
+                            setEditGender(false)
+                        }}
+                        gender={user.InfoProfile.isMan ? 'мужчина' : 'женщина'}
+                        isEditGender = {user.EditGender}
+
+            />
 
 
         </Container>
     );
 });
-
-
-
 
 
 export default UserPage;
