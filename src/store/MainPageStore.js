@@ -23,6 +23,7 @@ export default class MainPageStore {
 
     doRequestFromDevices(){
         getDevices_24().then((response)=>{
+            debugger
             console.log(response)
             this.devices = response.data
         })

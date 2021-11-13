@@ -125,12 +125,17 @@ export default class DeviceStore {
             if(maxPriceQuery){
 
             }
-            debugger
+
             if(brandQuery){
                 let selectedBrands = {}
                 let copyBrandQuery = brandQuery
-                let arrOfBrands =  copyBrandQuery.replace(/(%20)/g,'').replace(/\s/g, '').replace(/brand=/g,'')
-                arrOfBrands = arrOfBrands.match(/\w+/g)
+                let arrOfBrands =  copyBrandQuery.replace(/(%20)/g,'').replace(/\s/g, '').replace(/brand=/g,'');
+                console.log(arrOfBrands)
+                debugger
+                arrOfBrands = arrOfBrands.match(/[\w\p{sc=Cyrillic}]+((\w)*|(\p{sc=Cyrillic})*)/gui)
+                console.log(arrOfBrands)
+                debugger
+
 
 
                 for (let i in this._brandInType){
@@ -281,8 +286,9 @@ export default class DeviceStore {
                     this._pageCount = Math.ceil(r.data.amountOfAllDevices / this._limitPage)
                     return Promise.resolve()
                 }
-            ).catch((r)=>{
-                return Promise.reject(r.response)
+            ).catch(({response})=>{
+                debugger
+                return Promise.reject(response)
             })
     }
 
@@ -303,8 +309,17 @@ export default class DeviceStore {
         this._isLoadDevices = bool
     }
 
-    cleanSelectedBrands(){
-        this._selectedBrands = {}
+    cleanSelectedBrands(typeUrl){
+        this._brandInType = this._brandInType.map(el=>{
+            if(el.name===typeUrl){
+                el.brands = el.brands.map(el=>({...el, isCheck: true}))
+            }
+
+            return el
+
+        })
+
+        this._isAllSelected = true
     }
 
     setCurrentPage(number) {

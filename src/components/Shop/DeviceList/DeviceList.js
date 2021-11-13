@@ -12,7 +12,6 @@ const DeviceList = observer(() => {
     const {device, user, taskInstance} = useContext(Context)
     const history = useHistory()
     const {type: typeUrl} = useParams();
-    debugger
     const {search} = useLocation();
     console.log('search: ', search)
 
@@ -22,7 +21,6 @@ const DeviceList = observer(() => {
     }, [typeUrl])
 
     useEffect(() => {
-        debugger
 
         function doRequest() {
             device.setDevices(typeUrl).then(
@@ -31,29 +29,19 @@ const DeviceList = observer(() => {
                 }
             ).catch(
                 (response) => {
+
                     debugger
-                    if (response.data.info === 'Devices with this type doesn\'t exists') {
+                    if (response.data.status === 400) {
                         taskInstance.createTask(response.data.info, 'Warning')
-                        device.cleanSelectedBrands()
+                        device.cleanSelectedBrands(typeUrl)
                         device.returnPriceRangeToInitial()
                         device.setCurrentPage(1)
-                        history.push(`/home`)
+                        history.push(`/home/${typeUrl}`)
                         return
                     }
-                    if (response.status === 500){
-                        debugger
-                        user.checkRefresh().then(()=>{
-                            device.cleanSelectedBrands()
-                            device.returnPriceRangeToInitial()
-                            device.setCurrentPage(1)
-                            doRequest()
-                        }).catch(()=>{
-                            doRequest()
-                        })
-                        return
-                    }
+
                     taskInstance.createTask(response.data.info, 'Warning')
-                    device.cleanSelectedBrands()
+                    device.cleanSelectedBrands(typeUrl)
                     device.returnPriceRangeToInitial()
                     device.setCurrentPage(1)
                     history.push(`/home/${typeUrl}`)

@@ -32,8 +32,7 @@ const NavBar = observer(() => {
     }
 
     useEffect(()=>{
-        debugger
-        console.log(isLock)
+
     }, [isLock])
 
     return (
@@ -43,7 +42,6 @@ const NavBar = observer(() => {
                 <Toolbar className={classes.toolbar} variant={'dense'}>
                     <div className={classes.toolbar__item}>
                         <NavLink className={classes.toolbar__buyDeviceLink} onClick={() => {
-                            device.cleanSelectedBrands()
                         }} to={SHOP_ROUTE}>
                             <Typography  variant={'h5'}>
                                 Купи девайс

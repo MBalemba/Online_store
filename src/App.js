@@ -23,7 +23,6 @@ const App = observer(function () {
         window.addEventListener('beforeunload', (event) => {
             event.preventDefault()
             // Chrome требует установки возвратного значения.
-            debugger
             basket.SaveInCookie()
         });
     })

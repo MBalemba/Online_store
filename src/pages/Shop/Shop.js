@@ -44,10 +44,16 @@ const Shop = observer(() => {
                     }
                 ).catch(
                     (response) => {
+
+
+                       // /* user.checkStatus(response.status, response.info).then(() => {
+                       //
+                       //  })*/
+
                         debugger
-                        if (response.data.info === 'Devices with this type doesn\'t exists') {
+                        if (response.data.status === 400) {
                             taskInstance.createTask(response.data.info, 'Warning')
-                            device.cleanSelectedBrands()
+                            device.cleanSelectedBrands(typeUrl)
                             device.returnPriceRangeToInitial()
                             device.setCurrentPage(1)
                             history.push(`/home`)
@@ -56,7 +62,7 @@ const Shop = observer(() => {
                         if (response.status === 500){
                             debugger
                             user.checkRefresh().then(()=>{
-                                device.cleanSelectedBrands()
+                                device.cleanSelectedBrands(typeUrl)
                                 device.returnPriceRangeToInitial()
                                 device.setCurrentPage(1)
                                 doRequest()
@@ -66,7 +72,7 @@ const Shop = observer(() => {
                             return
                         }
                         taskInstance.createTask(response.data.info, 'Warning')
-                        device.cleanSelectedBrands()
+                        device.cleanSelectedBrands(typeUrl)
                         device.returnPriceRangeToInitial()
                         device.setCurrentPage(1)
                         history.push(`/home/${typeUrl}`)

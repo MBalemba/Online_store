@@ -225,7 +225,7 @@ const SettingsBar = observer(() => {
                                 unmountOnExit={true}
                             >
                                 {(state) =>  <Button color={'warning'} className={`buttonSettings settingsAppear ${state}`} variant="outlined" size="large" onClick={() => {
-                                    device.cleanSelectedBrands()
+                                    device.cleanSelectedBrands(typeUrl)
                                     device.returnPriceRangeToInitial()
                                     device.setCurrentPage(1)
                                     history.push(`/home/${typeUrl}`)
