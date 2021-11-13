@@ -184,7 +184,7 @@ const ModalDevice = ({edit = false, open, setOpen, info, fishingData, isLoading=
 
                                 })}
                                 onSubmit={(values, {setSubmitting}) => {
-                                    debugger
+
                                     let data = values
                                     if(link){
                                         data = {...data, imgRef: link}

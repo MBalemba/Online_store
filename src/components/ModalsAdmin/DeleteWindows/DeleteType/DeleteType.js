@@ -36,7 +36,7 @@ export const DeleteType = observer(({show, onHide}) => {
 
     function deleteBrandHandler(){
         store.deleteType().then(()=>{
-            debugger
+
             doRequest()
         })
     }

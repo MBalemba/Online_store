@@ -14,7 +14,7 @@ const BasketCard = observer(({id, count}) => {
 
     useEffect(() => {
         giveDeviceById(id).then((response) => {
-            debugger
+
             console.log('response', response)
             SetDevice(response.data)
         }).catch(({response}) => {

@@ -110,7 +110,7 @@ const CakeTable = ({isUserTable = false, row}) => {
 
     const handleChange = (event) => {
 
-        debugger
+
 
         const callbackChangeStatus = () => {
             setStatus(event.target.value)

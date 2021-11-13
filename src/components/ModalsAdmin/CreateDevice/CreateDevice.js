@@ -103,15 +103,15 @@ const CreateDeviceContainer = observer(({show, onHide, createDevice}) => {
                             if(createDevice.IsGetReadyToRequest()){
                                  createDevice.giveSomeDataToServer(characteristic, taskInstance)
                                      .then(()=>{
-                                         debugger
+
                                      })
                                      .catch((response)=>{
                                          if(response.status === 468) {
-                                             debugger
+
                                              if (response.data.message !== 'Maximum upload size exceeded; nested exception is java.lang.IllegalStateException: org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException: The field imgFile exceeds its maximum permitted size of 1048576 bytes.') {
-                                                 debugger
+
                                                  user.checkRefresh().then(()=>{
-                                                     debugger
+
                                                      event.target.click()
                                                  })
                                              }

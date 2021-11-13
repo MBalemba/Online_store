@@ -46,7 +46,7 @@ const AdminOrderTable = observer(() => {
     useEffect(()=>{
         const items = orderStore.OrderInfo
         setTimeout(()=>{setOrderItems(items)}, 1000)
-        debugger
+
     }, [orderStore.OrderInfo])
 
     const [orderItems, setOrderItems] = useState([])

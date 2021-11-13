@@ -40,7 +40,7 @@ const Shop = observer(() => {
             function doRequest() {
                 device.setDevices(typeUrl).then(
                     () => {
-                        debugger
+
                     }
                 ).catch(
                     (response) => {
@@ -50,7 +50,7 @@ const Shop = observer(() => {
                        //
                        //  })*/
 
-                        debugger
+
                         if (response.data.status === 400) {
                             taskInstance.createTask(response.data.info, 'Warning')
                             device.cleanSelectedBrands(typeUrl)
@@ -60,7 +60,7 @@ const Shop = observer(() => {
                             return
                         }
                         if (response.status === 500){
-                            debugger
+
                             user.checkRefresh().then(()=>{
                                 device.cleanSelectedBrands(typeUrl)
                                 device.returnPriceRangeToInitial()
@@ -91,7 +91,7 @@ const Shop = observer(() => {
 
             device.setBrandInType().then((answer)=>{
                 if (typeUrl) {
-                    debugger
+
                     device.toggleStatusLoadDevices(true)
                     device.setPropertyFromUri(search, typeUrl)
                     doRequest()

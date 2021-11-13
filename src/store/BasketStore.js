@@ -13,7 +13,7 @@ export default class BasketStore {
 
 
     toggleBasket(id, price) {
-        debugger
+
 
         if(id===null){
             return ''
@@ -23,7 +23,7 @@ export default class BasketStore {
             return el.id === id
         })
 
-        debugger
+
 
         if (isElemWithIdExist) {
             const elem = this._basketElems.find(el => el.id === id)

@@ -36,7 +36,7 @@ export default class MenuStore {
 
 
     setBrandInType() {
-        debugger
+
         getTypeBrand().then((r) => {
             const arr = r.data.map(el =>{
                 el.brands = el.brands.map(brandItem => ({...brandItem, isCheck: true}))
@@ -68,12 +68,12 @@ export default class MenuStore {
 
             if (minPriceQuery){
 
-                debugger
+
                 this._clientMinPrice = minPriceQuery.replace(/%20/g,'').replace(/\s/g, '').replace(/minPrice=/g,'').match(/\w+/g)[0]
                 console.log(minPriceQuery.replace(/%20/g,'').replace(/\s/g, '').replace(/minPrice=/g,'').match(/\w+/g)[0])
 
                 if(maxPriceQuery){
-                    debugger
+
                     this._clientMaxPrice = maxPriceQuery.replace(/%20/g,'').replace(/\s/g, '').replace(/maxPrice=/g,'').match(/\w+/g)[0]
                     console.log(maxPriceQuery.replace(/%20/g,'').replace(/\s/g, '').replace(/maxPrice=/g,'').match(/\w+/g)[0])
 
@@ -133,7 +133,7 @@ export default class MenuStore {
             }
         }
 
-        debugger
+
 
         if(this._currentPage !== 1){
             return `${strQ}&page=${this._currentPage}`
@@ -177,7 +177,7 @@ export default class MenuStore {
 
         return getDevices(`?type=${type}&limit=${this._limitPage}${this.createStrParamsForRequest()}`).then(
             (r)=>{
-                debugger
+
                 const dataMaxPrice = Number(r.data.maxPrice)
                 const dataMinPrice = Number(r.data.minPrice)
 
@@ -301,7 +301,7 @@ export default class MenuStore {
 
 
             if (this._pageCount< this._paginationTypeBorderValue){
-                debugger
+
                 for (let i = 1; i<=this._pageCount; i++){
                     arr.push(i)
                 }

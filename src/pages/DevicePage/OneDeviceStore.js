@@ -54,10 +54,10 @@ export default class OneDeviceStore {
 
     giveInfoDevice(id){
         return giveDeviceById(id).then(response =>{
-            debugger
+
             this.device = response.data
         }).catch(({response})=>{
-            debugger
+
             return Promise.reject(response)
         })
     }
@@ -78,9 +78,9 @@ export default class OneDeviceStore {
         //
         // if(lastData.isName){
         //     getImageByName(lastData.pathFile).then((resp)=>{
-        //         debugger
+        //
         //     }).catch((response)=>{
-        //         debugger
+        //
         //     })
         // }
         delete lastData.pathFile
@@ -106,7 +106,7 @@ export default class OneDeviceStore {
         dataForm.append('name', newData.name)
         dataForm.append('price', newData.price)
         dataForm.append('characteristic', JSON.stringify(newData.characteristic))
-        debugger
+
 
         if(newData.imgFile){
             dataForm.append('imgFile', newData.imgFile, newData.imgFile.name)

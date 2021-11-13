@@ -15,6 +15,11 @@ import {CardProduct} from "../../Common/CardProduct/CardProduct";
 const mainPageStore = new MainPageStore()
 
 export const Footer = observer(() => {
+
+    useEffect(()=>{
+        mainPageStore.setBrandInType()
+    }, [])
+
     const history = useHistory()
     const classes = MainShopStyles()
     return (

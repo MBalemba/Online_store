@@ -38,13 +38,13 @@ export default class DeviceStore {
 
 
     setBrandInType() {
-        debugger
+
         return getTypeBrand().then((r) => {
             const arr = r.data.map(el =>{
                 el.brands = el.brands.map(brandItem => ({...brandItem, isCheck: true}))
                 return el
             })
-            debugger
+
             this._brandInType = r.data
             return 1
         })
@@ -106,12 +106,12 @@ export default class DeviceStore {
 
             if (minPriceQuery){
 
-                debugger
+
                 this._clientMinPrice = minPriceQuery.replace(/%20/g,'').replace(/\s/g, '').replace(/minPrice=/g,'').match(/\w+/g)[0]
                 console.log(minPriceQuery.replace(/%20/g,'').replace(/\s/g, '').replace(/minPrice=/g,'').match(/\w+/g)[0])
 
                 if(maxPriceQuery){
-                    debugger
+
                     this._clientMaxPrice = maxPriceQuery.replace(/%20/g,'').replace(/\s/g, '').replace(/maxPrice=/g,'').match(/\w+/g)[0]
                     console.log(maxPriceQuery.replace(/%20/g,'').replace(/\s/g, '').replace(/maxPrice=/g,'').match(/\w+/g)[0])
 
@@ -131,17 +131,17 @@ export default class DeviceStore {
                 let copyBrandQuery = brandQuery
                 let arrOfBrands =  copyBrandQuery.replace(/(%20)/g,'').replace(/\s/g, '').replace(/brand=/g,'');
                 console.log(arrOfBrands)
-                debugger
+
                 arrOfBrands = arrOfBrands.match(/[\w\p{sc=Cyrillic}]+((\w)*|(\p{sc=Cyrillic})*)/gui)
                 console.log(arrOfBrands)
-                debugger
+
 
 
 
                 for (let i in this._brandInType){
                     if(this._brandInType[i].name === typeUrl){
                         this._brandInType[i].brands = this._brandInType[i].brands.map(el=>{
-                            debugger
+
                             let isDo = false
 
                             arrOfBrands.forEach((k, index)=>{
@@ -177,7 +177,7 @@ export default class DeviceStore {
     }
 
     createStrParamsForRequest(typeUrl) {
-        debugger
+
         let strQ = '&brand='
 
         for (let i in this._brandInType){
@@ -244,12 +244,12 @@ export default class DeviceStore {
     setDevices(type) {
 
         const a = this.createStrParamsForRequest()
-        debugger
+
 
 
             return getDevices(`?type=${type}&limit=${this._limitPage}${this.createStrParamsForRequest(type)}`).then(
                 (r)=>{
-                    debugger
+
                     const dataMaxPrice = Number(r.data.maxPrice)
                     const dataMinPrice = Number(r.data.minPrice)
 
@@ -287,7 +287,7 @@ export default class DeviceStore {
                     return Promise.resolve()
                 }
             ).catch(({response})=>{
-                debugger
+
                 return Promise.reject(response)
             })
     }
@@ -383,7 +383,7 @@ export default class DeviceStore {
 
 
             if (this._pageCount< this._paginationTypeBorderValue){
-                debugger
+
                 for (let i = 1; i<=this._pageCount; i++){
                     arr.push(i)
                 }

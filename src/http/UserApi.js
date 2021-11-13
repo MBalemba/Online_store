@@ -4,13 +4,13 @@ import {$authHost, $authHostRefresh, $host} from "./index";
 export const registration = async (obj) => {
     console.log(process.env.REACT_APP_API_URL)
         const response = await $host.post('user/registration', obj)
-        debugger
+
         return response
 }
 
 export const login = async (telephoneNumber, password) => {
     const response = await $host.post('login', {telephoneNumber: telephoneNumber, password: password})
-    debugger
+
     return response
 }
 
@@ -27,7 +27,7 @@ export const refresh = async () => {
 
 export const getTypeBrand = async () => {
     const response = await $host.get('type/getAll')
-    debugger
+
     return response
 }
 
@@ -49,7 +49,7 @@ export const giveDeviceServer = async (data) => {
 
 export const giveDeviceById = async (id) => {
     const response = await $host.get(`device/getById/${id}`)
-    debugger
+
     return response
 }
 
@@ -66,7 +66,7 @@ export const postBrand = async (data) => {
 
 
 export const AddOrderInfoToServer = async (data) => {
-    debugger
+
     const response = await $authHost.post('order/add', data)
     return response
 }
@@ -77,15 +77,15 @@ export const getAllOrders = async () => {
 }
 
 export const getImageByName = async (name) => {
-    debugger
+
     const response = await $authHost.get(process.env.REACT_APP_API_URL + 'takeImage/'+ name)
     return response
 }
 
 export const codeConfirmation = async (obj) => {
-    debugger
+
     const response = await $host.put('/user/codeConfirmation', obj)
-    debugger
+
     return response
 }
 
@@ -93,7 +93,7 @@ export const changeOrderStatus = async (data) => {
 
     const response = await $authHost.put('order/changeStatusOfOrder', data)
     console.log(response.data)
-    debugger
+
     return response
 }
 

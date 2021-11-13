@@ -6,7 +6,7 @@ import {observer} from "mobx-react-lite";
 import {toJS} from "mobx";
 import './Basket.css'
 import {BiDotsVertical, BsDot, BsThreeDotsVertical, GoPrimitiveDot} from "react-icons/all";
-import {useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {Typography} from "@material-ui/core";
 
 const Basket = observer(() => {
@@ -64,7 +64,7 @@ const Basket = observer(() => {
             <div className={'cardWrapper'}>
                 {basket.allCards.map(el => {
                         console.log(toJS(el))
-                        debugger
+
                         return <BasketCard key={el.id} id={el.id} count={el.count}/>
                     }
                 )}
@@ -88,7 +88,7 @@ const Basket = observer(() => {
             <Row>
                 <Col className={'mt-2 flex-row justify-content-end'} md={12}>
                     {!user.isAuthUser &&
-                    <Typography variant={'overline'}><i>Чтобы сделать заказ, войдите в аккаунт, если нет аккаунта, создайте</i></Typography>
+                    <Typography variant={'overline'}><i>Чтобы сделать заказ, <Link to={'login'}>войдите</Link> в аккаунт, если нет аккаунта, <Link to={'registration'}>создайте</Link></i></Typography>
                     }
                 </Col>
             </Row>

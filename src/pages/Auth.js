@@ -187,7 +187,7 @@ const Auth = observer(() => {
                     }),
                     number: Yup.string().required('Пустое поле'),
                     kod: Yup.string().test('kod', 'Должно быть 6 символов', val => {
-                        debugger;
+                        ;
                         return val === '' ? true : val?.match(/\d/g)?.join('')?.length === 6
                     }).required('Пустое поле'),
 
@@ -225,13 +225,13 @@ const Auth = observer(() => {
         if (isLoginPage) {
             user.doAutorizate(email, password, taskInstance)
                 .then((data) => {
-                    debugger
+
                     console.log(data)
                     taskInstance.createTask('Успешно', 'Successful')
                     history.push(ADMIN_ROUTE)
                 })
                 .catch(() => {
-                    debugger
+
                     taskInstance.createTask('Ошибка регистрации', 'Warning')
                 })
         } else {
@@ -278,24 +278,24 @@ const Auth = observer(() => {
                         if (isLoginPage) {
                             user.doAutorizate(telephoneNumber, password, taskInstance)
                                 .then((data) => {
-                                    debugger
+
                                     console.log(data)
                                     taskInstance.createTask('Успешно', 'Successful')
                                     history.push(ADMIN_ROUTE)
                                 })
                                 .catch(() => {
-                                    debugger
+
                                     setCustomIsSubmitting(false)
                                     taskInstance.createTask('Ошибка авторизации', 'Warning')
                                 })
                         } else {
-                            debugger
+
                             user.doRegistaration({
                                 FIO: fullName,
                                 telephoneNumber: telephoneNumber,
                                 password: password
                             }).then(() => {
-                                debugger
+
                                 taskInstance.createTask('Заполните код, который пришел на ваш номер телефона', 'Warning')
                                 setIsKod({appear: true, value: ''})
                                 setTimeout(() => {
@@ -303,7 +303,7 @@ const Auth = observer(() => {
                                 }, 1000)
                             })
                                 .catch(() => {
-                                    debugger
+
                                     taskInstance.createTask('Проблема регистрации', 'Warning')
                                     setTimeout(() => {
                                         setCustomIsSubmitting(false);
@@ -426,7 +426,7 @@ const Auth = observer(() => {
                                                 taskInstance.createTask('Вы успешно зарегистрироровались', 'Success')
                                                 history.push(LOGIN_ROUTE)
                                             }).catch(({response}) => {
-                                                debugger
+
                                                 taskInstance.createTask('Неверный код отправлен', 'Warning')
                                             })
                                         }} variant="contained">Подтвердить код</ButtonM>
@@ -437,7 +437,7 @@ const Auth = observer(() => {
                                 </div>
                             }
 
-                            <div style={{maxWidth: '100%', wordWrap: 'break-word'}}>
+                            {/*<div style={{maxWidth: '100%', wordWrap: 'break-word'}}>
 
                                 <Typography style={{maxWidth: '100%', wordWrap: 'break-word'}} variant={'body1'}>
                                     {JSON.stringify(formik.values)}
@@ -458,7 +458,7 @@ const Auth = observer(() => {
                                 <Typography variant={'body1'}>
                                     {'\n' +'isSubmitting: ' +JSON.stringify(formik.isSubmitting)}
                                 </Typography>
-                            </div>
+                            </div>*/}
                         </div>
 
                         {!isKod.appear &&

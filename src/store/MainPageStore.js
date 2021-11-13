@@ -13,9 +13,9 @@ export default class MainPageStore {
     }
 
     setBrandInType() {
-        debugger
+
         return getTypeBrand().then((r) => {
-            debugger
+
             this._brand = r.data
             return 1
         })
@@ -23,7 +23,7 @@ export default class MainPageStore {
 
     doRequestFromDevices(){
         getDevices_24().then((response)=>{
-            debugger
+
             console.log(response)
             this.devices = response.data
         })

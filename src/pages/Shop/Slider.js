@@ -82,7 +82,7 @@ class Slider extends Component {
     }
 
     componentWillUnmount() {
-        debugger
+
         clearInterval(this.updateSliderIntervalId)
         this.removeEvents()
     }
@@ -253,7 +253,7 @@ class Slider extends Component {
     }
 
     increase() {
-        debugger
+
         if (this.currentSlide < this.numberItemsGallery - 1) {
             this.currentSlide = this.currentSlide + 1;
             this.x = this.getPosition()
@@ -267,7 +267,7 @@ class Slider extends Component {
     }
 
     decrease() {
-        debugger
+
         if (this.currentSlide > 0) {
             this.currentSlide = this.currentSlide - 1;
             this.x = this.getPosition()
@@ -330,7 +330,7 @@ class Slider extends Component {
                         {this.state.arr && this.state.arr.map((el) =>
                             <div onClick={() => {
                                 this.dotTurn(el);
-                                debugger;
+                                ;
                                 this.setState({activeItem: el})
                             }} key={el} className={'wrapperDotItem'}>
                                 <div style={this.state.activeItem === el ? {backgroundColor: '#007bff'} : {}}

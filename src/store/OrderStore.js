@@ -20,12 +20,12 @@ export default class OrderStore {
         getAllOrders()
             .then((response) => {
                 this._isFetching = false
-                debugger
+
                 this._OrderInfo = response.data
             })
             .catch(({response}) => {
                 this._isFetching = false
-                debugger
+
                 callbackUserCheck(response.status, response.info).then(() => {
                     this.getOrderInfo()
                 })
@@ -36,18 +36,18 @@ export default class OrderStore {
     changeOrderStatus(data = {}, userCheckCallback = emptyFunc, taskInstance = emptyFunc, callbackChangeStatus = emptyFunc) {
         changeOrderStatus(data)
             .then((response) => {
-                debugger
+
                 taskInstance.createTask('Статус успешно изменен', 'Success')
                 callbackChangeStatus()
             })
             .catch(({response}) => {
-                debugger
+
 
                 userCheckCallback(response.status, response.info).then(() => {
-                    debugger
+
                     this.changeOrderStatus(userCheckCallback, taskInstance, callbackChangeStatus)
                 }).catch(() => {
-                    debugger
+
                     if (response.data.message) {
                         taskInstance.createTask(response.data.message, 'Danger')
                     }

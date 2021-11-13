@@ -23,7 +23,7 @@ const NavBar = observer(() => {
     const [isLock, setIsLock] = useState(true)
     const classes = useStylesHeader()
     const handleLock = (bool)=>{
-        debugger
+
         setIsLock(bool);
     }
 

@@ -49,7 +49,7 @@ export default class StoreDeleteType {
     }
 
     deleteBrand(){
-        debugger
+
 
         return deleteBrand(this.selectedBrandId).then((response)=>{
             this.returnToInitial()

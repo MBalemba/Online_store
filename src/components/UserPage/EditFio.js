@@ -125,7 +125,7 @@ const EditFio = observer( ({open, handleClose, firstName, lastName, middleName, 
                                 }
 
                                 onSubmit={(values, {setSubmitting}) => {
-                                    debugger
+
                                     let fio =  values.lastName + ' '+values.firstName +' '+values.middleName;
                                     getNewFio(fio)
 

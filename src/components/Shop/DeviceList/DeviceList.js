@@ -25,12 +25,12 @@ const DeviceList = observer(() => {
         function doRequest() {
             device.setDevices(typeUrl).then(
                 () => {
-                    debugger
+
                 }
             ).catch(
                 (response) => {
 
-                    debugger
+
                     if (response.data.status === 400) {
                         taskInstance.createTask(response.data.info, 'Warning')
                         device.cleanSelectedBrands(typeUrl)
@@ -58,7 +58,7 @@ const DeviceList = observer(() => {
         }
 
         if (typeUrl && device.BrandInType.length!==0) {
-            debugger
+
             device.toggleStatusLoadDevices(true)
             device.setPropertyFromUri(search, typeUrl)
             doRequest()

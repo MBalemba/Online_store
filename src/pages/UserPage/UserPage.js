@@ -74,7 +74,7 @@ const UserPage = observer(() => {
         function editFio() {
             user.setIsEditFio(true)
             user.editFio(fio).then(() => {
-                debugger
+
                 setTimeout(()=> {
                     endLoadEditStatusFio(false)
                     taskInstance.createTask('Успешно изменено имя', 'success')
@@ -99,7 +99,7 @@ const UserPage = observer(() => {
         function editGender() {
             user.setIsEditGender(true)
             user.editGender(isMan).then(() => {
-                debugger
+
                 setTimeout(()=> {
                     endLoadEditStatusGender(false)
                     taskInstance.createTask('Успешно изменен гендер', 'success')

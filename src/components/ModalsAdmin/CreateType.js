@@ -15,13 +15,13 @@ const CreateType = observer(({show, onHide}) => {
             device.setBrandInType()
         }). catch(
             ({response})=>{
-                debugger
+
                 if('Such Type already exits' === response.data.info){
                     taskInstance.createTask('Ошибка, возможно такой тип уже существует', 'warning')
                     return
                 }
                 if(response.data.status === 468){
-                    debugger
+
                     user.checkRefresh().then(()=>{
                         add()
                     })

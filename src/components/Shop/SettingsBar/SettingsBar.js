@@ -29,7 +29,7 @@ const SettingsBar = observer(() => {
 
 
     useEffect(() => {
-        debugger
+
         device.returnPriceRangeToInitial()
     }, [typeUrl])
 

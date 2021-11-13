@@ -24,7 +24,7 @@ const TableUserOrder = observer(({row, activeOrders}) => {
     const [tableData, setTableData] = useState([])
 
     useEffect(() => {
-        debugger
+
         let items = null
 
         if (activeOrders) {

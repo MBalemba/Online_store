@@ -119,7 +119,7 @@ export default class CreateDeviceStore {
                 return Promise.resolve()
             })
             .catch((e) => {
-                debugger
+
                 if(e.response.status!== 500 && e.response.data.info){
                     taskStore.createTask(e.response.data.info, 'Danger')
                 }

@@ -60,7 +60,7 @@ export default class UserStore {
 
     requestFromProfileData(){
         return getInfoAboutUser().then((response)=>{
-            debugger
+
             this._personalInfo = response.data
             return Promise.resolve(1)
         }).catch(({response})=>{
@@ -71,11 +71,11 @@ export default class UserStore {
     doRegistaration(data, ){
         return registration(data)
             .then((response)=>{
-                debugger
+
                 return Promise.resolve()
             })
             .catch(()=>{
-                debugger
+
                 return Promise.reject()
             })
     }
@@ -83,7 +83,7 @@ export default class UserStore {
     doAutorizate(telephoneNumber, password, taskInstance) {
         return login(telephoneNumber, password)
             .then((response) => {
-                debugger
+
                 localStorage.setItem('token', response.headers.jwtoken)
                 localStorage.setItem('RefreshToken', response.headers.refreshtoken)
                 if (response.data.info === 'ADMIN') {
@@ -97,7 +97,7 @@ export default class UserStore {
                 return Promise.resolve(response)
             })
             .catch(() => {
-                debugger
+
                 return Promise.reject()
             })
     }
@@ -106,7 +106,7 @@ export default class UserStore {
 
         return refresh()
             .then((response)=> {
-                debugger
+
                 localStorage.setItem('token', response.headers.jwtoken)
                 localStorage.setItem('RefreshToken', response.headers.refreshtoken)
 
@@ -114,7 +114,7 @@ export default class UserStore {
                 return Promise.resolve()
             })
             .catch((error)=>{
-                debugger
+
                 this.Out()
                 return Promise.reject()
             })
@@ -124,7 +124,7 @@ export default class UserStore {
 
         if (localStorage.getItem('token')) {
             return check().then((r) => {
-                debugger
+
                 if (r.data.info === 'ADMIN') {
                     this._isAuthAdmin = true
                 }
@@ -136,11 +136,11 @@ export default class UserStore {
                 return Promise.resolve()
 
             }).catch(({r})=>{
-                debugger
+
                 this.checkRefresh().then(()=>{})
                 console.log(r)
             }).finally(() => {
-                    debugger
+
                     return Promise.resolve()
                 }
             )
@@ -150,7 +150,7 @@ export default class UserStore {
     }
 
     checkStatus(status, message=''){
-        debugger
+
         if(status===400 && message==='Token was expired'){
             return this.checkRefresh()
         }
@@ -165,10 +165,10 @@ export default class UserStore {
     }
 
     getOrderItems(taskInstance) {
-        debugger
+
         getOrderItemsUser()
             .then((response)=>{
-                debugger
+
                 this._orderItems = response.data
                 taskInstance.createTask('Данные о заказе пришли', 'Success')
             })
@@ -192,13 +192,13 @@ export default class UserStore {
     }
 
     editFio(fio){
-        debugger
+
         return editFio(fio).then(()=>{
-            debugger
+
             this._personalInfo.fio = fio
             return Promise.resolve()
         }).catch(({response})=>{
-            debugger
+
             return Promise.reject(response.data)
         })
 
@@ -206,13 +206,13 @@ export default class UserStore {
     }
 
     editGender(gender){
-        debugger
+
         return editGender(gender).then(()=>{
-            debugger
+
             this._personalInfo.isMan = gender
             return Promise.resolve()
         }).catch(({response})=>{
-            debugger
+
             return Promise.reject(response.data)
         })
 

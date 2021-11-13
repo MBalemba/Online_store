@@ -92,7 +92,7 @@ const EditGender = observer( ({open, handleClose, gender, isEditGender, getNewGe
                                 }
 
                                 onSubmit={(values, {setSubmitting}) => {
-                                    debugger
+
                                     let isMan = values.picked ==="мужчина"? true: false;
                                     getNewGender(isMan)
                                 }}

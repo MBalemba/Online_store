@@ -57,7 +57,7 @@ const DeleteBrand = observer(({show, onHide}) => {
 
     function deleteBrandHandler() {
         store.deleteBrand().then(() => {
-            debugger
+
             doRequest()
         })
     }
