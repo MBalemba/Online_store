@@ -25,15 +25,12 @@ const useStyles = makeStyles((theme) => ({
 )
 
 
-
-
-
-
 const Shop = observer(() => {
     const {device, user, taskInstance} = useContext(Context)
     const {type: typeUrl} = useParams();
     const history = useHistory()
     const {search} = useLocation();
+
 
     useEffect(() => {
 
@@ -46,9 +43,9 @@ const Shop = observer(() => {
                     (response) => {
 
 
-                       // /* user.checkStatus(response.status, response.info).then(() => {
-                       //
-                       //  })*/
+                        // /* user.checkStatus(response.status, response.info).then(() => {
+                        //
+                        //  })*/
 
 
                         if (response.data.status === 400) {
@@ -59,14 +56,14 @@ const Shop = observer(() => {
                             history.push(`/home`)
                             return
                         }
-                        if (response.status === 500){
+                        if (response.status === 500) {
 
-                            user.checkRefresh().then(()=>{
+                            user.checkRefresh().then(() => {
                                 device.cleanSelectedBrands(typeUrl)
                                 device.returnPriceRangeToInitial()
                                 device.setCurrentPage(1)
                                 doRequest()
-                            }).catch(()=>{
+                            }).catch(() => {
                                 doRequest()
                             })
                             return
@@ -89,7 +86,7 @@ const Shop = observer(() => {
             }
 
 
-            device.setBrandInType().then((answer)=>{
+            device.setBrandInType().then((answer) => {
                 if (typeUrl) {
 
                     device.toggleStatusLoadDevices(true)
@@ -102,7 +99,6 @@ const Shop = observer(() => {
             return () => {
                 device.toggleStatusLoadDevices(true)
             }
-
 
 
         }
@@ -118,15 +114,17 @@ const Shop = observer(() => {
                     </Grid>
                     <Grid item md={9}>
                         {/*<SettingsBar/>*/}
-                        <MyPagination/>
                         <DeviceList/>
+                        {!device.IsLoadDevices &&<MyPagination/>}
+
                     </Grid>
 
                 </Grid> :
-                <MainShop />
+                <MainShop/>
             }
         </Container>
     );
-});
+}
+);
 
 export default Shop;

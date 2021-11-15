@@ -37,7 +37,9 @@ export const MainShopStyles = makeStyles((theme) => ({
         'cardList__item': {
             width: '294px',
             height: '226px',
+            textAlign: 'center',
             background: 'grey',
+            cursor: 'pointer',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',

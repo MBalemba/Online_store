@@ -22,6 +22,7 @@ const DeviceList = observer(() => {
 
     useEffect(() => {
 
+        window.scrollTo({ top: 0, behavior: 'smooth' })
         function doRequest() {
             device.setDevices(typeUrl).then(
                 () => {

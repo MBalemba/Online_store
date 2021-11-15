@@ -10,7 +10,15 @@ import {BsInfoCircle, FaLink, MdHome} from "react-icons/all";
 import mapImg from './../../../assets/img/footer/Image.png'
 import {Vk, Youtube, Instagram, Facebook} from "../../../assets/svg/foooter";
 import {CardProduct} from "../../Common/CardProduct/CardProduct";
+import  phoneImg from './../../../assets/img/mainPage/mobile.jpg'
+import  Tv from './../../../assets/img/mainPage/tv.jpg'
+import  Pc from './../../../assets/img/mainPage/Pc.jpg'
+import  stone from './../../../assets/img/mainPage/stone.jpg'
+import  Washer from './../../../assets/img/mainPage/Washer.jpg'
+import  fridge from './../../../assets/img/mainPage/fridge.jpg'
 
+
+const imgMassive = [phoneImg, Tv, Pc, fridge, Washer, stone]
 
 const mainPageStore = new MainPageStore()
 
@@ -111,6 +119,8 @@ export const Footer = observer(() => {
 });
 
 
+
+
 const MainShop = observer(() => {
     const classes = MainShopStyles()
     const history = useHistory()
@@ -154,6 +164,7 @@ const MainShop = observer(() => {
                 <div className={classes.cardList}>
                     {mainPageStore.topCategory.map((el, id) =>
                         <div className={classes.cardList__item}
+                             /*style={{backgroundImage: `url(${imgMassive[id]})`, objectFit: 'cover', objectPosition: '0% 0%', }}*/
                              onClick={() => {
                                  history.push(`/home${el === 'неопределено' ? '' : '/' + el}`)
                              }}
