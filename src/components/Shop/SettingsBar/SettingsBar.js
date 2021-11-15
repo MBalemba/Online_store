@@ -117,22 +117,24 @@ const SettingsBar = observer(() => {
 
                                     </div>
 
-                                    {brands.map(brand =>
-                                        <div className={'blockBrandsSettings'} xs={12} key={brand.id}>
-                                            <div onClick={() => device.changeSelectedBrand(typeUrl, brand.name)}
-                                                 className={'checkBlockBrand'}
-                                                 style={{cursor: 'pointer', margin: '0.5rem'}}
-                                            >
-                                                <Typography variant={'body2'}>{brand.name}</Typography>
-                                                {brand.isCheck
-                                                    ? <ImCheckboxChecked/>
-                                                    : <ImCheckboxUnchecked/>
-                                                }
-                                            </div>
-                                            <Divider/>
+                                    <div className={'brandMaxHeight'}>
+                                        {brands.map(brand =>
+                                            <div className={'blockBrandsSettings'} xs={12} key={brand.id}>
+                                                <div onClick={() => device.changeSelectedBrand(typeUrl, brand.name)}
+                                                     className={'checkBlockBrand'}
+                                                     style={{cursor: 'pointer', margin: '0.5rem'}}
+                                                >
+                                                    <Typography variant={'body2'}>{brand.name}</Typography>
+                                                    {brand.isCheck
+                                                        ? <ImCheckboxChecked/>
+                                                        : <ImCheckboxUnchecked/>
+                                                    }
+                                                </div>
+                                                <Divider/>
 
-                                        </div>
-                                    )}
+                                            </div>
+                                        )}
+                                    </div>
                                 </>
 
                             }

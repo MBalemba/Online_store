@@ -17,6 +17,16 @@
 
 .blockBrandsSettings{
     margin-bottom: 30px;
+    padding: 1rem;
+}
+
+.brandMaxHeight {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .checkBlockBrand{

@@ -5,6 +5,8 @@ import {ListGroup, ListGroupItem} from "react-bootstrap";
 import {NavLink, useHistory, useLocation} from 'react-router-dom'
 import {SHOP_ROUTE} from "../../utils/consts";
 import './Shop.css'
+import {Box, Typography} from "@mui/material";
+
 
 const TypeBar = observer(() => {
     const {device} = useContext(Context)
@@ -13,20 +15,28 @@ const TypeBar = observer(() => {
 
     return (
 
-            <ListGroup className={'listGroup'} style={{backgroundColor: 'rgba(0,0,0,0.03)'}}>
+            <ListGroup  className={'listGroup'}>
+                <Box sx={{fontWeight: '700'}} >
+                    <Typography style={{fontWeight: '700', textTransform: 'uppercase',}} gutterBottom={true} variant={'h6'}>
+                        Категории:
+                    </Typography>
+                </Box>
+
                 {device.BrandInType?.map(type =>
                     <NavLink activeStyle={{
                         fontWeight: "bold",
-                        color: "white",
-                        backgroundColor: '#007bff',
+                        textDecoration: 'underline',
                         minHeight: '2rem',
+                        color: '#1976d2',
 
                     }} key={type.name} to={SHOP_ROUTE + '/' + type.name}
 
-                             style={{cursor: 'pointer', position: 'static', padding: '13px 20px'}}
+                             style={{cursor: 'pointer', position: 'static', color: 'black', padding: '13px 0px'}}
                         // active={device.SelectedType === type.name}
                     >
-                        {type.name}
+                        <Typography variant={'body1'}>
+                            {type.name}
+                        </Typography>
                     </NavLink>
                 )}
 

@@ -13,6 +13,10 @@
 }
 
 .listGroup{
+    background:white;
+    border: 1px solid #e2e3e5;
+    padding: 2rem;
+    border-radius: 0.3rem;
 }
 
 
