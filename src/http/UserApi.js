@@ -33,12 +33,12 @@ export const getTypeBrand = async () => {
 
 export const getDevices = async (query) => {
     console.log('query', query)
-    const response = await $authHost.get('device/getByParams' + query)
+    const response = await $host.get('device/getByParams' + query)
     return response
 }
 
 export const getDevices_24 = async ()=>{
-    const response = await $authHost.get('/device/getTopDevices')
+    const response = await $host.get('/device/getTopDevices')
     return response
 }
 

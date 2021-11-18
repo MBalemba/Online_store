@@ -57,7 +57,7 @@ const App = observer(function () {
                     <NavBar/>
                     <AppRouter/>
                     <Container>
-                        <Footer />
+                        <Footer/>
                     </Container>
                     <TaskContainer />
                 </>

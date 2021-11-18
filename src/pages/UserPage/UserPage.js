@@ -22,6 +22,7 @@ import {observer} from "mobx-react-lite";
 import {Button} from "@mui/material";
 import EditFio from "../../components/UserPage/EditFio";
 import EditGender from "../../components/UserPage/EditGender";
+import AlertDialog from "../../components/Common/AlertDialog/alert";
 
 
 const UserPagePaper = styled(Paper)({
@@ -48,9 +49,15 @@ const useStyles = makeStyles(theme => ({
 
 const UserPage = observer(() => {
 
+
+
+
+
+
+
     const classes = useStyles()
     const {taskInstance, user} = useContext(Context)
-
+    const [isOutDialogOpen, changeIsOutDialogOpen] = React.useState(false)
     const [editGender, setEditGender] = useState(false)
     const [editFio, setEditFio] = useState(false)
 
@@ -62,6 +69,13 @@ const UserPage = observer(() => {
                 getPersonalData()
             ])
         })
+    }
+
+    function exit(bool) {
+        changeIsOutDialogOpen(false)
+        if(bool){
+            user.Out();
+        }
     }
 
 
@@ -178,8 +192,8 @@ const UserPage = observer(() => {
                             <ListItemText primary="Номер" secondary={user.InfoProfile.telephone_number}/>
                         </ListItem>
                         <Divider light/>
-                        <ListItem button>
-                            <ListItemText primary="Выйти из аккаунта"/>
+                        <ListItem onClick={()=>changeIsOutDialogOpen(true)} button>
+                            <ListItemText  primary="Выйти из аккаунта"/>
                         </ListItem>
                     </List>
 
@@ -220,6 +234,8 @@ const UserPage = observer(() => {
                         isEditGender = {user.EditGender}
 
             />
+
+            <AlertDialog callback={exit} questionText={'Вы точно хотите выйти?'} isOpen={isOutDialogOpen} />
 
 
         </Container>

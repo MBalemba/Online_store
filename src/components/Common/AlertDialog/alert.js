@@ -27,9 +27,9 @@ export default function AlertDialog({callback,questionText='',  text='', isOpen}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={()=>callback(false)}>Disagree</Button>
+                    <Button onClick={()=>callback(false)}>Нет</Button>
                     <Button onClick={()=>callback(true)} autoFocus>
-                        Agree
+                        Да
                     </Button>
                 </DialogActions>
             </Dialog>

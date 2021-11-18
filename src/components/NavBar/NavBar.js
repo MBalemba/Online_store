@@ -13,6 +13,7 @@ import {NavLink} from "react-router-dom";
 import {useStylesHeader} from "./Styles";
 import Lock from "../Common/Svg/Lock";
 import UnderHeaderMenu from "./UnderheaderMenu/UnderheaderMenu";
+import AlertDialog from "../Common/AlertDialog/alert";
 
 
 
@@ -21,14 +22,17 @@ const NavBar = observer(() => {
     const {user, device, basket} = useContext(Context)
     const history = useHistory();
     const [isLock, setIsLock] = useState(true)
+    const [isOutDialogOpen, changeIsOutDialogOpen] = React.useState(false)
     const classes = useStylesHeader()
     const handleLock = (bool)=>{
-
         setIsLock(bool);
     }
 
-    const acountOut = () => {
-        user.Out()
+    const acountOut = (bool) => {
+        changeIsOutDialogOpen(false)
+        if(bool){
+            user.Out()
+        }
     }
 
     useEffect(()=>{
@@ -37,8 +41,10 @@ const NavBar = observer(() => {
 
     return (
         <>
-
+            <AlertDialog callback={acountOut} questionText={'Вы точно хотите выйти?'} isOpen={isOutDialogOpen} />
             <AppBar className={classes.navbar} position="fixed">
+
+
                 <Toolbar className={classes.toolbar} variant={'dense'}>
                     <div className={classes.toolbar__item}>
                         <NavLink className={classes.toolbar__buyDeviceLink} onClick={() => {
@@ -73,7 +79,7 @@ const NavBar = observer(() => {
                                         </NavElemWrapper>
                                     </Button>
 
-                                    <Button onClick={() => acountOut()} variant={'outline'}>
+                                    <Button onClick={()=>changeIsOutDialogOpen(true)} variant={'outline'}>
                                         <NavElemWrapper>
                                             <p>Выйти</p>
                                         </NavElemWrapper>
@@ -107,7 +113,7 @@ const NavBar = observer(() => {
                                 </Button>
 
                                 {user.isAuthUser ?
-                                    <Button className={classes.toolbar__headerButton+' '+classes.toolbar__headerButton_leftMargin} onClick={() => acountOut()} variant={'outline'}>
+                                    <Button className={classes.toolbar__headerButton+' '+classes.toolbar__headerButton_leftMargin} onClick={()=>changeIsOutDialogOpen(true)} variant={'outline'}>
                                         <NavElemWrapper>
                                             <p>Выйти</p>
                                         </NavElemWrapper>

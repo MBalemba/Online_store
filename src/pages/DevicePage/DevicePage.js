@@ -48,7 +48,6 @@ const DevicePage = observer(() => {
             if(status){
                 deleteDeviceHandler()
             }
-
         }
 
         function fishingData(dataObj) {
